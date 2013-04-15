@@ -26,7 +26,24 @@ function dkan_dataset_install() {
  */
 function dkan_dataset_rdf_add_dcat() {
   require_once 'import/rdf.php';
-  require_once libraries_get_path('ARC2') . 'libraries/arc/ARC2.php';
+
+  if (function_exists('libraries_get_path')) {
+    module_load_include('module', 'libraries');
+    if (libraries_get_path('arc')) {
+      $path = libraries_get_path('arc') . '/ARC2.php';
+    }
+    elseif (libraries_get_path('ARC2')) {
+      $path = libraries_get_path('ARC2') . '/ARC2.php';
+    }
+  }
+  elseif (file_exists(dirname(__FILE__) . '../../../libraries/arc/ARC2.php')) {
+    $path = dirname(__FILE__) . '../../../libraries/arc/ARC2.php';
+  }
+  elseif (file_exists('libraries/arc/ARC2.php')) {
+    $path = 'libraries/arc/ARC2.php';
+  }
+  require_once $path;
+
   module_load_include('inc', 'rdfx', 'rdfx.terms');
   rdfx_save_terms('http://www.w3.org/ns/dcat#', 'dcat', $dcat);
   rdfx_save_terms('http://purl.org/dc/terms/', 'dc', $dc);

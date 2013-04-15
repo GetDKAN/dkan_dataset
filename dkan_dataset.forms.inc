@@ -65,6 +65,10 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
 
     $form['#after_build']['dkan_dataset'] = 'dkan_dataset_resource_form_after_build';
 
+    // TODO: Allow permissions to change this? Or allow users to turn off these
+    // form changes by not including dkan_dataset.forms.inc.
+    $form['field_resource']['#access'] = FALSE;
+
     // Removing path from vertiable tabs.
     unset($form['path']['#group']);
     unset($form['path']['#title']);
@@ -89,7 +93,6 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     $form['title']['#attributes']['placeholder'] = t('eg. A descriptive title');
     $form['body'][$form['language']['#value']][0]['#prefix'] = '<div id="prefix">';
     $form['body'][$form['language']['#value']][0]['#suffix'] = '</div>';
-    $form['body'][$form['language']['#value']][0]['#description'] = t('eg. Some useful notes about the data');
     $form['path']['alias']['#description'] = '';
     $form['path']['alias']['#title'] = '';
     $form['field_tags']['und']['#description'] = t('eg. economy, mental health, government');
@@ -159,6 +162,7 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     $form['#attached']['js'][] = drupal_get_path('module', 'dkan_dataset') . '/js/dkan_forms.js';
     $form['#attached']['js'][] = drupal_get_path('module', 'dkan_dataset') . '/js/dkan_forms.slugify.js';
 
+    // Don't show feeds form.
     if (isset($form['feeds'])) {
       $form['feeds']['#access'] = FALSE;
     }
@@ -266,6 +270,10 @@ function dkan_dataset_resource_form_after_build($form, &$form_state) {
   if (isset($form['field_link_file'])) {
     $form['field_link_file'][$form['language']['#value']][0]['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011.csv';
     $form['field_link_api'][$form['language']['#value']][0]['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011';
+  }
+  if (isset($form['field_format'])) {
+    $form['field_format'][$form['language']['#value']]['textfield']['#attributes']['placeholder'] = 'eg. csv, json';
+    $form['field_format'][$form['language']['#value']]['textfield']['#description'] = t('File format will be autodetected');
   }
   $form['body'][$form['language']['#value']][0]['value']['#attributes']['placeholder'] = t('eg. Some useful notes about the data');
   return $form;

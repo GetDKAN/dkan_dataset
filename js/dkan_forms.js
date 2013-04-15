@@ -102,7 +102,7 @@
       });
 
       // Autohide selected elements.
-      var elements = "#views-exposed-form-dataset-page,#block-dkan-dataset-dkan-dataset-search-bar";
+      var elements = "#views-exposed-form-dataset-page,#block-dkan-sitewide-dkan-sitewide-search-bar";
       $(elements, context).dkanFormsHide();
       var autoDeluxeElements = ".field-name-field-tags";
       $(autoDeluxeElements, context).dkanFormsAutoDeluxeHide();

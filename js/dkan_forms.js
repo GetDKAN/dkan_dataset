@@ -4,62 +4,6 @@
  */
 (function ($) {
 
-  /**
-   * Shows and hides a description for Drupal form elements.
-   */
-  $.fn.dkanFormsHide = function () {
-    this.each(function () {
-      $(this).addClass('compact-form-wrapper');
-      var desc = $(this).find('.description').addClass('compact-form-description');
-      var input = $(this).find('input');
-      desc.click(function () {
-        input.focus();
-      });
-      if ($(input).html() == '') {
-        var input = $(this).find('textarea');
-      }
-      if ($(input).html() == null) {
-        var input = $(this).find('input');
-      }
-      input.addClass('compact-form-input')
-      input.blur(function () {
-        if (input.val() === '') {
-          desc.fadeIn('fast');
-        }
-      });
-      input.keyup(function () {
-        if (input.val() != '') {
-          desc.hide();
-        }
-      });
-      if (input.val() != '') {
-        desc.css('display', 'none');
-      }
-    });
-  }
-
-  /**
-   * Shows and hides a description for Autocomplete Deluxe form elements.
-   */
-  $.fn.dkanFormsAutoDeluxeHide = function () {
-    this.each(function () {
-      $(this).addClass('compact-form-wrapper');
-      var desc = $(this).find('.description').addClass('compact-form-description');
-      var input = $(this).find('#autocomplete-deluxe-input');
-      desc.click(function () {
-        input.focus();
-      });
-      input.focus(function () {
-        desc.hide();
-      });
-      if ($('#autocomplete-deluxe-item').html() != null) {
-        desc.css('display', 'none');
-      }
-      if ($(this).find('input').val() != '') {
-        desc.css('display', 'none');
-      }
-    });
-  }
   Drupal.behaviors.dkanAddtional = {
     attach: function (context, settings) {
       if (settings.dkanAdditional && context.context) {
@@ -100,12 +44,6 @@
       $('input.form-file').change(function() {
         $(this).next('input[type="submit"]').mousedown();
       });
-
-      // Autohide selected elements.
-      var elements = "#views-exposed-form-dataset-page,#block-dkan-sitewide-dkan-sitewide-search-bar";
-      $(elements, context).dkanFormsHide();
-      var autoDeluxeElements = ".field-name-field-tags";
-      $(autoDeluxeElements, context).dkanFormsAutoDeluxeHide();
 
       // Date module borks if you add a date without a time. This adds a default
       // time if someone picks a date and time has been added yet.

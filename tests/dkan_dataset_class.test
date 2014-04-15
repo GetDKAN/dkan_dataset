@@ -86,7 +86,6 @@ class DkanDatasetClassWebTestCase extends DrupalWebTestCase {
     $modules[] = 'libraries';
     $modules[] = 'recline';
     $modules[] = 'remote_stream_wrapper';
-    $modules[] = 'restws';
     $modules[] = 'strongarm';
     $modules[] = 'token';
     $modules[] = 'rdfx';
@@ -101,7 +100,6 @@ class DkanDatasetClassWebTestCase extends DrupalWebTestCase {
     $modules[] = 'eva';
     $modules[] = 'views';
     $modules[] = 'views_bulk_operations';
-    $modules[] = 'views_json';
 
     $modules = array_unique($modules);
     parent::setUp($modules);

@@ -33,7 +33,7 @@
           $('#edit-path-alias').slugify($(this));
           $('#url-slug').slugify($(this));
         });
-        $('.url-edit-preview button.btn').click(function(e) {
+        $('#url-edit-preview button.btn').click(function(e) {
           e.preventDefault();
           $('#url-edit-preview').hide();
           $('#field-tags-wrapper .path-form').show();

@@ -382,7 +382,8 @@ function dkan_dataset_node_update($node) {
       break;
 
     case 'resource':
-      $datasets = $node->field_dataset_ref[LANGUAGE_NONE];
+      $resource = entity_metadata_wrapper('node', $node);
+      $datasets = $resource->field_dataset_ref->raw();
       if (count($datasets)) {
         $queue = DrupalQueue::get('dataset_changelog');
         foreach ($datasets as $dataset) {
@@ -420,35 +421,41 @@ function dkan_dataset_sync_groups($node) {
   $resources_new = $node_new->field_resources->value();
   $resources_orig = $node_orig->field_resources->value();
 
-
   $new_groups = array();
   $orig_groups = array();
   $new_resources = array();
   $orig_resources = array();
-
-  // Grouping by nid to make it easier to compare.
-  foreach ($groups_new as $new_key => $new_group) {
-    $new_groups[$new_key] = $new_group->title;
+  // If group is a singular value field process differently.
+  if (is_object($groups_new)) {
+    if ($groups_new->vuuid != $groups_orig->vuuid) {
+      dkan_dataset_process_groups($resources_new, $groups_new);
+    }
   }
-  foreach ($groups_orig as $orig_key => $orig_group) {
-    $orig_groups[$orig_key] = $orig_group->title;
-  }
-  foreach ($resources_new as $new_key => $new_resource) {
-    $new_resources[$new_resource->nid] = $new_resource;
-  }
-  foreach ($resources_orig as $orig_key => $orig_resource) {
-    $orig_resources[$orig_resource->nid] = $orig_resource;
-  }
-  // Groups have changed.
-  $additional_groups = array();
-  $resources_added = array();
-  if ((array_diff($orig_groups, $new_groups) || array_diff($new_groups, $orig_groups)) && $resources_new) {
-    $additional_groups = dkan_dataset_resource_groups($resources_new, $node);
-    $groups_new = $groups_new + $additional_groups;
-    dkan_dataset_process_groups($resources_new, $groups_new);
+  else {
+    // Grouping by nid to make it easier to compare.
+    foreach ($groups_new as $new_key => $new_group) {
+      $new_groups[$new_key] = $new_group->title;
+    }
+    foreach ($groups_orig as $orig_key => $orig_group) {
+      $orig_groups[$orig_key] = $orig_group->title;
+    }
+    foreach ($resources_new as $new_key => $new_resource) {
+      $new_resources[$new_resource->nid] = $new_resource;
+    }
+    foreach ($resources_orig as $orig_key => $orig_resource) {
+      $orig_resources[$orig_resource->nid] = $orig_resource;
+    }
+    // Groups have changed.
+    $additional_groups = array();
+    $resources_added = array();
+    if ((array_diff($orig_groups, $new_groups) || array_diff($new_groups, $orig_groups)) && $resources_new) {
+      $additional_groups = dkan_dataset_resource_groups($resources_new, $node);
+      $groups_new = $groups_new + $additional_groups;
+      dkan_dataset_process_groups($resources_new, $groups_new);
+    }
   }
   // Resources have been added.
-  elseif (array_diff_key($new_resources, $orig_resources) && $groups_new) {
+  if (array_diff_key($new_resources, $orig_resources) && $groups_new) {
     foreach ($new_resources as $nid => $resource) {
       foreach ($orig_resources as $orig_nid => $orig_resource) {
         if (!isset($orig_resources[$nid])) {
@@ -516,6 +523,8 @@ function dkan_dataset_resource_groups($resources, $new_dataset) {
  *   Fully instantiated resource nodes.
  * @param array $groups
  *   Fully insstantiated group nodes.
+ *   NOTE: This is an array if group field "Number of values" is multiple but an
+ *   object if "Number of values" is singular.
  */
 function dkan_dataset_process_groups($nodes, $groups, $op = 'added', $limit_update_resources = 20) {
   $counter_resource = 0;

@@ -18,7 +18,6 @@ dependencies[] = imagecache_canvasactions
 dependencies[] = image
 dependencies[] = list
 dependencies[] = og
-dependencies[] = og_extras
 dependencies[] = og_ui
 dependencies[] = options
 dependencies[] = search_api

@@ -388,7 +388,7 @@ function dkan_dataset_node_update($node) {
         $queue = DrupalQueue::get('dataset_changelog');
         foreach ($datasets as $dataset) {
           $item = array(
-            'dataset' => $dataset['target_id'],
+            'dataset' => $dataset,
             'message' => 'Update to resource \'' . $node->title . '\'',
             'user' => $user->uid,
           );

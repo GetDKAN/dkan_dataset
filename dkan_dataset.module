@@ -357,7 +357,7 @@ function dkan_dataset_add_resource_access($node) {
   }
 }
 
- 
+
 /**
  * Implements hook_file_mimetype_mapping_alter().
  */
@@ -605,4 +605,17 @@ function dkan_dataset_dataset_changelog_run($item) {
   // Restore Anonymous user.
   $user = $original_user;
   drupal_save_session(TRUE);
+}
+
+/**
+ * Implements hook_page_alter().
+ */
+function dkan_dataset_page_alter(&$page) {
+  $breadcrumbs = drupal_get_breadcrumb();
+  if (arg(0) == 'dataset' && is_array($breadcrumbs)) {
+    $breadcrumbs[1] = t('Datasets');
+    $breadcrumbs[2] = t('Search');
+    // we can return here because page_title is handled by views.
+    drupal_set_breadcrumb($breadcrumbs);
+  }
 }

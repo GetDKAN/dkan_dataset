@@ -9,7 +9,7 @@
  * Test basic Data API functionality.
  */
 class DkanDatasetApiWebTestCase extends DrupalWebTestCase {
-  protected $profile = 'standard';
+  protected $profile = 'testing';
   protected $group;
   protected $dataset;
   protected $resource;
@@ -107,10 +107,10 @@ class DkanDatasetApiWebTestCase extends DrupalWebTestCase {
     $modules[] = 'views_bulk_operations';
 
     $modules = array_unique($modules);
+
     parent::setUp($modules);
 
     features_rebuild();
-
 
     // Setup group.
     $this->group = $this->drupalCreateNode(

@@ -40,7 +40,7 @@ function dkan_dataset_field_group_pre_render(&$element, $group, &$form) {
       );
     }
   }
-  elseif (isset($form['#action']) && $form['#action'] == '/node/add/dataset' && !$additional && $arg2 != 'edit') {
+  elseif (isset($form['#action']) && $form['#action'] == url('node/add/dataset') && !$additional && $arg2 != 'edit') {
     if ($group->group_name == 'group_additional') {
       $element += array(
         '#type' => 'markup',
@@ -174,7 +174,7 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     }
     else {
       $form['actions']['submit']['#value'] = t('Finish');
-      $form['#action'] = '/node/add/dataset';
+      $form['#action'] = url('node/add/dataset');
     }
   }
   if ($form_id == 'resource_node_form') {

@@ -9,7 +9,7 @@
  * Test basic Data API functionality.
  */
 class DkanDatasetWebTestCase extends DrupalWebTestCase {
-  protected $profile = 'standard';
+  protected $profile = 'testing';
 
   /**
    * Information about the test.

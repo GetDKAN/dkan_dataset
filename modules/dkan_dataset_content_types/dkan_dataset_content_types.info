@@ -1,7 +1,7 @@
 name = DKAN Dataset Content Types
 core = 7.x
 package = DKAN Features
-version = 7.x-1.0-rc1
+version = 7.x-1.0
 project = dkan_dataset_content_types
 dependencies[] = autocomplete_deluxe
 dependencies[] = ctools

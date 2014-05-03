@@ -222,11 +222,9 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     $form['og_group_ref']['#title'] = t('Groups');
     $form['og_group_ref']['#type'] = 'fieldset';
 
-    $action_query = '';
     if ($query = drupal_get_query_parameters()) {
       if (isset($query['dataset'])) {
         $form['field_dataset_ref'][$field_dataset_ref_langcode]['#default_value'] = $query['dataset'];
-        $action_query = '?dataset=' . $query['dataset'];
         $form['prefix']['#type'] = 'item';
         $form['prefix']['#weight'] = '-20';
         $form['prefix']['#markup'] = dkan_form_create_stages('resource-create', $query['dataset']);
@@ -240,7 +238,12 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     }
     $form['#validate'][] = 'dkan_dataset_resource_node_form_validate';
     // This saves us on the ajax reloading.
-    $form['#action'] = '/node/add/resource' . $action_query;
+    if (isset($query['dataset'])) {
+      $form['#action'] = url('node/add/resource', array('query' => array('dataset' => $query['dataset'])));
+    }
+    else {
+      $form['#action'] = url('node/add/resource');
+    }
     if (isset($query['dataset']) || (isset($form_state['input']['field_dataset_ref']['und'][0]))) {
       $form['actions']['additional'] = array(
         '#type' => 'submit',
@@ -482,7 +485,8 @@ function dkan_dataset_dataset_submit_js($form, &$form_state) {
 
   // Replacement elements.
   $stage = dkan_form_create_stages('resource-edit', $form_state['node']->nid);
-  $breadcrumbs = '<ul class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/dataset">Datasets</a></li><li>' . l($form_state['values']['title'], 'node/' . $form_state['nid']) . '</li><li><a href="/node/add/resource?dataset=' . $form_state['nid'] . '" class="active">Add Resource</a></li></ul>';
+  $resource_url = url('node/add/resource', array('query' => array('dataset' => $form_state['nid'])));
+  $breadcrumbs = '<ul class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/dataset">Datasets</a></li><li>' . l($form_state['values']['title'], 'node/' . $form_state['nid']) . '</li><li><a href="' . $resource_url . '" class="active">Add Resource</a></li></ul>';
   $resources_block = '<section class="block block-dkan-forms block-dkan-forms-resource-nodes block-dkan-forms-dkan-forms-resource-nodes even" id="block-dkan-forms-dkan-forms-resource-nodes"><div class="block-inner clearfix"><h2 class="block-title">Resources</h2><div class="content clearfix"><div class="item-list"><ul class="nav-simple"><li class="last"></li></ul></div><a id="context-block-dkan_dataset-dkan_forms_resource_nodes" class="context-block editable edit-resource-create"></a></div></div></section>';
 
   $commands[] = ajax_command_append('#region-sidebar-first .region-inner', $resources_block);
@@ -523,7 +527,7 @@ function dkan_dataset_prepare_resource_form($nid) {
   // Don't pull from cache.
   $new_form_state['input'] = array();
   $resource_form = drupal_build_form($type . '_node_form', $new_form_state);
-  $resource_form['#action'] = '/node/add/resource?dataset=' . $nid;
+  $resource_form['#action'] = url('node/add/resource', array('query' => array('dataset' => $nid)));
   return $resource_form;
 }
 

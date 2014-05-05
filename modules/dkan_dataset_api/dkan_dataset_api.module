@@ -168,7 +168,7 @@ function dkan_dataset_api_settings() {
     '#description' => t(
       'Demo at !demo. More information on !url.',
       array(
-        '!demo' => l('this link', 'site_read'),
+        '!demo' => l('this link', 'api/3/action/site_read'),
         '!url' => l(t('site_read'), 'http://docs.ckan.org/en/latest/api/index.html#ckan.logic.action.get.site_read'),
       )
     ),
@@ -192,7 +192,7 @@ function dkan_dataset_api_settings() {
     '#description' => t(
       'Demo at !demo. More information on !url.',
       array(
-        '!demo' => l('this link', 'revision_list'),
+        '!demo' => l('this link', 'api/3/action/revision_list'),
         '!url' => l(t('dkan_dataset_revision_list'), 'http://docs.ckan.org/en/latest/api/index.html#ckan.logic.action.get.revision_list'),
       )
     ),
@@ -204,7 +204,7 @@ function dkan_dataset_api_settings() {
     '#description' => t(
       'Demo at !demo. More information on !url. This also mirrors the deprecated !legacy.',
       array(
-        '!demo' => l('this link', 'package_list'),
+        '!demo' => l('this link', 'api/3/action/package_list'),
         '!url' => l(t('package_list'), 'http://docs.ckan.org/en/latest/api/index.html#ckan.logic.action.get.package_list'),
         '!legacy' => l(t('rest/dataset'), 'http://docs.ckan.org/en/latest/legacy-api.html#model-resources'),
       )
@@ -274,7 +274,7 @@ function dkan_dataset_api_settings() {
     '#description' => t(
       'Demo at !demo. More information on !url.',
       array(
-        '!demo' => l('this link', 'group_list', array('query' => array('all_fields' => 'TRUE'))),
+        '!demo' => l('this link', 'api/3/action/group_list', array('query' => array('all_fields' => 'TRUE'))),
         '!url' => l(t('group_list'), 'http://docs.ckan.org/en/latest/api/index.html#ckan.logic.action.get.group_list'),
       )
     ),

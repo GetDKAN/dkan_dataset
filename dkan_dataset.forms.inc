@@ -591,7 +591,7 @@ function dkan_dataset_resource_nodes() {
   $nodes = array();
   $current_node = menu_get_object();
 
-  if (isset($current_node->type) && $current_node->type == 'resource' && isset($current_node->field_dataset_ref[0])) {
+  if (isset($current_node->type) && $current_node->type == 'resource' && isset($current_node->field_dataset_ref[LANGUAGE_NONE][0])) {
     $wrapper = entity_metadata_wrapper('node', $current_node);
     $target = $wrapper->field_dataset_ref->value();
     $target_id = $target[0]->nid;

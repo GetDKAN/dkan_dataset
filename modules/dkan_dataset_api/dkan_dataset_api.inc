@@ -122,6 +122,12 @@ function dkan_open_data_build_datasets($nodes) {
           $resources[] = $resource['target_id'];
         }
         $resources = node_load_multiple($resources);
+        // check user access
+        foreach ($resources as $key => $resource) {
+          if (!node_access('view', $resource)) {
+            unset($resources[$key]);
+          }
+        }
         $row->resources = dkan_open_data_build_dataset_resources($resources);
         $row->num_resources = count($resources);
       }

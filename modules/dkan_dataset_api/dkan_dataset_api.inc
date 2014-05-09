@@ -33,7 +33,7 @@ function dkan_open_data_build_rows($nodes) {
           $tags[] = $tag->name->value();
         }
       }
-      $row->keyword = implode(', ', $tags);
+      $row->keyword = $tags;
       $row->modified = format_date($node_wrapper->changed->value(), 'custom', 'Y-m-d');
 
       $publisher = $node_wrapper->og_group_ref->value();
@@ -61,15 +61,19 @@ function dkan_open_data_build_rows($nodes) {
         $row->distribution = $dist;
       }
       $row->license = dkan_open_data_get_field_value($node, 'field_license', 'value');
-      $row->spatial = dkan_open_data_get_field_value($node, 'field_spatial_geographical_cover', 'value');
-      $row->temporal = dkan_open_data_get_field_value($node, 'field_temporal_coverage', 'value');
+      if ($spatial = dkan_open_data_get_field_value($node, 'field_spatial_geographical_cover', 'value')) {
+        $row->spatial = $spatial;
+      }
+      if ($temporal = dkan_open_data_get_field_value($node, 'field_temporal_coverage', 'value')) {
+        $row->temporal = $temporal;
+      }
 
       // Extended fields.
       if ($accrual = strtolower(dkan_open_data_get_field_value($node, 'field_frequency', 'label'))) {
         $row->references = dkan_open_data_get_field_value($node, 'field_related_content', 'value');
       }
       $language = !isset($node->langauge) && $node->language != 'und' ? $node->language : 'english';
-      $row->language = $language;
+      $row->language = array($language);
       $row->granularity = dkan_open_data_get_field_value($node, 'field_granularity', 'value');
     }
     catch (EntityMetadataWrapperException $e) {

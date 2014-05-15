@@ -16,8 +16,26 @@
  */
 function dkan_open_data_build_rows($nodes) {
 
-  $rows = array();
+  // First row is the catalog itself
+  $catalog_dist = new stdClass();
+  $catalog_dist->accessURL = url('data.json', array('absolute' => TRUE));
+  $catalog_dist->format = 'application/json';
 
+  $catalog_row = new stdClass();
+  $catalog_row->title = variable_get('dkan_catalog_desc', 'Data Catalog');
+  $catalog_row->description = variable_get('dkan_catalog_desc', 'Version 1.0');
+  $catalog_row->keyword = array('catalog');
+  $catalog_row->modified = NULL;
+  $catalog_row->publisher = variable_get('site_name');
+  $catalog_row->contactPoint = variable_get('dkan_catalog_contact', $catalog_row->publisher);
+  $catalog_row->mbox = variable_get('dkan_catalog_mbox', variable_get('site_mail'));
+  $catalog_row->identifier = "1";
+  $catalog_row->accessLevel = 'public';
+  $catalog_row->distribution = array($catalog_dist);
+
+  $rows = array($catalog_row);
+
+  $i = 0;
   foreach ($nodes as $node) {
     $node_wrapper = entity_metadata_wrapper('node', $node);
 
@@ -35,6 +53,9 @@ function dkan_open_data_build_rows($nodes) {
       }
       $row->keyword = $tags;
       $row->modified = format_date($node_wrapper->changed->value(), 'custom', 'Y-m-d');
+      if ($i == 0) {
+        $rows[0]->modified = $row->modified;
+      }
 
       $publisher = $node_wrapper->og_group_ref->value();
       if (!isset($publisher[0]->title)) {
@@ -82,6 +103,7 @@ function dkan_open_data_build_rows($nodes) {
 
     $rows[] = $row;
     unset($row);
+    $i++;
   }
   return $rows;
 }

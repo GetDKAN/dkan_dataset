@@ -50,3 +50,6 @@ before_script:
 script:
   # Run test suite
   - drush test-run --xml 'DKAN Dataset' --uri=http://127.0.0.1:8080
+
+notifications:
+  slack: nuams:2Eywq0BtPv73ISq3CF6gvRzo

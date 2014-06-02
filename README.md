@@ -14,13 +14,7 @@ DKAN Dataset is currently managed in code on Github but is mirrored on Drupal.or
 
 This module REQUIRES implementers to use "drush make". If you only use "drush download" you will miss key dependencies for required modules and libraries.
 
-The following will download the required libraries and patched modules:
-
-```bash
-drush dl dkan_dataset
-cd dkan_dataset
-drush make --no-core dkan_dataset.make
-```
+See installation instructions here: http://docs.getdkan.com/dkan-documentation/dkan-developers/adding-dkan-features-existing-drupal-site#Installing_DKAN_Dataset
 
 ## Contributing
 

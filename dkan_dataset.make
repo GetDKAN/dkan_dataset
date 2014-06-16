@@ -63,8 +63,11 @@ projects[libraries][subdir] = contrib
 projects[link][version] = 1.1
 projects[link][subdir] = contrib
 
-projects[link_iframe_formatter][version] = 1.1
+projects[link_iframe_formatter][download][type] = git
+projects[link_iframe_formatter][download][url] = "http://git.drupal.org/project/link_iframe_formatter.git"
+projects[link_iframe_formatter][download][revision] = 228f9f4
 projects[link_iframe_formatter][subdir] = contrib
+projects[link_iframe_formatter][type] = module
 
 projects[multistep][download][type] = git
 projects[multistep][download][url] = "http://git.drupal.org/project/multistep.git"

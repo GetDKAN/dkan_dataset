@@ -72,7 +72,7 @@ projects[multistep][download][revision] = 3b0d40a
 projects[multistep][subdir] = contrib
 projects[multistep][type] = module
 
-projects[og][version] = 2.4
+projects[og][version] = 2.7
 projects[og][patch][1090438] = http://drupal.org/files/issues/og-add_users_and_entities_with_drush-1090438-12.patch
 projects[og][subdir] = contrib
 

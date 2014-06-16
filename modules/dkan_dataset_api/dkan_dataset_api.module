@@ -800,7 +800,7 @@ function dkan_dataset_api_group_list() {
           $row->display_name = $group->title;
           $row->created = format_date($group->created, 'custom', 'Y-m-d\TH:i:s.u');
           $row->updated = format_date($group->changed, 'custom', 'Y-m-d\TH:i:s.u');
-          $row->image = file_create_l($group->field_image['und'][0]['uri']);
+          $row->image = file_create_url($group->field_image['und'][0]['uri']);
           $row->status = $group->status ? 'active' : 'disabled';
           $row->revision_id = $group->vuuid;
           $rows[] = $row;

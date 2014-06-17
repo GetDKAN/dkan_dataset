@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/nuams/dkan_dataset.png?branch=7.x-1.x)](https://travis-ci.org/nuams/dkan_dataset)
+[![Build Status](https://travis-ci.org/NuCivic/dkan_dataset.png?branch=7.x-1.x)](https://travis-ci.org/NuCivic/dkan_dataset)
 
 # DKAN Dataset
 
@@ -18,12 +18,12 @@ See installation instructions here: http://docs.getdkan.com/dkan-documentation/d
 
 ## Contributing
 
-We are accepting issues in the dkan issue thread only -> https://github.com/nuams/dkan/issues -> Please label your issue as **"component: dkan_dataset"** after submitting so we can identify problems and feature requests faster.
+We are accepting issues in the dkan issue thread only -> https://github.com/NuCivic/dkan/issues -> Please label your issue as **"component: dkan_dataset"** after submitting so we can identify problems and feature requests faster.
 
 If you can, please cross reference commits in this repo to the corresponding issue in the dkan issue thread. You can do that easily adding this text:
 
 ```
-nuams/dkan#issue_id
+NuCivic/dkan#issue_id
 ``` 
 
 to any commit message or comment replacing **issue_id** with the corresponding issue id.

@@ -66,6 +66,7 @@ projects[link][subdir] = contrib
 projects[link_iframe_formatter][download][type] = git
 projects[link_iframe_formatter][download][url] = "http://git.drupal.org/project/link_iframe_formatter.git"
 projects[link_iframe_formatter][download][revision] = 228f9f4
+projects[link_iframe_formatter][patch][2287233] = https://www.drupal.org/files/issues/link_iframe_formatter-coding-standards.patch 
 projects[link_iframe_formatter][subdir] = contrib
 projects[link_iframe_formatter][type] = module
 

@@ -348,20 +348,18 @@ function dkan_dataset_resource_node_form_validate($form, &$form_state) {
     }
     elseif ($api) {
       $request = drupal_http_request($api);
-      include_once DRUPAL_ROOT . '/includes/file.mimetypes.inc';
       if (!isset($request->error)) {
-        $mapping = file_mimetype_mapping();
-        $offset = array_search($request->headers['content-type'], $mapping['mimetypes']);
-        if ($offset) {
-          $type = array_search($offset, $mapping['extensions']);
-        }
+        // Remove char type or other info from content type.
+        $strpos = strpos($request->headers['content-type'],';');
+        $mimetype = ($strpos !== false) ? substr($request->headers['content-type'], 0, $strpos) : $request->headers['content-type'];
+        $type = dkan_dataset_discovery_extension($mimetype);
       }
-      $type = 'data';
     }
     else {
       $type = substr($link, strrpos($link, '.') + 1);
     }
     $vocabs = taxonomy_vocabulary_get_names();
+    $type = isset($type) ? $type : 'data';
     if (isset($vocabs['format'])) {
       $form_state['values']['field_format'][$field_format_langcode][0]['vid'] = $vocabs['format']->vid;
       if ($tax = taxonomy_get_term_by_name($type, 'format')) {

@@ -122,8 +122,10 @@ projects[uuid][subdir] = contrib
 projects[views][version] = 3.7
 projects[views][subdir] = contrib
 
-projects[recline][version] = 1.0
-projects[recline][subdir] = contrib
+projects[recline][download][type] = git
+projects[recline][download][url] = https://github.com/NuCivic/recline.git
+projects[recline][download][branch] = 7.x-1.x
+projects[recline][download][revision] = "0b4ec95c6ef68fc041c56fd7c48d0f1c362fa0f1"
 
 projects[entity_rdf][download][type] = git
 projects[entity_rdf][download][url] = http://git.drupal.org/project/entity_rdf.git
@@ -189,7 +191,7 @@ libraries[Leaflet][download][revision] = "81221ae4cd9772a8974b2e3c867d4fb35abd05
 libraries[recline][type] = libraries
 libraries[recline][download][type] = git
 libraries[recline][download][url] = "https://github.com/okfn/recline.git"
-libraries[recline][download][revision] = "300e5ea6a74af4b332b10ff8710d5173d2201dfc"
+libraries[recline][download][revision] = "7757e563ee180e136a8a4008b6ac7b7b56e3050f"
 
 libraries[arc][type] = libraries
 libraries[arc][download][type] = git

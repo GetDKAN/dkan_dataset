@@ -125,7 +125,7 @@ projects[views][subdir] = contrib
 projects[recline][download][type] = git
 projects[recline][download][url] = https://github.com/NuCivic/recline.git
 projects[recline][download][branch] = 7.x-1.x
-projects[recline][download][revision] = "0b4ec95c6ef68fc041c56fd7c48d0f1c362fa0f1"
+;projects[recline][download][tag] = 7.x-1.1
 
 projects[entity_rdf][download][type] = git
 projects[entity_rdf][download][url] = http://git.drupal.org/project/entity_rdf.git

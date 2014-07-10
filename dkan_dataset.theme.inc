@@ -60,6 +60,10 @@ function theme_dkan_dataset_resource_view($vars) {
 
   if (isset($nodes)) {
     foreach ($nodes as $node) {
+      // Node could be empty if it has been deleted.
+      if (!$node) {
+        continue;
+      }
       $node_wrapper = entity_metadata_wrapper('node', $node);
       $body = $node_wrapper->body->value();
       $term = '';

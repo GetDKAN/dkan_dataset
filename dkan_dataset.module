@@ -465,7 +465,9 @@ function dkan_dataset_sync_groups($node) {
       $new_resources[$new_resource->nid] = $new_resource;
     }
     foreach ($resources_orig as $orig_key => $orig_resource) {
-      $orig_resources[$orig_resource->nid] = $orig_resource;
+      if ($orig_resource) {
+        $orig_resources[$orig_resource->nid] = $orig_resource;
+      }
     }
     // Groups have changed.
     $additional_groups = array();

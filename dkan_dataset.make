@@ -119,7 +119,7 @@ projects[uuid][version] = 1.0-alpha5
 projects[uuid][patch][1927474] = http://drupal.org/files/unknown-column-in-field-list-fix-1927474-2.patch
 projects[uuid][subdir] = contrib
 
-projects[views][version] = 3.7
+projects[views][version] = 3.8
 projects[views][subdir] = contrib
 
 projects[recline][download][type] = git

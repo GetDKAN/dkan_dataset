@@ -52,7 +52,12 @@ projects[field_group][subdir] = contrib
 projects[filefield_sources][version] = 1.9
 projects[filefield_sources][subdir] = contrib
 
+projects[gravatar][download][type] = git
+projects[gravatar][download][url] = "http://git.drupal.org/project/gravatar.git"
+projects[gravatar][download][revision] = e933db3
+projects[gravatar][patch][1568162] = http://drupal.org/files/views-display-user-picture-doesn-t-display-gravatar-1568162-10.patch
 projects[gravatar][subdir] = contrib
+projects[gravatar][type] = module
 
 projects[jquery_update][version] = 2.3
 projects[jquery_update][subdir] = contrib

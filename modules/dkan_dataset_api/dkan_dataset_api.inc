@@ -324,3 +324,34 @@ function dkan_open_data_get_field_value($node, $field_name, $column_name) {
     return '';
   }
 }
+
+/**
+ * Makes data.json output human readable.
+ */
+
+function dkan_open_data_json_encode($var) {
+  // The PHP version cannot change within a request.
+  static $php530;
+
+  if (!isset($php530)) {
+    $php530 = version_compare(PHP_VERSION, '5.3.0', '>=');
+  }
+
+  if ($php530) {
+    return json_encode($var, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
+  }
+
+  // json_encode() escapes <, >, ', &, and " using its options parameter, but
+  // does not support this parameter prior to PHP 5.3.0.  Use a helper instead.
+  include_once DRUPAL_ROOT . '/includes/json-encode.inc';
+  return drupal_json_encode_helper($var);
+}
+
+function dkan_open_data_json_output($var = NULL) {
+  // We are returning JSON, so tell the browser.
+  drupal_add_http_header('Content-Type', 'application/json');
+
+  if (isset($var)) {
+    echo dkan_open_data_json_encode($var);
+  }
+}

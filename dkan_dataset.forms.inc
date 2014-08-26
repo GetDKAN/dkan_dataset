@@ -27,7 +27,7 @@ function dkan_dataset_field_group_build_pre_render_alter(&$element) {
 function dkan_dataset_field_group_pre_render(&$element, $group, &$form) {
   
   // Only pre_render if additional info form should appear on separate page
-  if (variable_get('dkan_dataset_form_additional_info', 0 )) {
+  if (variable_get('dkan_dataset_form_additional_info', 1 )) {
     if (module_exists('context')) {
       $contexts = context_active_contexts();
     }
@@ -250,7 +250,7 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     else {
       $form['#action'] = url('node/add/resource');
     }
-    if (variable_get('dkan_dataset_form_additional_info', 0 )) {
+    if (variable_get('dkan_dataset_form_additional_info', 1 )) {
       if (isset($query['dataset']) || (isset($form_state['input']['field_dataset_ref']['und'][0]))) {
         $form['actions']['additional'] = array(
           '#type' => 'submit',

@@ -25,28 +25,32 @@ function dkan_dataset_field_group_build_pre_render_alter(&$element) {
  * Implements hook_field_group_pre_render().
  */
 function dkan_dataset_field_group_pre_render(&$element, $group, &$form) {
-  if (module_exists('context')) {
-    $contexts = context_active_contexts();
-  }
-  $query = drupal_get_query_parameters();
-  $arg2 = arg(2);
-  $additional = isset($form['#additional_processed']) && $form['#additional_processed'] ? TRUE : FALSE;
-  if ((isset($form['#groups'][$group->group_name]->disabled) && $form['#groups'][$group->group_name]->disabled) || isset($query['additional'])) {
-    if ($group->group_name == 'group_primary') {
-      $element += array(
-        '#type' => 'markup',
-        '#weight' => $group->weight,
-        '#access' => FALSE,
-      );
+  
+  // Only pre_render if additional info form should appear on separate page
+  if (variable_get('dkan_dataset_form_additional_info', 1 )) {
+    if (module_exists('context')) {
+      $contexts = context_active_contexts();
     }
-  }
-  elseif (isset($form['#action']) && $form['#action'] == url('node/add/dataset') && !$additional && $arg2 != 'edit') {
-    if ($group->group_name == 'group_additional') {
-      $element += array(
-        '#type' => 'markup',
-        '#weight' => $group->weight,
-        '#access' => FALSE,
-      );
+    $query = drupal_get_query_parameters();
+    $arg2 = arg(2);
+    $additional = isset($form['#additional_processed']) && $form['#additional_processed'] ? TRUE : FALSE;
+    if ((isset($form['#groups'][$group->group_name]->disabled) && $form['#groups'][$group->group_name]->disabled) || isset($query['additional'])) {
+      if ($group->group_name == 'group_primary') {
+        $element += array(
+          '#type' => 'markup',
+          '#weight' => $group->weight,
+          '#access' => FALSE,
+        );
+      }
+    }
+    elseif (isset($form['#action']) && $form['#action'] == url('node/add/dataset') && !$additional && $arg2 != 'edit') {
+      if ($group->group_name == 'group_additional') {
+        $element += array(
+          '#type' => 'markup',
+          '#weight' => $group->weight,
+          '#access' => FALSE,
+        );
+      }
     }
   }
 }
@@ -124,8 +128,10 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       $og_group_ref_langcode = dkan_dataset_form_field_language($form, 'og_group_ref');
 
       // Don't show groups if user doesn't have any groups to add.
-      $groups = $form['og_group_ref'][$og_group_ref_langcode][0]['default']['#options'];
-      if (count($groups) < 2) {
+      if (isset($form['og_group_ref'][$og_group_ref_langcode][0]['default'])) {
+        $groups = $form['og_group_ref'][$og_group_ref_langcode][0]['default']['#options'];
+      }
+      if (isset($groups) and (count($groups) < 2)) {
         $form['og_group_ref']['#access'] = FALSE;
       }
       // Move groups to vertical tabs.
@@ -244,23 +250,25 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     else {
       $form['#action'] = url('node/add/resource');
     }
-    if (isset($query['dataset']) || (isset($form_state['input']['field_dataset_ref']['und'][0]))) {
-      $form['actions']['additional'] = array(
-        '#type' => 'submit',
-        '#value' => t('Next: Additional Info'),
-        '#weight' => -5,
-        '#submit' => array('node_form_submit'),
-      );
-      if (variable_get('dkan_resource_form_ajax', 0)) {
-        $form['actions']['additional']['#ajax'] = array(
-          'callback' => 'dkan_dataset_additional_submit_js',
-          'wrapper' => $form['#id'],
-          'method' => 'replace',
-          'effect' => 'fade',
+    if (variable_get('dkan_dataset_form_additional_info', 1 )) {
+      if (isset($query['dataset']) || (isset($form_state['input']['field_dataset_ref']['und'][0]))) {
+        $form['actions']['additional'] = array(
+          '#type' => 'submit',
+          '#value' => t('Next: Additional Info'),
+          '#weight' => -5,
+          '#submit' => array('node_form_submit'),
         );
-      }
-      else {
-        $form['actions']['additional']['#submit'] = array('node_form_submit', 'dkan_dataset_resource_additional_form_submit');
+        if (variable_get('dkan_resource_form_ajax', 0)) {
+          $form['actions']['additional']['#ajax'] = array(
+            'callback' => 'dkan_dataset_additional_submit_js',
+            'wrapper' => $form['#id'],
+            'method' => 'replace',
+            'effect' => 'fade',
+          );
+        }
+        else {
+          $form['actions']['additional']['#submit'] = array('node_form_submit', 'dkan_dataset_resource_additional_form_submit');
+        }
       }
     }
     $form['actions']['another'] = array(

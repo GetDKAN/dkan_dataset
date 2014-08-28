@@ -2,4 +2,4 @@
 ------------------
 - Change references to NuCivic organization on github
 - Several bug fixes
-- Some changes for Project Open Data complince, including data.json self-reference
+- Some changes for Project Open Data compliance, including data.json self-reference

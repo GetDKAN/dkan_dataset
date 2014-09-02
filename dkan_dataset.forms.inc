@@ -112,7 +112,7 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     // Get langcode for field_license.
     $field_license_langcode = dkan_dataset_form_field_language($form, 'field_license');
     // Add icon to license field.
-    $form['field_license'][$field_license_langcode]['#description'] = '<i class="icon-large icon-info-sign"></i>' . t('License definitions and additional information can be found at') . '<a href="http://opendefinition.org">opendefinition.org</a>';
+    $form['field_license'][$field_license_langcode]['#description'] = '<i class="icon-large icon-info-sign"></i>' . t('License definitions and additional information can be found at ') . '<a href="http://opendefinition.org">opendefinition.org</a>';
 
     // Get langcode for field_additional_info.
     $field_additional_info_langcode = dkan_dataset_form_field_language($form, 'field_additional_info');

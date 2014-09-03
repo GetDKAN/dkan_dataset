@@ -337,7 +337,7 @@ function dkan_dataset_resource_node_form_validate($form, &$form_state) {
   $field_format_langcode = dkan_dataset_form_field_language($form, 'field_format');
 
   $link = isset($form_state['values']['field_link_file'][$field_link_file_langcode]) ? $form_state['values']['field_link_file'][$field_link_file_langcode][0]['url'] : NULL;
-  $api = $form_state['values']['field_link_api'][$field_link_api_langcode][0]['url'];
+  $api = isset($form_state['values']['field_link_api']) ? $form_state['values']['field_link_api'][$field_link_api_langcode][0]['url'] : NULL;
   $upload_fid = $form_state['values']['field_upload'][$field_upload_langcode][0]['fid'];
   $link_fid = isset($form_state['values']['field_link_remote_file'][$field_upload_langcode]) ? $form_state['values']['field_link_remote_file'][$field_upload_langcode][0]['fid'] : NULL;
   // Ensure that only one type of resource is uploaded or linked to.

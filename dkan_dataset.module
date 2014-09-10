@@ -73,7 +73,7 @@ function dkan_dataset_form_settings() {
   );
   $form['dkan_dataset_form_additional_info'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Divide Dataset form into main form and "Additional Data" (CKAN style). '),
+    '#title' => t('Divide Dataset form into main form and "Additional Data" (CKAN style).'),
     '#default_value' => variable_get('dkan_dataset_form_additional_info', 1),
   );
   return system_settings_form($form);
@@ -147,6 +147,9 @@ function dkan_dataset_node_view($node, $view_mode, $langcode) {
       '#suffix' => '</div>',
       '#weight' => '20',
     );
+  }
+  elseif ($view_mode == 'full' && $node->type == 'resource') {
+    $node->content['#attached']['css'][] = drupal_get_path('module', 'dkan_dataset') . '/dkan_dataset.css';
   }
 }
 
@@ -280,10 +283,10 @@ function dkan_dataset_libraries_info() {
 function dkan_form_create_stages($op, $dataset_nid = NULL, $resource_nid = NULL) {
   // TODO: should be theme function.
   $stages = '<div id="dkan-stages">';
-  // Omit "Additional Info" depending on variable
+  // Omit "Additional Info" depending on variable.
   $stages_additional_1 = $stages_additional_2 = $stages_additional_3 = $stages_additional_4 = '';
   if (variable_get('dkan_dataset_form_additional_info', 1)) {
-     $stages_additional_1 =  '
+    $stages_additional_1 = '
      <li class="last uncomplete">
         <span class="highlight">' . l(t('Additional data'), 'node/' . $dataset_nid . '/edit', array('query' => array('additional' => TRUE))) . '</span>
     </li>';
@@ -371,11 +374,11 @@ function dkan_dataset_add_resource_access($node) {
 /**
  * Discovers extension based off of mimetype.
  *
- * @param string mimetype
- * Mimetype to search for.
+ * @param string $mimetype
+ *   Mimetype to search for.
  *
  * @return string
- * Extension or empty string.
+ *   Extension or empty string.
  */
 function dkan_dataset_discovery_extension($mimetype) {
   include_once DRUPAL_ROOT . '/includes/file.mimetypes.inc';
@@ -650,7 +653,7 @@ function dkan_dataset_page_alter(&$page) {
   if (arg(0) == 'dataset' && is_array($breadcrumbs)) {
     $breadcrumbs[1] = t('Datasets');
     $breadcrumbs[2] = t('Search');
-    // we can return here because page_title is handled by views.
+    // We can return here because page_title is handled by views.
     drupal_set_breadcrumb($breadcrumbs);
   }
 }

@@ -115,11 +115,13 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     $form['field_license'][$field_license_langcode]['#description'] = '<i class="icon-large icon-info-sign"></i>' . t('License definitions and additional information can be found at ') . '<a href="http://opendefinition.org">opendefinition.org</a>';
 
     // Get langcode for field_additional_info.
-    $field_additional_info_langcode = dkan_dataset_form_field_language($form, 'field_additional_info');
-    foreach ($form['field_additional_info'][$field_additional_info_langcode] as $key => $values) {
-      if (is_int($key)) {
-        $form['field_additional_info'][$field_additional_info_langcode][$key]['first']['#attributes']['placeholder'] = t('key');
-        $form['field_additional_info'][$field_additional_info_langcode][$key]['second']['#attributes']['placeholder'] = t('value');
+    if (isset($form['field_additional_info'])) {
+      $field_additional_info_langcode = dkan_dataset_form_field_language($form, 'field_additional_info');
+      foreach ($form['field_additional_info'][$field_additional_info_langcode] as $key => $values) {
+        if (is_int($key)) {
+          $form['field_additional_info'][$field_additional_info_langcode][$key]['first']['#attributes']['placeholder'] = t('key');
+          $form['field_additional_info'][$field_additional_info_langcode][$key]['second']['#attributes']['placeholder'] = t('value');
+        }
       }
     }
 
@@ -224,9 +226,11 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     $form['field_link_remote_file'][$field_link_file_langcode][0]['#title'] = '';
 
     // Move groups to vertical tabs.
-    $form['og_group_ref']['#group'] = 'additional_settings';
-    $form['og_group_ref']['#title'] = t('Groups');
-    $form['og_group_ref']['#type'] = 'fieldset';
+    if (isset($form['og_group_ref'])) {
+      $form['og_group_ref']['#group'] = 'additional_settings';
+      $form['og_group_ref']['#title'] = t('Groups');
+      $form['og_group_ref']['#type'] = 'fieldset';
+    }
 
     if ($query = drupal_get_query_parameters()) {
       if (isset($query['dataset'])) {

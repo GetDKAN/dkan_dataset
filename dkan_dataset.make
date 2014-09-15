@@ -71,7 +71,7 @@ projects[link][subdir] = contrib
 projects[link_iframe_formatter][download][type] = git
 projects[link_iframe_formatter][download][url] = "http://git.drupal.org/project/link_iframe_formatter.git"
 projects[link_iframe_formatter][download][revision] = 228f9f4
-projects[link_iframe_formatter][patch][2287233] = https://www.drupal.org/files/issues/link_iframe_formatter-coding-standards.patch 
+projects[link_iframe_formatter][patch][2287233] = https://www.drupal.org/files/issues/link_iframe_formatter-coding-standards.patch
 projects[link_iframe_formatter][subdir] = contrib
 projects[link_iframe_formatter][type] = module
 
@@ -169,6 +169,12 @@ projects[imagecache_actions][download][branch] = 7.x-1.x
 projects[imagecache_actions][download][revision] = cd19d2a
 projects[imagecache_actions][subdir] = contrib
 projects[imagecache_actions][type] = module
+
+projects[views_responsive_grid][version] = 1.3
+projects[views_responsive_grid][subdir] = contrib
+
+projects[views_bulk_operations][version] = 3.2
+projects[views_bulk_operations][subdir] = contrib
 
 ; Libraries
 libraries[chosen][type] = libraries

@@ -391,6 +391,7 @@ ul.resource-list li {
   padding: 0 0 0 40px;
 }
 .resource-list li .format-label {
+  text-indent: -9999px;
   position: absolute;
   top: 0;
   left: 0;

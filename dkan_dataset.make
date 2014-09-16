@@ -176,6 +176,9 @@ projects[views_responsive_grid][subdir] = contrib
 projects[views_bulk_operations][version] = 3.2
 projects[views_bulk_operations][subdir] = contrib
 
+projects[pathauto][version] = 1.2
+projects[pathauto][subdir] = contrib
+
 ; Libraries
 libraries[chosen][type] = libraries
 libraries[chosen][download][type] = git

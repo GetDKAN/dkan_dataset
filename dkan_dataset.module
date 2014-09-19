@@ -496,7 +496,8 @@ function dkan_dataset_sync_groups($node) {
   if (array_diff_key($new_resources, $orig_resources) && $groups_new) {
     foreach ($new_resources as $nid => $resource) {
       foreach ($orig_resources as $orig_nid => $orig_resource) {
-        if (!isset($orig_resources[$nid])) {
+        // Don't process unless the resource has a referenced dataset.
+        if (!isset($orig_resources[$nid]) && $resource->field_dataset_ref) {
           $resources_added[$nid] = $resource;
         }
       }

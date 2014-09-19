@@ -27,8 +27,13 @@ projects[date][subdir] = contrib
 projects[double_field][version] = 2.3
 projects[double_field][subdir] = contrib
 
-projects[entity][version] = 1.5
+projects[entity][download][type] = git
+projects[entity][download][branch] = 7.x-1.x
+projects[entity][download][url] = "http://git.drupal.org/project/entity.git"
+projects[entity][download][revision] = "4d2cc6f"
+projects[entity][patch][2341611] = https://www.drupal.org/files/issues/entity-multivalue-token-replacement-fix-2341611-0.patch
 projects[entity][subdir] = contrib
+projects[entity][type] = module
 
 projects[entityreference][version] = 1.1
 projects[entityreference][subdir] = contrib

@@ -78,9 +78,18 @@ function dkan_dataset_content_types_field_default_field_instances() {
             'prefix' => '',
             'suffix' => '',
           ),
-          'style' => 'inline',
+          'table' => array(
+            'first' => array(
+              'column_label' => 'Field',
+            ),
+            'number_column' => 0,
+            'number_column_label' => '№',
+            'second' => array(
+              'column_label' => 'Value',
+            ),
+          ),
         ),
-        'type' => 'double_field_unformatted_list',
+        'type' => 'double_field_table',
         'weight' => 4,
       ),
       'teaser' => array(

@@ -366,8 +366,11 @@ function dkan_dataset_add_resource_access($node) {
   if ($node->type != 'dataset') {
     return FALSE;
   }
+  elseif (node_hook($node->type, 'form') && node_access('create', $node->type)) {
+    return TRUE;
+  }
   else {
-    return _node_add_access();
+   return FALSE;
   }
 }
 

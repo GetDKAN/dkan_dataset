@@ -21,7 +21,7 @@ projects[context][subdir] = contrib
 projects[ctools][version] = 1.4
 projects[ctools][subdir] = contrib
 
-projects[date][version] = 2.7
+projects[date][version] = 2.8
 projects[date][subdir] = contrib
 
 projects[double_field][version] = 2.3
@@ -104,7 +104,8 @@ projects[ref_field][download][revision] = 9dbf7cf
 projects[ref_field][subdir] = contrib
 projects[ref_field][type] = module
 
-projects[remote_file_source][version] = 1.0
+projects[remote_file_source][version] = 1.x
+projects[remote_file_source][download][patch][2362487] = https://www.drupal.org/files/issues/remote_file_source-location-content-dist.patch 
 projects[remote_file_source][subdir] = contrib
 
 projects[remote_stream_wrapper][version] = 1.0-beta4

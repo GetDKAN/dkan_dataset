@@ -96,6 +96,20 @@ projects[og_extras][download][revision] = "b7e3587"
 projects[og_extras][subdir] = contrib
 projects[og_extras][type] = module
 
+projects[open_data_schema_map][type] = module
+projects[open_data_schema_map][download][type] = git
+projects[open_data_schema_map][download][url] = https://github.com/NuCivic/open_data_schema_map.git
+projects[open_data_schema_map][download][branch] = master
+projects[open_data_schema_map][download][revision] = a962d05a921b66772aa9b084c677fafec4721ae7
+projects[open_data_schema_map][subdir] = contrib
+
+projects[open_data_schema_map_dkan][type] = module
+projects[open_data_schema_map_dkan][download][type] = git
+projects[open_data_schema_map_dkan][download][url] = https://github.com/NuCivic/open_data_schema_map_dkan.git
+projects[open_data_schema_map_dkan][download][branch] = master
+projects[open_data_schema_map_dkan][download][revision] = b652a71d6f7c46b289ec795cd7130c69bcb68f91
+projects[open_data_schema_map_dkan][subdir] = contrib
+
 projects[ref_field][download][type] = git
 projects[ref_field][download][url] = "http://git.drupal.org/project/ref_field.git"
 projects[ref_field][download][patch][1670356] = http://drupal.org/files/removed_notice-1670356-1.patch

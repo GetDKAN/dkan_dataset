@@ -105,7 +105,7 @@ projects[ref_field][subdir] = contrib
 projects[ref_field][type] = module
 
 projects[remote_file_source][version] = 1.x
-projects[remote_file_source][download][patch][2362487] = https://www.drupal.org/files/issues/remote_file_source-location-content-dist.patch
+projects[remote_file_source][download][patch][2362487] = https://www.drupal.org/files/issues/remote_file_source-location-content-dist.patch 
 projects[remote_file_source][subdir] = contrib
 
 projects[remote_stream_wrapper][version] = 1.0-beta4
@@ -191,18 +191,6 @@ libraries[chosen][download][type] = git
 libraries[chosen][download][url] = "https://github.com/harvesthq/chosen.git"
 libraries[chosen][directory_name] = chosen
 libraries[chosen][download][revision] = "a0ca7da1ae52235b5abb6f66d9218a20450116c1"
-
-libraries[deep_diff][type] = libraries
-libraries[deep_diff][download][type] = git
-libraries[deep_diff][download][url] = "https://github.com/flitbit/diff.git"
-libraries[deep_diff][directory_name] = deep_diff
-libraries[deep_diff][download][revision] = "07e91c624e5016be5c5c6560a9eabe49ef3ba2d0"
-
-libraries[recline_deeplink][type] = libraries
-libraries[recline_deeplink][download][type] = git
-libraries[recline_deeplink][download][url] = "https://github.com/NuCivic/recline-deeplink.git"
-libraries[recline_deeplink][directory_name] = recline_deeplink
-libraries[recline_deeplink][download][revision] = "3175e9332b5bee893ad2e4c3018b81d1b4cde455"
 
 libraries[slugify][type] = libraries
 libraries[slugify][download][type] = git

@@ -1,3 +1,9 @@
+7.x-1.6
+---------
+ - Creating taxonomies during setup test
+ - Updating ref_field patch
+ - Replacing dkan_dataset_api with open_data_schema_map
+
 7.x-1.4  2014-10-10
 --------------------------
  - Many warnings fixed with proper isset calls

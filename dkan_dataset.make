@@ -149,7 +149,7 @@ projects[views][subdir] = contrib
 
 projects[recline][download][type] = git
 projects[recline][download][url] = https://github.com/NuCivic/recline.git
-projects[recline][download][branch] = 7.x-1.x
+projects[recline][download][branch] = dkan_299_recline_hangs_chrome_on_map_view
 projects[recline][subdir] = contrib
 
 projects[entity_rdf][download][type] = git
@@ -201,7 +201,7 @@ projects[pathauto][subdir] = contrib
 
 ; Libraries
 
-includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/7.x-1.x/recline.make
+includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/dkan_299_recline_hangs_chrome_on_map_view/recline.make
 
 libraries[chosen][type] = libraries
 libraries[chosen][download][type] = git

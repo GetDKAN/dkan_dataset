@@ -7,12 +7,15 @@ composer install
 mysql -e 'drop database dkan_dataset_rest_test; create database dkan_dataset_rest_test;'
 
 # Install DKAN
-cd ..
-cp ../../../dkan_dataset.make .
-drush make --prepare-install build-dkan.make --yes test/drupal
-cd test/drupal
-drush si --sites-subdir=default --db-url=mysql://root:@127.0.0.1/dkan_test --account-name=admin --account-pass=admin  --site-name="DKAN" install_configure_form.update_status_module='array(FALSE,FALSE)' --yes
+cd /tmp
+drush -y dl drupal
+cd -
+mv /tmp/drupal-7.34 drupal
+cd drupal
+drush si --db-url=mysql://root:@127.0.0.1/dkan_dataset_rest_test --account-name=admin --account-pass=admin  --yes
 drush cc all --yes
+cp ../../../../dkan_dataset.make .
+drush make dkan_dataset.make --yes --no-core
 drush dl -y services
 drush en -y dkan_dataset dkan_dataset_content_types dkan_dataset_rest_api
 
@@ -22,3 +25,4 @@ sleep 4
 cd ../
 
 bin/behat
+rm dkan_dataset.make

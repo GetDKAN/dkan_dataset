@@ -19,7 +19,25 @@ function dkan_dataset_rest_api_default_services_endpoint() {
   $endpoint->authentication = array(
     'services' => 'services',
   );
-  $endpoint->server_settings = array();
+  $endpoint->server_settings = array(
+    'formatters' => array(
+      'bencode' => TRUE,
+      'json' => TRUE,
+      'jsonp' => TRUE,
+      'php' => TRUE,
+      'xml' => TRUE,
+      'yaml' => TRUE,
+    ),
+    'parsers' => array(
+      'application/json' => TRUE,
+      'application/vnd.php.serialized' => TRUE,
+      'application/x-www-form-urlencoded' => TRUE,
+      'application/x-yaml' => TRUE,
+      'application/xml' => TRUE,
+      'multipart/form-data' => TRUE,
+      'text/xml' => TRUE,
+    ),
+  );
   $endpoint->resources = array(
     'node' => array(
       'alias' => 'node',
@@ -47,6 +65,24 @@ function dkan_dataset_rest_api_default_services_endpoint() {
       ),
       'targeted_actions' => array(
         'attach_file' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
+    'user' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'enabled' => '1',
+        ),
+      ),
+      'actions' => array(
+        'login' => array(
+          'enabled' => '1',
+        ),
+        'logout' => array(
+          'enabled' => '1',
+        ),
+        'token' => array(
           'enabled' => '1',
         ),
       ),

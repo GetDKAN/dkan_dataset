@@ -16,8 +16,8 @@ projects[beautytips][type] = module
 projects[chosen][version] = 2.0-alpha1
 projects[chosen][subdir] = contrib
 
-projects[context][subdir] = contrib
 projects[context][version] = 3.3
+projects[context][subdir] = contrib
 
 projects[ctools][version] = 1.4
 projects[ctools][subdir] = contrib

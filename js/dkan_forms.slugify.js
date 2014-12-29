@@ -17,13 +17,15 @@
 
   Drupal.behaviors.dkanFormsSlugify = {
     attach: function (context, settings) {
+      console.log($('#edit-path-alias').val());
       // Slugify!
       if ($('#edit-path-alias').val() != '') {
         $('#url-edit-preview').hide();
       }
       else {
+        console.log('wtf');
         // Initially hide the path until clicked.
-        $('#node_dataset_form_group_primary .path-form').hide();
+        $('.node-dataset-form .group-primary .path-form').hide();
         // Hidden by default in case js is disabled.
         $('#url-edit-preview').show();
         // Force URLs to be url friendly.
@@ -36,7 +38,7 @@
         $('#url-edit-preview button.btn').click(function(e) {
           e.preventDefault();
           $('#url-edit-preview').hide();
-          $('#node_dataset_form_group_primary .path-form').show();
+          $('.node-dataset-form .group-primary .path-form').show();
           $('#edit-path-alias').focus();
           $('#edit-path-alias').addClass('processed');
         });

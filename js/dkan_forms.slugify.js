@@ -17,13 +17,11 @@
 
   Drupal.behaviors.dkanFormsSlugify = {
     attach: function (context, settings) {
-      console.log($('#edit-path-alias').val());
       // Slugify!
       if ($('#edit-path-alias').val() != '') {
         $('#url-edit-preview').hide();
       }
       else {
-        console.log('wtf');
         // Initially hide the path until clicked.
         $('.node-dataset-form .group-primary .path-form').hide();
         // Hidden by default in case js is disabled.

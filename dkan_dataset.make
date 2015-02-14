@@ -36,6 +36,12 @@ projects[entity][patch][2341611] = https://www.drupal.org/files/issues/entity-mu
 projects[entity][subdir] = contrib
 projects[entity][type] = module
 
+projects[entity_rdf][download][type] = git
+projects[entity_rdf][download][url] = http://git.drupal.org/project/entity_rdf.git
+projects[entity_rdf][download][revision] = 7d91983
+projects[entity_rdf][type] = module
+projects[entity_rdf][subdir] = contrib
+
 projects[entityreference][version] = 1.1
 projects[entityreference][subdir] = contrib
 
@@ -55,8 +61,19 @@ projects[field_group][version] = 1.3
 projects[field_group][patch][2042681] = http://drupal.org/files/issues/field-group-show-ajax-2042681-8.patch
 projects[field_group][subdir] = contrib
 
+projects[field_group_table][download][type] = git
+projects[field_group_table][download][url] = "https://github.com/nuams/field_group_table.git"
+projects[field_group_table][subdir] = contrib
+projects[field_group_table][type] = module
+
 projects[filefield_sources][version] = 1.9
 projects[filefield_sources][subdir] = contrib
+
+projects[geofield][version] = 1.2
+projects[geofield][subdir] = contrib
+
+projects[geophp][version] = 1.7
+projects[geophp][subdir] = contrib
 
 projects[gravatar][download][type] = git
 projects[gravatar][download][url] = "http://git.drupal.org/project/gravatar.git"
@@ -64,6 +81,19 @@ projects[gravatar][download][revision] = e933db3
 projects[gravatar][patch][1568162] = http://drupal.org/files/views-display-user-picture-doesn-t-display-gravatar-1568162-10.patch
 projects[gravatar][subdir] = contrib
 projects[gravatar][type] = module
+
+projects[imagecache_actions][download][type] = git
+projects[imagecache_actions][download][url] = "http://git.drupal.org/project/imagecache_actions.git"
+projects[imagecache_actions][download][branch] = 7.x-1.x
+projects[imagecache_actions][download][revision] = cd19d2a
+projects[imagecache_actions][subdir] = contrib
+projects[imagecache_actions][type] = module
+
+projects[leaflet_draw_widget][download][type] = git
+projects[leaflet_draw_widget][download][url] = "https://github.com/acouch/leaflet_draw_widget.git"
+projects[leaflet_draw_widget][download][revision] = "33a98b1285d03b3efbce9f1652d3f78e401c3728"
+projects[leaflet_draw_widget][subdir] = contrib
+projects[leaflet_draw_widget][type] = module
 
 projects[jquery_update][version] = 2.3
 projects[jquery_update][subdir] = contrib
@@ -111,6 +141,21 @@ projects[open_data_schema_map_dkan][download][branch] = master
 projects[open_data_schema_map_dkan][download][revision] = b652a71d6f7c46b289ec795cd7130c69bcb68f91
 projects[open_data_schema_map_dkan][subdir] = contrib
 
+projects[pathauto][version] = 1.2
+projects[pathauto][subdir] = contrib
+
+projects[rdfx][download][type] = git
+projects[rdfx][download][url] = http://git.drupal.org/project/rdfx.git
+projects[rdfx][download][branch] = 7.x-2.x
+projects[rdfx][download][revision] = cc7d4fc
+projects[rdfx][patch][1271498] = http://drupal.org/files/issues/1271498_3_rdfui_form_values.patch
+projects[rdfx][subdir] = contrib
+
+projects[recline][download][type] = git
+projects[recline][download][url] = https://github.com/NuCivic/recline.git
+projects[recline][download][branch] = 7.x-1.x
+projects[recline][subdir] = contrib
+
 projects[ref_field][download][type] = git
 projects[ref_field][download][url] = "http://git.drupal.org/project/ref_field.git"
 projects[ref_field][patch][1670356] = http://drupal.org/files/removed_notice-1670356-1.patch
@@ -145,51 +190,8 @@ projects[uuid][version] = 1.0-alpha5
 projects[uuid][patch][1927474] = http://drupal.org/files/unknown-column-in-field-list-fix-1927474-2.patch
 projects[uuid][subdir] = contrib
 
-projects[views][version] = 3.8
+projects[views][version] = 3.10
 projects[views][subdir] = contrib
-
-projects[recline][download][type] = git
-projects[recline][download][url] = https://github.com/NuCivic/recline.git
-projects[recline][download][branch] = 7.x-1.x
-projects[recline][subdir] = contrib
-
-projects[entity_rdf][download][type] = git
-projects[entity_rdf][download][url] = http://git.drupal.org/project/entity_rdf.git
-projects[entity_rdf][download][revision] = 7d91983
-projects[entity_rdf][type] = module
-projects[entity_rdf][subdir] = contrib
-
-projects[geofield][version] = 1.2
-projects[geofield][subdir] = contrib
-
-projects[geophp][version] = 1.7
-projects[geophp][subdir] = contrib
-
-projects[rdfx][download][type] = git
-projects[rdfx][download][url] = http://git.drupal.org/project/rdfx.git
-projects[rdfx][download][branch] = 7.x-2.x
-projects[rdfx][download][revision] = cc7d4fc
-projects[rdfx][patch][1271498] = http://drupal.org/files/issues/1271498_3_rdfui_form_values.patch
-projects[rdfx][subdir] = contrib
-
-projects[field_group_table][download][type] = git
-projects[field_group_table][download][url] = "https://github.com/nuams/field_group_table.git"
-projects[field_group_table][subdir] = contrib
-projects[field_group_table][type] = module
-
-projects[leaflet_draw_widget][download][type] = git
-projects[leaflet_draw_widget][download][url] = "https://github.com/acouch/leaflet_draw_widget.git"
-projects[leaflet_draw_widget][download][revision] = "33a98b1285d03b3efbce9f1652d3f78e401c3728"
-projects[leaflet_draw_widget][subdir] = contrib
-projects[leaflet_draw_widget][type] = module
-
-
-projects[imagecache_actions][download][type] = git
-projects[imagecache_actions][download][url] = "http://git.drupal.org/project/imagecache_actions.git"
-projects[imagecache_actions][download][branch] = 7.x-1.x
-projects[imagecache_actions][download][revision] = cd19d2a
-projects[imagecache_actions][subdir] = contrib
-projects[imagecache_actions][type] = module
 
 projects[views_responsive_grid][version] = 1.3
 projects[views_responsive_grid][subdir] = contrib
@@ -197,8 +199,6 @@ projects[views_responsive_grid][subdir] = contrib
 projects[views_bulk_operations][version] = 3.2
 projects[views_bulk_operations][subdir] = contrib
 
-projects[pathauto][version] = 1.2
-projects[pathauto][subdir] = contrib
 
 ; Libraries
 

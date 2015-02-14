@@ -153,6 +153,7 @@ projects[rdfx][subdir] = contrib
 
 projects[recline][download][type] = git
 projects[recline][download][url] = https://github.com/NuCivic/recline.git
+projects[recline][download][revision] = 4b4e470c35cb91d770d84ce9aec82be047c08e80
 projects[recline][download][branch] = 7.x-1.x
 projects[recline][subdir] = contrib
 

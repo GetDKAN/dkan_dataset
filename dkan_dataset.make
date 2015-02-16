@@ -153,8 +153,8 @@ projects[rdfx][subdir] = contrib
 
 projects[recline][download][type] = git
 projects[recline][download][url] = https://github.com/NuCivic/recline.git
-projects[recline][download][revision] = 4b4e470c35cb91d770d84ce9aec82be047c08e80
-projects[recline][download][branch] = 7.x-1.x
+projects[recline][download][revision] = a0f6f107865c7d95bdb618d2ada1d0f2c96170c0
+projects[recline][download][branch] = nucivic_nucivic_internal_372_map_broken
 projects[recline][subdir] = contrib
 
 projects[ref_field][download][type] = git
@@ -203,7 +203,7 @@ projects[views_bulk_operations][subdir] = contrib
 
 ; Libraries
 
-includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/7.x-1.x/recline.make
+includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/nucivic_nucivic_internal_372_map_broken/recline.make
 
 libraries[chosen][type] = libraries
 libraries[chosen][download][type] = git

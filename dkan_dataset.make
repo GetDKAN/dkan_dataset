@@ -131,14 +131,14 @@ projects[open_data_schema_map][type] = module
 projects[open_data_schema_map][download][type] = git
 projects[open_data_schema_map][download][url] = https://github.com/NuCivic/open_data_schema_map.git
 projects[open_data_schema_map][download][branch] = master
-projects[open_data_schema_map][download][revision] = 1a62a7084c1c81fcf5569acc3c9bba1a0a8ba5f1
+projects[open_data_schema_map][download][revision] = 2e46a2e8ceea434731cdaa2fb298a0f3d7a116a6
 projects[open_data_schema_map][subdir] = contrib
 
 projects[open_data_schema_map_dkan][type] = module
 projects[open_data_schema_map_dkan][download][type] = git
 projects[open_data_schema_map_dkan][download][url] = https://github.com/NuCivic/open_data_schema_map_dkan.git
 projects[open_data_schema_map_dkan][download][branch] = master
-projects[open_data_schema_map_dkan][download][revision] = 622b684c228f3c40840ad8bf176a1108f06b4320
+projects[open_data_schema_map_dkan][download][revision] = 6e4f1558b4d0a3bd8da9ce8d516041d71bfa9f06
 projects[open_data_schema_map_dkan][subdir] = contrib
 
 projects[pathauto][version] = 1.2

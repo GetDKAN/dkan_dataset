@@ -199,7 +199,7 @@ projects[views_bulk_operations][subdir] = contrib
 
 ; Libraries
 
-includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/7.x-1.x/recline.make
+includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/2913a73c8b3859c3b6b5e57298e02f4a1e335d5f/recline.make
 
 libraries[chosen][type] = libraries
 libraries[chosen][download][type] = git

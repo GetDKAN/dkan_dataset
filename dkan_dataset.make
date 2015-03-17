@@ -1,6 +1,24 @@
 core = 7.x
 api = 2
 
+; Leaflet Draw Widget specific
+projects[leaflet_draw_widget][download][type] = git
+projects[leaflet_draw_widget][download][url] = "https://github.com/NuCivic/leaflet_draw_widget.git"
+projects[leaflet_draw_widget][download][revision] = "cf497e9aebc283a5c8185a7eba73a0232d722e66"
+projects[leaflet_draw_widget][subdir] = contrib
+projects[leaflet_draw_widget][type] = module
+
+includes[leaflet_draw_widget_make] = https://raw.githubusercontent.com/NuCivic/leaflet_draw_widget/cf497e9aebc283a5c8185a7eba73a0232d722e66/leaflet_widget.make
+
+; Recline specific
+projects[recline][download][type] = git
+projects[recline][download][url] = https://github.com/NuCivic/recline.git
+projects[recline][download][revision] = 2913a73c8b3859c3b6b5e57298e02f4a1e335d5f
+projects[recline][download][branch] = 7.x-1.x
+projects[recline][subdir] = contrib
+
+includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/2913a73c8b3859c3b6b5e57298e02f4a1e335d5f/recline.make
+
 ; Contrib Modules
 projects[autocomplete_deluxe][subdir] = contrib
 projects[autocomplete_deluxe][version] = 2.0-beta3
@@ -65,12 +83,6 @@ projects[field_group_table][type] = module
 projects[filefield_sources][version] = 1.9
 projects[filefield_sources][subdir] = contrib
 
-projects[geofield][version] = 1.2
-projects[geofield][subdir] = contrib
-
-projects[geophp][version] = 1.7
-projects[geophp][subdir] = contrib
-
 projects[gravatar][download][type] = git
 projects[gravatar][download][url] = "http://git.drupal.org/project/gravatar.git"
 projects[gravatar][download][revision] = e933db3
@@ -84,12 +96,6 @@ projects[imagecache_actions][download][branch] = 7.x-1.x
 projects[imagecache_actions][download][revision] = cd19d2a
 projects[imagecache_actions][subdir] = contrib
 projects[imagecache_actions][type] = module
-
-projects[leaflet_draw_widget][download][type] = git
-projects[leaflet_draw_widget][download][url] = "https://github.com/acouch/leaflet_draw_widget.git"
-projects[leaflet_draw_widget][download][revision] = "33a98b1285d03b3efbce9f1652d3f78e401c3728"
-projects[leaflet_draw_widget][subdir] = contrib
-projects[leaflet_draw_widget][type] = module
 
 projects[jquery_update][version] = 2.3
 projects[jquery_update][subdir] = contrib
@@ -147,12 +153,6 @@ projects[rdfx][download][revision] = cc7d4fc
 projects[rdfx][patch][1271498] = http://drupal.org/files/issues/1271498_3_rdfui_form_values.patch
 projects[rdfx][subdir] = contrib
 
-projects[recline][download][type] = git
-projects[recline][download][url] = https://github.com/NuCivic/recline.git
-projects[recline][download][revision] = 2913a73c8b3859c3b6b5e57298e02f4a1e335d5f
-projects[recline][download][branch] = 7.x-1.x
-projects[recline][subdir] = contrib
-
 projects[ref_field][download][type] = git
 projects[ref_field][download][url] = "http://git.drupal.org/project/ref_field.git"
 projects[ref_field][patch][1670356] = http://drupal.org/files/removed_notice-1670356-1.patch
@@ -199,8 +199,6 @@ projects[views_bulk_operations][subdir] = contrib
 
 ; Libraries
 
-includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/2913a73c8b3859c3b6b5e57298e02f4a1e335d5f/recline.make
-
 libraries[chosen][type] = libraries
 libraries[chosen][download][type] = git
 libraries[chosen][download][url] = "https://github.com/harvesthq/chosen.git"
@@ -212,16 +210,6 @@ libraries[slugify][download][type] = git
 libraries[slugify][download][url] = "https://github.com/pmcelhaney/jQuery-Slugify-Plugin.git"
 libraries[slugify][directory_name] = slugify
 libraries[slugify][download][revision] = "79133a1bdfd3ac80d500d661a722b85c03a01da3"
-
-libraries[Leaflet.draw][type] = libraries
-libraries[Leaflet.draw][download][type] = git
-libraries[Leaflet.draw][download][url] = "https://github.com/Leaflet/Leaflet.draw.git"
-libraries[Leaflet.draw][download][revision] = "82f4d960a44753c3a9d98001e49e03429395b53a"
-
-libraries[Leaflet][type] = libraries
-libraries[Leaflet][download][type] = git
-libraries[Leaflet][download][url] = "https://github.com/Leaflet/Leaflet.git"
-libraries[Leaflet][download][revision] = "81221ae4cd9772a8974b2e3c867d4fb35abd052d"
 
 libraries[arc][type] = libraries
 libraries[arc][download][type] = git

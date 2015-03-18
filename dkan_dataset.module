@@ -323,7 +323,7 @@ function dkan_form_create_stages($op, $dataset_nid = NULL, $resource_nid = NULL)
     $stages .= '<ol class="stages stage-3">
       <li class="first complete"><span class="highlight">' . l(t('Edit dataset'), 'node/' . $dataset_nid . '/edit') . '</span></li>
       <li class="middle active">
-          <span class="highlight">Add data</span>
+          <span class="highlight">'.t('Add data').'</span>
       </li> ' . $stages_additional_1 .  '
     </ol>';
   }
@@ -333,7 +333,7 @@ function dkan_form_create_stages($op, $dataset_nid = NULL, $resource_nid = NULL)
           <span class="highlight">' . l(t('Edit dataset'), 'node/' . $dataset_nid . '/edit') . '</span>
       </li>
       <li class="middle complete">
-          <span class="highlight">' . l(t('Add dataset'), 'node/add/resource', array('query' => array('dataset' => $dataset_nid))) . '</span>
+          <span class="highlight">' . l(t('Add data'), 'node/add/resource', array('query' => array('dataset' => $dataset_nid))) . '</span>
       </li> ' . $stages_additional_2 . '
     </ol>';
   }

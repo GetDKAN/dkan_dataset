@@ -87,7 +87,7 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
                                     <div id="url-edit-preview">
                                       <div id="url-edit-label"><strong>URL</strong></div>
                                       <div id="url-edit-prefix">' . check_plain($_SERVER['HTTP_HOST']) . '/dataset/</div>' .
-        '<span id="url-slug">' . $alias . '</span>' . $form['path']['alias']['#default_value'] . '<button class="btn btn-small">Edit</button>
+        '<span id="url-slug">' . $alias . '</span>' . $form['path']['alias']['#default_value'] . '<button class="btn btn-small">'.t('Edit').'</button>
                                     </div>';
       $form['path']['#suffix'] = '</div>';
       $form['path']['alias']['#prefix'] = '<span class="add-on">/dataset/</span>';
@@ -211,11 +211,11 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     $field_link_file_langcode = dkan_dataset_form_field_language($form, 'field_link_file');
     $field_link_remote_file_langcode = dkan_dataset_form_field_language($form, 'field_link_remote_file');
     $form['field_link_file'][$field_link_file_langcode][0]['#description'] = 'Link to a CSV file that will be imported into the DKAN datastore.';
-    $form['field_link_remote_file'][$field_link_file_langcode][0]['#description'] = 'Link to a csv, html, xls, json, xlsx, doc, docx, rdf, txt, jpg, png, gif, tiff, pdf, odf, ods, odt, tsv, geojson, or xml file. CSV files can be imported into the DKAN datastore.';
+    $form['field_link_remote_file'][$field_link_file_langcode][0]['#description'] = t('Link to a csv, html, xls, json, xlsx, doc, docx, rdf, txt, jpg, png, gif, tiff, pdf, odf, ods, odt, tsv, geojson, or xml file. CSV files can be imported into the DKAN datastore.');
 
     // Get langcode for field_link_api.
     $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_link_api');
-    $form['field_link_api'][$field_link_api_langcode][0]['#description'] = 'Link to a public API or information source.';
+    $form['field_link_api'][$field_link_api_langcode][0]['#description'] = t('Link to a public API or information source.');
 
     $form['title']['#attributes']['placeholder'] = t('eg. January Gold Prices');
     $form['title']['#required'] = TRUE;
@@ -445,16 +445,16 @@ function dkan_dataset_resource_form_after_build($form, &$form_state) {
     // Get langcode for field_link_api.
     $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_link_api');
 
-    $form['field_link_file'][$field_link_file_langcode][0]['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011.csv';
-    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_remotefile']['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011.csv';
+    $form['field_link_file'][$field_link_file_langcode][0]['url']['#attributes']['placeholder'] = t('eg. http://example.com/gold-prices-jan-2011.csv');
+    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_remotefile']['url']['#attributes']['placeholder'] = t('eg. http://example.com/gold-prices-jan-2011.csv');
     $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_remotefile']['select']['#suffix'] = '';
-    $form['field_link_api'][$field_link_api_langcode][0]['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011';
+    $form['field_link_api'][$field_link_api_langcode][0]['url']['#attributes']['placeholder'] = t('eg. http://example.com/gold-prices-jan-2011');
   }
   if (isset($form['field_format'])) {
     // Get langcode for field_format.
     $field_format_langcode = dkan_dataset_form_field_language($form, 'field_format');
 
-    $form['field_format'][$field_format_langcode]['textfield']['#attributes']['placeholder'] = 'eg. csv, json';
+    $form['field_format'][$field_format_langcode]['textfield']['#attributes']['placeholder'] = t('eg. csv, json');
     $form['field_format'][$field_format_langcode]['textfield']['#description'] = t('File format will be autodetected');
   }
   // Get langcode for body.

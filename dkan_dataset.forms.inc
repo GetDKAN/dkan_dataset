@@ -454,7 +454,7 @@ function dkan_dataset_resource_form_after_build($form, &$form_state) {
     // Get langcode for field_format.
     $field_format_langcode = dkan_dataset_form_field_language($form, 'field_format');
 
-    $form['field_format'][$field_format_langcode]['textfield']['#attributes']['placeholder'] = 'eg. csv, json';
+    $form['field_format'][$field_format_langcode]['textfield']['#attributes']['placeholder'] = t('eg. csv, json');
     $form['field_format'][$field_format_langcode]['textfield']['#description'] = t('File format will be autodetected');
   }
   // Get langcode for body.

@@ -37,7 +37,7 @@ projects[chosen][subdir] = contrib
 projects[context][version] = 3.6
 projects[context][subdir] = contrib
 
-projects[ctools][version] = 1.4
+projects[ctools][version] = 1.7
 projects[ctools][subdir] = contrib
 
 projects[date][version] = 2.8

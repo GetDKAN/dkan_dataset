@@ -17,7 +17,7 @@ projects[recline][download][revision] = a88c601058b5dc1c09569c718354b290633412ad
 projects[recline][download][branch] = 7.x-1.x
 projects[recline][subdir] = contrib
 
-includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/2913a73c8b3859c3b6b5e57298e02f4a1e335d5f/recline.make
+includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/a88c601058b5dc1c09569c718354b290633412ad/recline.make
 
 ; Contrib Modules
 projects[autocomplete_deluxe][subdir] = contrib

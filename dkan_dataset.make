@@ -13,11 +13,10 @@ includes[leaflet_draw_widget_make] = https://raw.githubusercontent.com/NuCivic/l
 ; Recline specific
 projects[recline][download][type] = git
 projects[recline][download][url] = https://github.com/NuCivic/recline.git
-projects[recline][download][revision] = 2913a73c8b3859c3b6b5e57298e02f4a1e335d5f
-projects[recline][download][branch] = 7.x-1.x
+projects[recline][download][branch] = nucivic_internal_553
 projects[recline][subdir] = contrib
 
-includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/2913a73c8b3859c3b6b5e57298e02f4a1e335d5f/recline.make
+includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/nucivic_internal_553/recline.make
 
 ; Contrib Modules
 projects[autocomplete_deluxe][subdir] = contrib

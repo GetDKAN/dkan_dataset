@@ -281,12 +281,12 @@ function dkan_dataset_content_types_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        0 => 'Daily',
-        1 => 'Weekly',
-        2 => 'Monthly',
-        3 => 'Annually',
-        4 => 'Continuously',
-        5 => 'Irregularly',
+        0 => t('Daily'),
+        1 => t('Weekly'),
+        2 => t('Monthly'),
+        3 => t('Annually'),
+        4 => t('Continuously'),
+        5 => t('Irregularly'),
       ),
       'allowed_values_function' => '',
     ),
@@ -430,9 +430,9 @@ function dkan_dataset_content_types_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        'public' => 'Public',
-        'restricted' => 'Restricted',
-        'private' => 'Private',
+        'public' => t('Public'),
+        'restricted' => t('Restricted'),
+        'private' => t('Private'),
       ),
       'allowed_values_function' => '',
     ),

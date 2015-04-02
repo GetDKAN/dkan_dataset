@@ -133,7 +133,7 @@ projects[open_data_schema_map][type] = module
 projects[open_data_schema_map][download][type] = git
 projects[open_data_schema_map][download][url] = https://github.com/NuCivic/open_data_schema_map.git
 projects[open_data_schema_map][download][branch] = master
-projects[open_data_schema_map][download][revision] = d70703cb8df24fcc0c67d3ab8af621a5b7f88fc9
+projects[open_data_schema_map][download][revision] = ffeb4e991a52879d42115c2baa2b284551b9d4a4
 projects[open_data_schema_map][subdir] = contrib
 
 projects[open_data_schema_map_dkan][type] = module

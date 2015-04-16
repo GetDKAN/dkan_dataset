@@ -43,3 +43,5 @@ features[variable][] = pathauto_node_dataset_pattern
 features[variable][] = pathauto_node_resource_pattern
 files[] = tests/dkan_dataset.test
 files[] = tests/dkan_dataset_class.test
+stylesheets[all][] = css/dkan_dataset.css
+stylesheets[all][] = css/dkan-flaticon.css

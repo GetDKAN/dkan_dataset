@@ -292,9 +292,13 @@ li .heading:hover {
 .resource-list {
   list-style-type: none;
 }
-.form-group .resource-list li {
+.node-dataset .form-group .resource-list li {
   margin: 4px 10px 4px 0;
   float: left;
+  display: block;
+  padding: 0;
+  position: relative;
+  min-height: 1em;
 }
 .node-dataset .resource-list li {
   display: block;

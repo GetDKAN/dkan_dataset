@@ -106,7 +106,8 @@ function dkan_dataset_node_view($node, $view_mode, $langcode) {
       '#suffix' => '</div>',
       '#view_mode' => $view_mode,
     );
-    $node->content['resources']['#attached']['css'][] = drupal_get_path('module', 'dkan_dataset') . '/dkan_dataset.css';
+    $node->content['resources']['#attached']['css'][] = drupal_get_path('module', 'dkan_dataset') . '/css/dkan_dataset.css';
+    $node->content['resources']['#attached']['js'][] = drupal_get_path('module', 'dkan_dataset') . '/js/dkan_tooltip.js';
     $node->content['release_date'] = array(
       '#theme' => 'dkan_dataset_release_date_view',
       '#node' => $node,
@@ -162,7 +163,8 @@ function dkan_dataset_node_view($node, $view_mode, $langcode) {
     );
   }
   elseif ($view_mode == 'full' && $node->type == 'resource') {
-    $node->content['#attached']['css'][] = drupal_get_path('module', 'dkan_dataset') . '/dkan_dataset.css';
+    $node->content['#attached']['css'][] = drupal_get_path('module', 'dkan_dataset') . '/css/dkan_dataset.css';
+    $node->content['#attached']['js'][] = drupal_get_path('module', 'dkan_dataset') . '/js/dkan_tooltip.js';
   }
 }
 

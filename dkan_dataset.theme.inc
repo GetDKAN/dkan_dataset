@@ -75,7 +75,7 @@ function theme_dkan_dataset_resource_view($vars) {
         $desc = '<p class="description"></p>';
       }
       if (isset($node->field_format) && $node->field_format && $node_wrapper->field_format->value()) {
-        $term .= '<span class="format-label" property="dc:format" data-format="' . $node_wrapper->field_format->value()->name . '">' . $node_wrapper->field_format->value()->name  . '</span>';
+        $term .= '<span data-toggle="tooltip" data-placement="top" data-original-title="' . $node_wrapper->field_format->value()->name . '" class="format-label" property="dc:format" data-format="' . $node_wrapper->field_format->value()->name . '">' . $node_wrapper->field_format->value()->name  . '</span>';
       }
       else {
         $term = '<span class="format-label" property="dc:format" data-format="data">Data</span>';

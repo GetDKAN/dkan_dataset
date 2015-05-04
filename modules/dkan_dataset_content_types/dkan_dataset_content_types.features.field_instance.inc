@@ -391,9 +391,9 @@ function dkan_dataset_content_types_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'hidden',
-        'module' => 'select_or_other',
+        'module' => 'dkan_dataset_content_types',
         'settings' => array(),
-        'type' => 'select_or_other_formatter',
+        'type' => 'render_license',
         'weight' => 13,
       ),
       'teaser' => array(

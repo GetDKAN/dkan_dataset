@@ -1,6 +1,12 @@
 core = 7.x
 api = 2
 
+projects[visualization_entity][type] = module
+projects[visualization_entity][subdir] = nucivic
+projects[visualization_entity][download][type] = git
+projects[visualization_entity][download][branch] = internal_308_embed_viz
+projects[visualization_entity][download][url] = "https://github.com/NuCivic/visualization_entity.git"
+
 ; Leaflet Draw Widget specific
 projects[leaflet_draw_widget][download][type] = git
 projects[leaflet_draw_widget][download][url] = "https://github.com/NuCivic/leaflet_draw_widget.git"

@@ -1,6 +1,14 @@
 core = 7.x
 api = 2
 
+includes[visualization_entity_make] = https://raw.githubusercontent.com/NuCivic/visualization_entity/internal_308_embed_viz/visualization_entity.make
+
+projects[visualization_entity][type] = module
+projects[visualization_entity][subdir] = nucivic
+projects[visualization_entity][download][type] = git
+projects[visualization_entity][download][branch] = internal_308_embed_viz
+projects[visualization_entity][download][url] = "https://github.com/NuCivic/visualization_entity.git"
+
 projects[autocomplete_deluxe][subdir] = contrib
 projects[autocomplete_deluxe][version] = 2.x
 projects[beautytips][subdir] = contrib

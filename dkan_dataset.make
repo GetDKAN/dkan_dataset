@@ -68,6 +68,9 @@ projects[facetapi][version] = 1.3
 projects[facetapi_pretty_paths][subdir] = contrib
 projects[facetapi_pretty_paths][version] = 1.1
 
+projects[facetapi_bonus][version] = 1.1
+projects[facetapi_bonus][subdir] = contrib
+
 projects[features][version] = 2.0
 projects[features][subdir] = contrib
 
@@ -133,7 +136,7 @@ projects[open_data_schema_map][type] = module
 projects[open_data_schema_map][download][type] = git
 projects[open_data_schema_map][download][url] = https://github.com/NuCivic/open_data_schema_map.git
 projects[open_data_schema_map][download][branch] = master
-projects[open_data_schema_map][download][revision] = ffeb4e991a52879d42115c2baa2b284551b9d4a4
+projects[open_data_schema_map][download][revision] = ea8eaf5307844624ba5c38cf3e97a7b96a6d45e8
 projects[open_data_schema_map][subdir] = contrib
 
 projects[open_data_schema_map_dkan][type] = module

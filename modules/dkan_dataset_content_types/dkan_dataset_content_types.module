@@ -83,10 +83,10 @@ function dkan_dataset_content_types_open_data_schema_map_results_alter(&$result,
       $dataset_row = array();
       foreach ($result as $key => $dataset) {
         dkan_dataset_content_types_alter_dataset_license($dataset, 'license');
-        array_push($dataset_row, $dataset);
+        $dataset_row[] = $dataset;
         unset($result[$key]);
       }
-      $result['dataset'] = $dataset_row;
+      $result = $dataset_row;
       break;
     case 'ckan_dataset':
       $dataset_row = array();

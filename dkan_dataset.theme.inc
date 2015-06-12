@@ -53,7 +53,7 @@ function theme_dkan_dataset_release_date_view($vars) {
  * Output the resource into the node content.
  */
 function theme_dkan_dataset_resource_view($vars) {
-  $output = '<h2>' . t('Data and Resources') . '</h2>';
+  $output = '<h4>' . t('Data and Resources') . '</h4>';
   $node = entity_metadata_wrapper('node', $vars['node']);
   $nodes = $node->field_resources->value();
   $links = array();

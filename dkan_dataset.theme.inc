@@ -116,7 +116,17 @@ function theme_dkan_dataset_resource_view($vars) {
         ))
       ) . $desc . '<span class="links">' . $explore_link . $download_link . '</span></div>';
     }
-
+    if (count($links)) {
+      $download_all = '<div property="dcat:Distribution"><span class="links">';
+      $download_all .= l('Download All<i class="fa fa-download"><span> Download</span></i>', 'node/' . $vars['node']->nid . '/dataset/download', array(
+        'html' => TRUE,
+        'attributes' => array(
+          'class' => array('btn', 'btn-primary')
+        )
+      ));
+      $download_all .= '</span></div>';
+      $links[] = $download_all;
+    }
     $output .= theme('item_list', array('items' => $links, 'attributes' => array('class' => array('resource-list'))));
     // Close first dcat declaration.
     $output .= '</div>';

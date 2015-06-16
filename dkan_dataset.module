@@ -247,6 +247,26 @@ function dkan_dataset_get_resource_nodes($nid) {
 }
 
 /**
+ * Helper to get the format string for a resource node
+ *
+ * @param $node
+ *   A resource node
+ *
+ * @return
+ *   The format string (eg, "csv", "html", etc.). Defaults to "data".
+ */
+function dkan_dataset_get_resource_format($node) {
+  $node_wrapper = entity_metadata_wrapper('node', $node);
+  if ($node_wrapper->getBundle() != 'resource') {
+    return FALSE;
+  }
+  if (isset($node->field_format['und']) && $node_wrapper->field_format->value()->name) {
+    return $node_wrapper->field_format->value()->name; 
+  }
+  return 'data';
+}
+
+/**
  * Helper to get title from nid.
  */
 function dkan_dataset_get_title($nid) {

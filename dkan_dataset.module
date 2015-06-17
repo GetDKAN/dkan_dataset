@@ -393,7 +393,13 @@ function dkan_dataset_download_access($node) {
   else {
     $node = entity_metadata_wrapper('node', $node);
     $resources = $node->field_resources->value();
-    if (count($resources)) {
+    $file_count = 0;
+    foreach ($resources as $resource) {
+      if (isset($resource->field_upload[LANGUAGE_NONE])) {
+        $file_count++;
+      }
+    }
+    if ($file_count) {
       return TRUE;
     }
   }

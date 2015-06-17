@@ -60,6 +60,7 @@ function theme_dkan_dataset_resource_view($vars) {
   $output .= '<div property="dcat:distribution">';
 
   if (isset($nodes)) {
+    $file_count = 0;
     foreach ($nodes as $node) {
       // Node could be empty if it has been deleted.
       if (!$node) {
@@ -94,6 +95,7 @@ function theme_dkan_dataset_resource_view($vars) {
       );
       $download_link = '';
       if (isset($node->field_upload[LANGUAGE_NONE])) {
+        $file_count++;
         $url = file_create_url($node->field_upload[LANGUAGE_NONE][0]['uri']);
         $download_link = l(
           '<i class="fa fa-download"><span> Download</span></i>',
@@ -116,7 +118,7 @@ function theme_dkan_dataset_resource_view($vars) {
         ))
       ) . $desc . '<span class="links">' . $explore_link . $download_link . '</span></div>';
     }
-    if (count($links)) {
+    if ($file_count) {
       $download_all = '<div property="dcat:Distribution"><span class="links">';
       $download_all .= l('Download All<i class="fa fa-download"><span> Download</span></i>', 'node/' . $vars['node']->nid . '/dataset/download', array(
         'html' => TRUE,

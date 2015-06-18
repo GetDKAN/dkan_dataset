@@ -71,7 +71,7 @@ projects[facetapi_pretty_paths][version] = 1.1
 projects[facetapi_bonus][version] = 1.1
 projects[facetapi_bonus][subdir] = contrib
 
-projects[features][version] = 2.0
+projects[features][version] = 2.5
 projects[features][subdir] = contrib
 
 projects[field_group][version] = 1.3

@@ -11,6 +11,14 @@ include_once 'dkan_dataset.theme.inc';
 include_once 'dkan_dataset.forms.inc';
 
 /**
+ * Implements hook_preprocess_html().
+ */
+function dkan_dataset_preprocess_html(&$vars) {
+  $path = drupal_get_path('module', 'dkan_dataset');
+  drupal_add_css($path . '/css/dkan_dataset.css');
+}
+
+/**
  * Implements hook_menu().
  */
 function dkan_dataset_menu() {

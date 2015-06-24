@@ -38,7 +38,7 @@ function dkan_dataset_download($node) {
     $files = array();
     foreach ($resources as $resource) {
       // Node could be empty if it has been deleted.
-      if (!$resource) {
+      if (!$resource || !$resource->status) {
         continue;
       }
       $resource_wrapper = entity_metadata_wrapper('node', $resource);

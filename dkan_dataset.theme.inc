@@ -118,7 +118,7 @@ function theme_dkan_dataset_resource_view($vars) {
         ))
       ) . $desc . '<span class="links">' . $explore_link . $download_link . '</span></div>';
     }
-    if ($file_count) {
+    if ($file_count > 1) {
       $download_all = '<div property="dcat:Distribution"><span class="links">';
       $download_all .= l('Download All<i class="fa fa-download"><span> Download</span></i>', 'node/' . $vars['node']->nid . '/dataset/download', array(
         'html' => TRUE,

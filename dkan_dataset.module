@@ -399,7 +399,7 @@ function dkan_dataset_download_access($node) {
         $file_count++;
       }
     }
-    if ($file_count) {
+    if ($file_count > 1) {
       return TRUE;
     }
   }

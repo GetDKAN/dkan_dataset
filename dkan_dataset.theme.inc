@@ -63,7 +63,7 @@ function theme_dkan_dataset_resource_view($vars) {
     $file_count = 0;
     foreach ($nodes as $node) {
       // Node could be empty if it has been deleted.
-      if (!$node) {
+      if (!$node || !node_access('view', $node)) {
         continue;
       }
       $node_wrapper = entity_metadata_wrapper('node', $node);

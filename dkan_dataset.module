@@ -43,6 +43,15 @@ function dkan_dataset_menu() {
     'file' => 'dkan_dataset.pages.inc',
     'file path' => $path,
   );
+  $items['node/%node/dataset/download'] = array(
+    'title' => 'Download Dataset',
+    'page callback' => 'dkan_dataset_download',
+    'page arguments' => array(1),
+    'access callback' => 'dkan_dataset_download_access',
+    'access arguments' => array(1),
+    'file' => 'dkan_dataset.pages.inc',
+    'file path' => $path,
+  );
   $items['admin/dkan'] = array(
     'title' => 'DKAN',
     'description' => 'DKAN Settings and Administration.',
@@ -399,6 +408,28 @@ function dkan_dataset_back_access($node) {
   }
   else {
     return node_access('view', $node);
+  }
+}
+
+/**
+ * Access callback for 'Download Dataset' tab.
+ */
+function dkan_dataset_download_access($node) {
+  if ($node->type != 'dataset') {
+    return FALSE;
+  }
+  else {
+    $node = entity_metadata_wrapper('node', $node);
+    $resources = $node->field_resources->value();
+    $file_count = 0;
+    foreach ($resources as $resource) {
+      if (isset($resource->field_upload[LANGUAGE_NONE])) {
+        $file_count++;
+      }
+    }
+    if ($file_count > 1) {
+      return TRUE;
+    }
   }
 }
 

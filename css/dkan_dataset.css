@@ -307,6 +307,9 @@ li .heading:hover {
   margin: 1em 0;
   min-height: 60px;
 }
+.node-dataset .resource-list li.last i {
+  padding-left: 10px;
+}
 .node-resource .download .format-label {
   display: block;
   line-height: 50px;

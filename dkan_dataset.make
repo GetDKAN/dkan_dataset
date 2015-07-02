@@ -12,7 +12,7 @@ includes[leaflet_draw_widget_make] = https://raw.githubusercontent.com/NuCivic/l
 
 ; Recline specific
 projects[recline][download][type] = git
-projects[recline][download][url] = https://github.com/NuCivic/recline.git
+projects[recline][download][url] = httchops://github.com/NuCivic/recline.git
 projects[recline][download][revision] = a6af472a07d520a758f14cdf836a48c33e15bf07
 projects[recline][download][branch] = 7.x-1.x
 projects[recline][subdir] = contrib
@@ -31,7 +31,7 @@ projects[beautytips][patch][849232] = http://drupal.org/files/include-excanvas-v
 projects[beautytips][subdir] = contrib
 projects[beautytips][type] = module
 
-projects[chosen][version] = 2.0-alpha1
+projects[chosen][version] = 2.0-beta4
 projects[chosen][subdir] = contrib
 
 projects[context][version] = 3.6
@@ -204,7 +204,7 @@ libraries[chosen][type] = libraries
 libraries[chosen][download][type] = git
 libraries[chosen][download][url] = "https://github.com/harvesthq/chosen.git"
 libraries[chosen][directory_name] = chosen
-libraries[chosen][download][revision] = "a0ca7da1ae52235b5abb6f66d9218a20450116c1"
+libraries[chosen][download][revision] = "910a12599c10a11b7005feedb1e53e4b4535100e"
 
 libraries[slugify][type] = libraries
 libraries[slugify][download][type] = git

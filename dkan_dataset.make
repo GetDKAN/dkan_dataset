@@ -201,10 +201,9 @@ projects[views_bulk_operations][subdir] = contrib
 ; Libraries
 
 libraries[chosen][type] = libraries
-libraries[chosen][download][type] = git
-libraries[chosen][download][url] = "https://github.com/harvesthq/chosen.git"
-libraries[chosen][directory_name] = chosen
-libraries[chosen][download][revision] = "910a12599c10a11b7005feedb1e53e4b4535100e"
+libraries[chosen][download][type] = get
+libraries[chosen][download][url] = https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip
+libraries[chosen][destination] = libraries
 
 libraries[slugify][type] = libraries
 libraries[slugify][download][type] = git

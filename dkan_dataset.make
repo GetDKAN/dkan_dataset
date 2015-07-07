@@ -31,7 +31,7 @@ projects[beautytips][patch][849232] = http://drupal.org/files/include-excanvas-v
 projects[beautytips][subdir] = contrib
 projects[beautytips][type] = module
 
-projects[chosen][version] = 2.0-alpha1
+projects[chosen][version] = 2.0-beta4
 projects[chosen][subdir] = contrib
 
 projects[context][version] = 3.6
@@ -201,10 +201,9 @@ projects[views_bulk_operations][subdir] = contrib
 ; Libraries
 
 libraries[chosen][type] = libraries
-libraries[chosen][download][type] = git
-libraries[chosen][download][url] = "https://github.com/harvesthq/chosen.git"
-libraries[chosen][directory_name] = chosen
-libraries[chosen][download][revision] = "a0ca7da1ae52235b5abb6f66d9218a20450116c1"
+libraries[chosen][download][type] = get
+libraries[chosen][download][url] = https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip
+libraries[chosen][destination] = libraries
 
 libraries[slugify][type] = libraries
 libraries[slugify][download][type] = git

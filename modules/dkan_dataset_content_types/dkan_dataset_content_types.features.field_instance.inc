@@ -415,6 +415,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
       'active' => 1,
       'module' => 'select_or_other',
       'settings' => array(
+        'apply_chosen' => '',
         'available_options' => 'cc-by|Creative Commons Attribution
 cc-by-sa|Creative Commons Attribution Share-Alike
 cc-zero|Creative Commons CCZero

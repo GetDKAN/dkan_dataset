@@ -155,22 +155,26 @@ function theme_dkan_dataset_resource_teaser_view($vars) {
       $node_wrapper = entity_metadata_wrapper('node', $node);
       $name = dkan_dataset_get_resource_format($node);
       $term = '';
-      if (!isset($links_data[$name])) {
-        $links_data[$name] = array(
-          'term_name' => $name,
-          'count' => 1,
-          'url' => 'node/' . $vars['node']->nid,
-          'link' => array(
-            'attributes' => array(
-              'class' => array('label'),
-              'title' => t('Resources') . ': ' . $vars['node']->title,
-              'data-format' => $name,
+
+      //Check node is published.
+      if ($node->status) {
+        if (!isset($links_data[$name])) {
+          $links_data[$name] = array(
+            'term_name' => $name,
+            'count' => 1,
+            'url' => 'node/' . $vars['node']->nid,
+            'link' => array(
+              'attributes' => array(
+                'class' => array('label'),
+                'title' => t('Resources') . ': ' . $vars['node']->title,
+                'data-format' => $name,
+              ),
             ),
-          ),
-        );
-      }
-      else {
-        $links_data[$name]['count'] = $links_data[$name]['count'] + 1;
+          );
+        }
+        else {
+          $links_data[$name]['count'] = $links_data[$name]['count'] + 1;
+        }
       }
     }
     foreach ($links_data as $term_name => $link) {

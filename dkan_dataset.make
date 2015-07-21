@@ -21,7 +21,7 @@ includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/431ff
 
 ; Contrib Modules
 projects[autocomplete_deluxe][subdir] = contrib
-projects[autocomplete_deluxe][version] = 2.0-beta3
+projects[autocomplete_deluxe][version] = 2.1
 
 projects[beautytips][download][type] = git
 projects[beautytips][download][branch] = 7.x-2.x

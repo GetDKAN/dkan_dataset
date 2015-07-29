@@ -161,6 +161,7 @@ function dkan_dataset_groups_default_search_api_index() {
     "server" : "groups_server",
     "item_type" : "node",
     "options" : {
+      "datasource" : { "bundles" : [ "dkan_data_story" ] },
       "index_directly" : 1,
       "cron_limit" : "50",
       "fields" : {
@@ -287,7 +288,7 @@ function dkan_dataset_groups_default_search_api_server() {
             "boost" : "1.0"
           },
           "search_api_viewed" : {
-            "table" : "search_api_db_groups_di_search_api_viewed",
+            "table" : "search_api_db_groups_di_text",
             "type" : "text",
             "boost" : "1.0"
           },
@@ -310,7 +311,7 @@ function dkan_dataset_groups_default_search_api_server() {
             "boost" : "1.0"
           },
           "field_resources:body:value" : {
-            "table" : "search_api_db_groups_di_field_resources_body_value",
+            "table" : "search_api_db_groups_di_text",
             "type" : "list\\u003Ctext\\u003E",
             "boost" : "1.0"
           },

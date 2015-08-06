@@ -57,3 +57,17 @@ function dkan_dataset_groups_extras_subscribe($entity_type, $entity) {
   $elements = og_ui_field_formatter_view($entity_type, $entity, NULL, NULL, NULL, array(), $display);
   return drupal_render($elements);
 }
+
+
+/**
+ * Implements hook_default_search_api_server_alter().
+ *
+ * Add og group ref when is enable dataset groups. In other case we don't need this field on the index.
+ */
+function dkan_dataset_groups_default_search_api_index_alter(array &$defaults) {
+  foreach ($defaults as $index) {
+    if ($index->machine_name == 'datasets') {
+      $index->options['fields']['og_group_ref'] = array('type' => 'integer', 'entity_type' => 'node');
+    }
+  }
+}

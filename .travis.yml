@@ -59,3 +59,5 @@ notifications:
       - nucivic:t3p2KxXdzymmwxitWPvfAsnK#monitor-devops
       - nucivic:t3p2KxXdzymmwxitWPvfAsnK#monitor-dkan
       - nucivic:t3p2KxXdzymmwxitWPvfAsnK#monitor-data-starter
+
+sudo: false

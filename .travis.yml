@@ -18,8 +18,8 @@ before_script:
   - export PATH="`pwd`/drush:$PATH"
 
   # install php packages required for running a web server from drush on php 5.3
-  # - sudo apt-get update > /dev/null
-  # - sudo apt-get install -y --force-yes php5-cgi php5-mysql
+  - apt-get update > /dev/null
+  - apt-get install -y --force-yes php5-cgi php5-mysql
 
   # disable sendmail
   - echo sendmail_path=`which true` >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini

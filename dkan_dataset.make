@@ -4,12 +4,11 @@ api = 2
 ; Leaflet Draw Widget specific
 projects[leaflet_draw_widget][download][type] = git
 projects[leaflet_draw_widget][download][url] = "https://github.com/NuCivic/leaflet_draw_widget.git"
-projects[leaflet_draw_widget][download][revision] = 7334e241314554937d08a01acb18f9393a13e0c3
-projects[leaflet_draw_widget][download][branch] = validation_json
+projects[leaflet_draw_widget][download][revision] = b69260d19a87cf2421e64d16c5b707b2f8bc86fa
 projects[leaflet_draw_widget][subdir] = contrib
 projects[leaflet_draw_widget][type] = module
 
-includes[leaflet_draw_widget_make] = https://raw.githubusercontent.com/NuCivic/leaflet_draw_widget/967c8bb3eb13f3b70f28a4b487074b23591f1075/leaflet_widget.make
+includes[leaflet_draw_widget_make] = https://raw.githubusercontent.com/NuCivic/leaflet_draw_widget/b69260d19a87cf2421e64d16c5b707b2f8bc86fa/leaflet_widget.make
 
 ; Recline specific
 projects[recline][download][type] = git

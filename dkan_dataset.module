@@ -495,7 +495,7 @@ function dkan_dataset_node_insert($node) {
         $dataset_wrapper->field_resources->set(array($node->nid));
         $dataset_wrapper->save();
         // Redirect to the dataset after saving the last node in the form.
-        drupal_goto('node/' . $dataset_nid);
+        //drupal_goto('node/' . $dataset_nid);
       }
     break;
   }

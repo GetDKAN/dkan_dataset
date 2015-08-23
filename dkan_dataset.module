@@ -487,7 +487,7 @@ function dkan_dataset_file_mimetype_mapping_alter(&$mapping) {
 function dkan_dataset_node_insert($node) {
   switch ($node->type) {
     case 'resource':
-      if (isset($node->field_dataset_ref['und'][0]) && $node->op == 'Save') {
+      if (isset($node->field_dataset_ref['und'][0]) && isset($node->op) && $node->op == 'Save') {
         $dataset_nid = $node->field_dataset_ref['und'][0]['target_id'];
         //$dataset_node = node_load($dataset_nid);
         //$dataset_wrapper = entity_metadata_wrapper('node', $dataset_node);

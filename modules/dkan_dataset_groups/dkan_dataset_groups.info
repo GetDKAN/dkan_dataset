@@ -1,7 +1,7 @@
 name = DKAN Dataset Groups
 description = Custom elements for groups.
 core = 7.x
-package = DKAN Features
+package = DKAN
 version = 7.x-1.x
 project = dkan_dataset_groups
 dependencies[] = ctools

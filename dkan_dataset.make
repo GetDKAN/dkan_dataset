@@ -4,7 +4,7 @@ api = 2
 ; Leaflet Draw Widget specific
 projects[leaflet_draw_widget][download][type] = git
 projects[leaflet_draw_widget][download][url] = "https://github.com/NuCivic/leaflet_draw_widget.git"
-projects[leaflet_draw_widget][download][branch] = validation_json
+projects[leaflet_draw_widget][download][branch] = allow_state_select
 projects[leaflet_draw_widget][subdir] = contrib
 projects[leaflet_draw_widget][type] = module
 

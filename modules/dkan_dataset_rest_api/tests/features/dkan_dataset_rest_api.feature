@@ -15,9 +15,9 @@ Feature: DKAN Dataset REST API
       Then I should not see "test dataset"
     Given I use the Dataset REST API to update "test dataset":
       | title                | body       | status |
-      | test dataset updated | body text  | 1      |
+      | Dataset updated | body text  | 1      |
       When I am on "/dataset"
-      Then I should see "test dataset updated"      
-    Given I use the Dataset REST API to delete "test dataset updated":
+      Then I should see "Dataset updated"
+    Given I use the Dataset REST API to delete "Dataset updated":
       When I am on "/dataset"
       Then I should not see "test dataset updated"

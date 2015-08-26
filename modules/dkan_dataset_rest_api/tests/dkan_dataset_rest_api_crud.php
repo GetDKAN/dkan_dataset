@@ -46,8 +46,8 @@ function dkan_dataset_services_curl_parse($curl) {
 function dkan_dataset_services_user_login($request_url) {
   // User data.
   $user_data = array(
-    'username' => 'admin',
-    'password' => 'admin',
+    'username' => 'api',
+    'password' => 'api',
   );
   $user_data = http_build_query($user_data);
 

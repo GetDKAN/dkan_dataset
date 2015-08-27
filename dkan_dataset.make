@@ -177,6 +177,7 @@ projects[search_api][subdir] = contrib
 
 projects[search_api_db][version] = 1.4
 projects[search_api_db][subdir] = contrib
+projects[search_api_db][patch][2436341] = https://www.drupal.org/files/issues/2436341-search_api_db-updb-1.patch
 
 projects[strongarm][version] = 2.0
 projects[strongarm][subdir] = contrib

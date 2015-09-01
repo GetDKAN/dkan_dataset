@@ -25,7 +25,7 @@ function dkan_dataset_theme() {
     'dkan_dataset_resource_teaser_view' => array(
       'variables' => array('node' => NULL),
     ),
-    'dkan_dataset_teaser_link_open_with' => array(
+    'dkan_dataset_teaser_link' => array(
       'variables' => array(
         'title' => NULL,
         'nid' => NULL,
@@ -34,14 +34,14 @@ function dkan_dataset_theme() {
         'type' => NULL,
       ),
     ),
+    'dkan_dataset_teaser_link_open_with' => array(
+      'variables' => array('node' => NULL),
+    ),
     'dkan_dataset_teaser_link_explore' => array(
-      'variables' => array(
-        'title' => NULL,
-        'nid' => NULL,
-        'desc' => NULL,
-        'format' => NULL,
-        'type' => NULL,
-      ),
+      'variables' => array('node' => NULL),
+    ),
+    'dkan_dataset_teaser_link_original' => array(
+      'variables' => array('node' => NULL),
     ),
   );
   return $theme;
@@ -87,30 +87,16 @@ function theme_dkan_dataset_resource_view($vars) {
       $node_wrapper = entity_metadata_wrapper('node', $node);
       $body = $node_wrapper->body->value();
       $term = '';
-
       if (isset($body['safe_value'])) {
         $desc = '<p class="description">' . dkan_dataset_text_trim($body['safe_value'], 80) . '</p>';
       }
       else {
         $desc = '<p class="description"></p>';
       }
-      $type = t("data");
+      $format = t("data");
       if (isset($node->field_format) && $node->field_format && $node_wrapper->field_format->value()) {
         $format = $node_wrapper->field_format->value()->name;
       }
-      $explore_link = l(
-        t('Explore Data'),
-        'node/' . $node->nid,
-        array(
-          'attributes' => array(
-            'class' => array(
-              'btn',
-              'btn-primary',
-            ),
-          ),
-        )
-      );
-      $download_link = '';
       if (isset($node->field_upload[LANGUAGE_NONE])) {
         $type = 'file_upload';
         $file_count++;
@@ -122,34 +108,18 @@ function theme_dkan_dataset_resource_view($vars) {
         $type = 'link_api';
       }
       if (variable_get('dkan_dataset_teaser_preview', 'explore') == 'explore') {
-        $links[] = theme('dkan_dataset_teaser_link_explore', array(
-          'title' => $node->title,
-          'nid' => $node->nid,
-          'desc' => $desc,
-          'format' => $format,
-          'type' => $type,
-          'node' => $node,
-        ));
+        $link = theme('dkan_dataset_teaser_link_explore', array('node' => $node, 'type' => $type));
+      }
+      elseif (variable_get('dkan_dataset_teaser_preview', 'explore') == 'open_with') {
+        $link = theme('dkan_dataset_teaser_link_open_with', array('node' => $node, 'format' => $format, 'type' => $type));
       }
       else {
-        $links[] = theme('dkan_dataset_teaser_link_open_with', array(
-          'title' => $node->title,
-          'nid' => $node->nid,
-          'desc' => $desc,
-          'format' => $format,
-          'type' => $type,
-          'node' => $node,
-        ));
+        $link = theme('dkan_dataset_teaser_link_original', array('node' => $node, 'type' => $type));
       }
-      $dcat = '<div property="dcat:Distribution">';
-      $slinks[] = $dcat . l($node->title . $term, 'node/' . $node->nid, array(
-        'html' => TRUE,
-        'attributes' => array(
-          'class' => array('heading'),
-          'title' => $node->title,
-          'property' => 'dcat:accessURL',
-        ))
-      ) . $desc . '<span class="links">' . $explore_link . $download_link . '</span></div>';
+      $links[] = theme('dkan_dataset_teaser_link', array(
+        'link' => $link, 'title' => $node->title, 'nid' => $node->nid, 'desc' => $desc,
+        'format' => $format, 'type' => $type, 'node' => $node,
+      ));
     }
     if ($file_count > 1) {
       $download_all = '<div property="dcat:Distribution"><span class="links">';
@@ -170,7 +140,7 @@ function theme_dkan_dataset_resource_view($vars) {
 }
 
 /**
- *
+ * Provides direct link url for resource.
  */
 function dkan_dataset_resource_direct_link($node) {
   if (isset($node->field_upload[LANGUAGE_NONE])) {
@@ -187,10 +157,11 @@ function dkan_dataset_resource_direct_link($node) {
   }
   return $url;
 }
+
 /**
- *
+ * Provides "Open With" preview calling implementing modules. 
  */
-function dkan_dataset_teaser_link_preview($format, $node) {
+function dkan_dataset_teaser_link_preview_open_with($format, $node) {
   $previews = array();
   drupal_alter('dkan_dataset_open_with', $previews);
   $links = array();
@@ -206,14 +177,14 @@ function dkan_dataset_teaser_link_preview($format, $node) {
     $open_with_text = t('Open With');
     $open_with =
     '<div class="btn-group">
-      <button class="btn btn-primary" data-toggle="dropdown"> ' . $open_with_text . '</button>
+      <button class="btn btn-primary" data-toggle="dropdown">' . $open_with_text . '</button>
         <button class="btn btn-primary" data-toggle="dropdown">
           <span class="caret"></span><span class="sr-only">Toggle dropdown</span>
         </button>
       <ul class="dropdown-menu">
     ';
     foreach ($links as $provider => $link) {
-      $open_with .= 
+      $open_with .=
         '<li class="' . $provider . ' ">
           <a href="' . $link['url'] . '" title="">
             <span> ' . $link['name'] . '</span>
@@ -245,6 +216,36 @@ function dkan_dataset_open_with_resource($node) {
 }
 
 /**
+ * Theme function to create original version of teaser links on Datasets.
+ */
+function theme_dkan_dataset_teaser_link_original($vars) {
+  $download_link = '';
+  $explore_link = l(
+    t('Explore Data'),
+    'node/' . $vars['node']->nid,
+    array(
+      'attributes' => array(
+        'class' => array('btn', 'btn-primary'),
+      ),
+    )
+  );
+  if ($vars['type'] == 'file_upload') {
+    $download_link = l(
+      '<i class="fa fa-download"><span> Download</span></i>',
+      dkan_dataset_resource_direct_link($vars['node']),
+      array(
+        'html' => TRUE,
+        'attributes' => array(
+          'class' => array('btn', 'btn-primary', 'orig'),
+        ),
+      )
+    );
+  }
+  $link = $explore_link . $download_link;
+  return $link;
+}
+
+/**
  * Theme function to create "Explore" version of teaser links on Datasets.
  */
 function theme_dkan_dataset_teaser_link_explore($vars) {
@@ -253,23 +254,30 @@ function theme_dkan_dataset_teaser_link_explore($vars) {
   $link = '
   <div class="dropdown btn-group dkan-explore">
     <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-      <i class="fa fa-share"></i>' . 
+      <i class="fa fa-share"></i>' .
         t('Explore') .
       '<span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
   ';
   if ($vars['type'] == 'file_upload' || $vars['type'] == 'link_remote_file') {
-    $link .= 
+    $link .=
     '<li><a href="' . $resource_link . '"><i class="fa fa-bar-chart"></i>' . t('Preview') . '</a></li>
      <li><a href="' .  $url . '" class="resource-url-analytics" target="_blank"><i class="fa fa-download"></i>' . t('Download') . '</a></li>';
   }
   else {
-    $link .= 
+    $link .=
     '<li><a href="' . $resource_link . '"><i class="fa fa-info-circle"></i>' . t('More information') . '</a></li>
      <li><a href="' .  $url . '" target="_blank"><i class="fa fa-external-link"></i>' . t('Go to resource') . '</a></li>';
   }
   $link .= '</ul></div>';
+  return $link;
+}
+
+/**
+ * Theme function for DKAN Dataset teaser link.
+ */
+function theme_dkan_dataset_teaser_link($vars) {
 
   $desc = $vars['desc'];
   $output = '<div property="dcat:Distribution">';
@@ -283,11 +291,12 @@ function theme_dkan_dataset_teaser_link_explore($vars) {
       'property' => 'dcat:accessURL',
     ))
   );
-  $output .= $title . $desc . '<span class="links">' .  $link . '</span></div>';
+  $output .= $title . $desc . '<span class="links">' .  $vars['link'] . '</span></div>';
 
   return $output;
-
 }
+
+
 /**
  * Theme function to create "open with" version of teaser links on Datasets.
  */
@@ -318,22 +327,9 @@ function theme_dkan_dataset_teaser_link_open_with($vars) {
     );
   }
 
-  $desc = $vars['desc'];
-  $output = '<div property="dcat:Distribution">';
-  $explore_link = dkan_dataset_teaser_link_preview($vars['format'], $vars['node']); 
-  $format = '<span data-toggle="tooltip" data-placement="top" data-original-title="' . $vars['format'] . '" class="format-label" property="dc:format" data-format="' . $vars['format'] . '">' . $vars['format'] . '</span>';
+  $link = dkan_dataset_teaser_link_preview_open_with($vars['format'], $vars['node']) . $link;
 
-  $title = l($vars['title'] . $format, 'node/' . $vars['nid'], array(
-    'html' => TRUE,
-    'attributes' => array(
-      'class' => array('heading'),
-      'title' => $vars['title'],
-      'property' => 'dcat:accessURL',
-    ))
-  );
-  $output .= $title . $desc . '<span class="links">' . $explore_link . $link . '</span></div>';
-
-  return $output;
+  return $link;
 
 }
 

@@ -127,8 +127,9 @@ function dkan_dataset_teaser_settings() {
     '#options' => array(
       'explore' => t('Explore'),
       'open_with' => t('Open with'),
+      'original' => t('Original'),
     ),
-    '#title' => t('Dataset preview mode.'),
+    '#title' => t('Dataset preview mode'),
     '#description' => t('Choose which preview mode to employ for Dataset teasers.'),
     '#default_value' => variable_get('dkan_dataset_teaser_preview', 'explore'),
   );

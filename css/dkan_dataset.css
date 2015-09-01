@@ -556,6 +556,12 @@ body .node-dataset #data-and-resources ul.resource-list li i span {
 body .node-dataset #data-and-resources ul.resource-list li .fa-download span {
   display: inline;
 }
+body .node-dataset #data-and-resources ul.resource-list li .orig .fa-download span {
+  display: none;
+}
+body .node-dataset #data-and-resources ul.resource-list li .orig {
+  margin-left: 10px;
+}
 #data-and-resources .btn .caret {
   margin: 0 0 0 5px;
 }

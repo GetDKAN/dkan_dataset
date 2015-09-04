@@ -288,9 +288,61 @@ li .heading:hover {
   color: black;
   font-weight: bold ;
 }
+.item-list .list-group li {
+  margin:0;
+}
+.pane-dkan-dataset-dkan-dataset-resource-nodes .item-list .list-group li {
+  margin: -1px;
+}
+.pane-dkan-dataset-dkan-dataset-resource-nodes .list-group-item {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 0px 0px 0px 0px;
+  -moz-border-radius: 0px 0px 0px 0px;
+  -webkit-border-radius: 0px 0px 0px 0px;
+}
+/* Move border-radius values from <li> to <a> */
+.pane-dkan-dataset-dkan-dataset-resource-nodes .list-group-item:first-child,
+.pane-dkan-dataset-dkan-dataset-resource-nodes .list-group-item:last-child {
+  border-radius: 0px 0px 0px 0px;
+  -moz-border-radius: 0px 0px 0px 0px;
+  -webkit-border-radius: 0px 0px 0px 0px;
+}
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.first a,
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.first .list-group-item:first-child,
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.first .list-group-item:last-child {
+  margin-bottom: 0;
+  border-radius: 4px 4px 0px 0px;
+  -moz-border-radius: 4px 4px 0px 0px;
+  -webkit-border-radius: 4px 4px 0px 0px;
+}
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.last a,
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.last .list-group-item:first-child,
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.last .list-group-item:last-child {
+  border-radius: 0px 0px 4px 4px;
+  -moz-border-radius: 0px 0px 4px 4px;
+  -webkit-border-radius: 0px 0px 4px 4px;
+}
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.first.last a,
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.first.last .list-group-item:first-child,
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.first.last .list-group-item:last-child {
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+.item-list .list-group li,
+.item-list .list-group,
 .resource-list li,
 .resource-list {
   list-style-type: none;
+}
+.data-and-resources .resource-list li {
+  margin: 0;
 }
 .node-dataset .form-group .resource-list li {
   margin: 4px 10px 4px 0;

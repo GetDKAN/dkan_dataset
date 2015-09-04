@@ -669,12 +669,13 @@ function dkan_dataset_resource_nodes() {
   }
   if ($nodes) {
     foreach ($nodes as $node) {
-      $links[] = l('<span>' . $node->title . '</span>', 'node/' . $node->nid, array('html' => TRUE));
+      $attributes = array('attributes' => array('class' => array('list-group-item')),'html' => true);
+      $links[] = l('<span>' . $node->title . '</span>', 'node/' . $node->nid, $attributes);
     }
     if (!$current_node) {
       $links[] = '';
     }
-    $output = theme('item_list', array('items' => $links, 'attributes' => array('class' => array('nav-simple'))));
+    $output = theme('item_list', array('items' => $links, 'attributes' => array('class' => array('list-group'))));
   }
   return $output;
 }

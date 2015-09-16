@@ -19,7 +19,7 @@
         $(this).find('.field-item').append('<div style="position: absolute;top: ' + offset + ';width: 100%;background-color: #FFF;height: ' + dif + 'px;text-align: center;opacity: .9;" id="click-full"><a href="#">' + Drupal.t("Show more") + '</a></div>');
         $(this).find('.field-item').eq(0).css({"height": height, "overflow":"hidden", "position":"relative", "padding-bottom" : dif});
       }
-      $("#click-full").click(function(e) {
+      $("#click-full").off().on('click', function(e) {
         if ($(this).hasClass("clicked")) {
           $(this).parent().css({"height": height, "overflow":"hidden"});
           $(this).css({"bottom": "inherit", "top" : offset, "padding" : "0 0 20px 0"});

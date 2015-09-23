@@ -59,9 +59,13 @@ function dkan_dataset_field_group_pre_render(&$element, $group, &$form) {
  * Implements hook_form_FORM_ID_alter().
  */
 function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
+  //Disable sticky and promote to frontpage.
+  if (strpos($form_id, '_node_form') !== FALSE && variable_get('dkan_dataset_form_remove_promoted_sticky', 0)) {
+    $form['options']['sticky']['#access'] = FALSE;
+    $form['options']['promote']['#access'] = FALSE;
+  }
 
   if ($form_id == 'dataset_node_form') {
-
     $form['#attached']['css'][] = drupal_get_path('module', 'dkan_dataset') . '/css/dkan_dataset.css';
     $form['#attached']['js'][] = drupal_get_path('module', 'dkan_dataset') . '/js/dkan_forms.js';
     beautytips_add_beautytips();

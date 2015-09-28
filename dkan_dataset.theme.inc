@@ -353,8 +353,8 @@ function theme_dkan_dataset_resource_teaser_view($vars) {
       $name = dkan_dataset_get_resource_format($node);
       $term = '';
 
-      //Check node is published.
-      if ($node->status) {
+      // Check node is published.
+      if (isset($node->status) && $node->status) {
         if (!isset($links_data[$name])) {
           $links_data[$name] = array(
             'term_name' => $name,

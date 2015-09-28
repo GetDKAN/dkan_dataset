@@ -304,7 +304,7 @@ function theme_dkan_dataset_teaser_link_open_with($vars) {
   $url = dkan_dataset_resource_direct_link($vars['node']);
   if ($vars['type'] == 'file_upload' || $vars['type'] == 'link_remote_file') {
     $link = l(
-      '<i class="fa fa-download"><span>' . t('Download') . '</span></i>',
+      '<i class="fa fa-download"></i>' . t('Download'),
       $url,
       array(
         'html' => TRUE,
@@ -316,7 +316,7 @@ function theme_dkan_dataset_teaser_link_open_with($vars) {
   }
   else {
     $link = l(
-      '<i class="fa fa-external-link"><span>' . t('Visit page') . '</span></i>',
+      '<i class="fa fa-external-link"></i>' . t('Visit page'),
       $url,
       array(
         'html' => TRUE,

@@ -307,6 +307,9 @@ li .heading:hover {
   margin: 1em 0;
   min-height: 60px;
 }
+.open_with .node-dataset .resource-list li {
+  padding: 0 295px 0 45px;
+}
 .node-dataset .resource-list li.last i {
   padding-left: 10px;
 }

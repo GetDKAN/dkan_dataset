@@ -16,6 +16,13 @@ include_once 'dkan_dataset.forms.inc';
 function dkan_dataset_preprocess_html(&$vars) {
   $path = drupal_get_path('module', 'dkan_dataset');
   drupal_add_css($path . '/css/dkan_dataset.css');
+  // Add body class for resource teaser type.
+  if ($node = menu_get_object()) {
+    if ($node->type == 'dataset') {
+      $preview = variable_get('dkan_dataset_teaser_preview', 'explore');
+      $vars['classes_array'][] = $preview;
+    }
+  }
 }
 
 /**
@@ -62,6 +69,13 @@ function dkan_dataset_menu() {
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
+  $items['admin/dkan/dataset_teaser'] = array(
+    'title' => 'DKAN Dataset Teasers',
+    'description' => 'Settings for DKAN Datasets teasers.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('dkan_dataset_teaser_settings'),
+    'access arguments' => array('administer site configuration'),
+  );
   $items['admin/dkan/dataset_forms'] = array(
     'title' => 'DKAN Dataset Forms',
     'description' => 'Form settings for DKAN Datasets.',
@@ -86,8 +100,9 @@ function dkan_dataset_menu() {
 function dkan_dataset_api_menu_settings() {
   drupal_goto('admin/config/services/odsm');
 }
+
 /**
- * Menu Callback for DKAN Dataset settings.
+ * Menu Callback for DKAN Dataset form settings.
  */
 function dkan_dataset_form_settings() {
   $form = array();
@@ -105,6 +120,25 @@ function dkan_dataset_form_settings() {
     '#type' => 'checkbox',
     '#title' => t('Divide Dataset form into main form and "Additional Data" (CKAN style).'),
     '#default_value' => variable_get('dkan_dataset_form_additional_info', 1),
+  );
+  return system_settings_form($form);
+}
+
+/**
+ * Menu Callback for DKAN Dataset teaser settings.
+ */
+function dkan_dataset_teaser_settings() {
+  $form = array();
+  $form['dkan_dataset_teaser_preview'] = array(
+    '#type' => 'select',
+    '#options' => array(
+      'explore' => t('Explore'),
+      'open_with' => t('Open with'),
+      'original' => t('Original'),
+    ),
+    '#title' => t('Dataset preview mode'),
+    '#description' => t('Choose which preview mode to employ for Dataset teasers.'),
+    '#default_value' => variable_get('dkan_dataset_teaser_preview', 'explore'),
   );
   return system_settings_form($form);
 }

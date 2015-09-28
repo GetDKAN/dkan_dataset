@@ -1,2 +1,4 @@
 *~
-
+vendor
+bin
+composer.json

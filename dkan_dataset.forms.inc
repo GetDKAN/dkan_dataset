@@ -5,7 +5,7 @@
  * Form elements for DKAN.
  */
 
-include_once 'includes/getRemoteFileInfo.php';
+include_once 'includes/getRemoteFileType.php';
 
 /**
  * Implements hook_field_group_build_pre_render_alter().
@@ -472,7 +472,7 @@ function dkan_dataset_resource_node_form_validate($form, &$form_state) {
         $type = isset($file->filemime) ? recline_get_data_type($file->filemime) : '';
       }
       elseif ($api) {
-        $file = new dkanDataset\getRemoteFileInfo($api, t('!site_name crawler', array('!site_name' => variable_get('site_name'))) , TRUE, file_directory_temp());
+        $file = new dkanDataset\getRemoteFileType($api, t('!site_name crawler', array('!site_name' => variable_get('site_name'))) , TRUE, file_directory_temp());
         $filemime = $file->getType();
         $type = recline_get_data_type($filemime);
       }

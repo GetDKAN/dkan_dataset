@@ -23,6 +23,4 @@ $info['header'] = $fileInfo->httpParseHeaders($headers);
 $fileInfo->info = $info;
 $type = $fileInfo->getType();
 $name = $fileInfo->getName();
-var_dump($name);
-var_dump($type);
 

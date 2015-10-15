@@ -577,9 +577,11 @@ function dkan_dataset_sync_groups($node) {
             $resources_added[$nid] = $resource;
           }
         }
-        $additional_groups = dkan_dataset_resource_groups($resources_added, $node);
-        $groups_new = $groups_new + $additional_groups;
-        dkan_dataset_process_groups($resources_added, $groups_new);
+        if (!empty($resource->body)) {
+          $additional_groups = dkan_dataset_resource_groups($resources_added, $node);
+          $groups_new = $groups_new + $additional_groups;
+          dkan_dataset_process_groups($resources_added, $groups_new);
+        }
       }
       // Resources have been removed.
       if (array_diff_key($orig_resources, $new_resources)) {

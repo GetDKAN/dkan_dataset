@@ -43,6 +43,10 @@ function dkan_dataset_theme() {
     'dkan_dataset_teaser_link_original' => array(
       'variables' => array('node' => NULL),
     ),
+    'dkan_dataset_preview_settings_external_table_form' => array(
+      'render element' => 'form',
+      'file' => 'dkan_dataset.admin.inc',
+    ),
   );
   return $theme;
 }
@@ -159,21 +163,11 @@ function dkan_dataset_resource_direct_link($node) {
 }
 
 /**
- * Provides "Open With" preview calling implementing modules. 
+ * Provides "Open With" preview calling implementing modules.
  */
-function dkan_dataset_teaser_link_preview_open_with($format, $node) {
-  $previews = array();
-  drupal_alter('dkan_dataset_open_with', $previews);
-  $links = array();
-  foreach ($previews as $provider => $preview) {
-    if (in_array($format, $preview['format'])) {
-      $function = $preview['link_callback'];
-      if (function_exists($function)) {
-        $links[$provider] = array('url' => $function($node), 'name' => $preview['name']);
-      }
-    }
-  }
-  if ($links) {
+function dkan_dataset_teaser_link_external_previews($node) {
+  $previews = dkan_dataset_teaser_external_previews_for_resource($node);
+  if (count($previews)) {
     $open_with_text = t('Open With');
     $open_with =
     '<div class="btn-group">
@@ -183,11 +177,11 @@ function dkan_dataset_teaser_link_preview_open_with($format, $node) {
         </button>
       <ul class="dropdown-menu">
     ';
-    foreach ($links as $provider => $link) {
+    foreach ($previews as $provider => $preview) {
       $open_with .=
         '<li class="' . $provider . ' ">
-          <a href="' . $link['url'] . '" title="">
-            <span> ' . $link['name'] . '</span>
+          <a href="' . $preview['url'] . '" title="">
+            <span> ' . $preview['name'] . '</span>
           </a>
         </li>';
     }
@@ -195,24 +189,6 @@ function dkan_dataset_teaser_link_preview_open_with($format, $node) {
     return $open_with;
   }
 
-}
-
-/**
- * Implements hook_dkan_dataset_open_with().
- */
-function dkan_dataset_dkan_dataset_open_with_alter(&$previews) {
-  $previews['dkan'] = array(
-    'name' => t('DKAN Preview'),
-    'link_callback' => 'dkan_dataset_open_with_resource',
-    'format' => array('csv'),
-  );
-}
-
-/**
- * Callback for dkan preview.
- */
-function dkan_dataset_open_with_resource($node) {
-  return url('node/' . $node->nid);
 }
 
 /**
@@ -263,12 +239,12 @@ function theme_dkan_dataset_teaser_link_explore($vars) {
   if ($vars['type'] == 'file_upload' || $vars['type'] == 'link_remote_file') {
     $link .=
     '<li><a href="' . $resource_link . '"><i class="fa fa-bar-chart"></i>' . t('Preview') . '</a></li>
-     <li><a href="' .  $url . '" class="resource-url-analytics" target="_blank"><i class="fa fa-download"></i>' . t('Download') . '</a></li>';
+     <li><a href="' . $url . '" class="resource-url-analytics" target="_blank"><i class="fa fa-download"></i>' . t('Download') . '</a></li>';
   }
   else {
     $link .=
     '<li><a href="' . $resource_link . '"><i class="fa fa-info-circle"></i>' . t('More information') . '</a></li>
-     <li><a href="' .  $url . '" target="_blank"><i class="fa fa-external-link"></i>' . t('Go to resource') . '</a></li>';
+     <li><a href="' . $url . '" target="_blank"><i class="fa fa-external-link"></i>' . t('Go to resource') . '</a></li>';
   }
   $link .= '</ul></div>';
   return $link;
@@ -291,7 +267,7 @@ function theme_dkan_dataset_teaser_link($vars) {
       'property' => 'dcat:accessURL',
     ))
   );
-  $output .= $title . $desc . '<span class="links">' .  $vars['link'] . '</span></div>';
+  $output .= $title . $desc . '<span class="links">' . $vars['link'] . '</span></div>';
 
   return $output;
 }
@@ -327,7 +303,7 @@ function theme_dkan_dataset_teaser_link_open_with($vars) {
     );
   }
 
-  $link = dkan_dataset_teaser_link_preview_open_with($vars['format'], $vars['node']) . $link;
+  $link = dkan_dataset_teaser_link_external_previews($vars['node']) . $link;
 
   return $link;
 
@@ -380,4 +356,33 @@ function theme_dkan_dataset_resource_teaser_view($vars) {
     $output = theme('item_list', array('items' => $links, 'attributes' => array('class' => array('resource-list'))));
   }
   return $output;
+}
+
+/**
+ * Theme function for previews form table
+ */
+function theme_dkan_dataset_preview_settings_external_table_form(&$vars) {
+  $form = $vars['form'];
+  $rows = $form['rows'];
+  $header =
+  $content = array(
+      '#theme' => 'table',
+      '#header' => $form['#header'],
+      '#rows' => array(),
+    );
+  // Traverse each row.  @see element_chidren().
+  foreach (element_children($rows) as $row_index) {
+    $row = array();
+    // Traverse each column in the row.  @see element_children().
+    foreach (element_children($rows[$row_index]) as $col_index) {
+      // Render the column form element.
+      $row[] = array('data' => drupal_render($rows[$row_index][$col_index]));
+    }
+    // Add the row to the table.
+    $content['#rows'][] = $row;
+  }
+
+  // Redner the table and return.
+  return drupal_render($content);
+
 }

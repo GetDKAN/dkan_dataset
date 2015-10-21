@@ -338,6 +338,8 @@ function dkan_dataset_groups_views_default_views() {
   $handler->display->display_options['arguments']['null']['id'] = 'null';
   $handler->display->display_options['arguments']['null']['table'] = 'views';
   $handler->display->display_options['arguments']['null']['field'] = 'null';
+  $handler->display->display_options['arguments']['null']['breadcrumb_enable'] = TRUE;
+  $handler->display->display_options['arguments']['null']['breadcrumb'] = '<none>';
   $handler->display->display_options['arguments']['null']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['null']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['null']['summary']['format'] = 'default_summary';
@@ -347,6 +349,8 @@ function dkan_dataset_groups_views_default_views() {
   $handler->display->display_options['arguments']['gid']['table'] = 'og_membership';
   $handler->display->display_options['arguments']['gid']['field'] = 'gid';
   $handler->display->display_options['arguments']['gid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['gid']['breadcrumb_enable'] = TRUE;
+  $handler->display->display_options['arguments']['gid']['breadcrumb'] = '<none>';
   $handler->display->display_options['arguments']['gid']['default_argument_type'] = 'og_context';
   $handler->display->display_options['arguments']['gid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['gid']['summary']['format'] = 'default_summary';
@@ -377,7 +381,7 @@ function dkan_dataset_groups_views_default_views() {
 
   /* Display: Block */
   $handler = $view->new_display('block', 'Block', 'block_1');
-  $export['dkan_og_extras_group_members1'] = $view;
+  $export['dkan_og_extras_group_members'] = $view;
 
   $view = new view();
   $view->name = 'group_block';

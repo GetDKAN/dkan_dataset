@@ -22,6 +22,9 @@ function dkan_dataset_preview_settings() {
   $form['external_previews'] = array(
     '#type' => 'fieldset',
     '#title' => t('External Preview Settings'),
+    '#description' => t('Enable or disable external preview links for all resource formats. Modify the list of available resource formats !here.', array(
+      '!here' => l(t('here'), 'admin/structure/taxonomy/format'),
+    )),
     '#collapsible' => FALSE,
   );
    $form['external_previews']['formats'] = array(
@@ -34,27 +37,28 @@ function dkan_dataset_preview_settings() {
   );
   $format_vocabulary = taxonomy_vocabulary_machine_name_load('format');
   $formats = taxonomy_get_tree($format_vocabulary->vid);
+  $previews = dkan_dataset_teaser_get_external_previews();
+  // The local preview isn't optional
+  unset($previews['dkan']);
   $preview_options = array();
-  foreach (dkan_dataset_teaser_get_external_previews() as $machine_name => $preview) {
+  foreach ($previews as $machine_name => $preview) {
     $preview_options[$machine_name] = $preview['name'];
   }
 
+  // We will check to see if the preview is is already toggled in the variable.
+  // If not, we chekck the defaults set by the preview definition.
   foreach ($formats as $format) {
-    $var_name = "dkan_dataset_format_previews_tid{$format->tid}";
-    $$var_name = variable_get($var_name, array());
     $default_value = array();
-    if (!empty($$var_name)) {
-      foreach ($$var_name as $machine_name => $value) {
-        if ($value) {
-          $default_value[] = $machine_name;
-        }
+    foreach($previews as $machine_name => $preview) {
+      if (in_array($format->name, $preview['format'])) {
+        $default_value[] = $machine_name;
       }
     }
     $form['external_previews']['formats']['rows'][] = array(
       'format' => array(
         '#markup' => $format->name,
       ),
-      $var_name => array(
+      "dkan_dataset_format_previews_tid{$format->tid}" => array(
         '#type' => 'checkboxes',
         '#tree' => TRUE,
         '#title' => 'whatever',

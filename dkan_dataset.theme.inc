@@ -34,13 +34,7 @@ function dkan_dataset_theme() {
         'type' => NULL,
       ),
     ),
-    'dkan_dataset_teaser_link_open_with' => array(
-      'variables' => array('node' => NULL),
-    ),
-    'dkan_dataset_teaser_link_explore' => array(
-      'variables' => array('node' => NULL),
-    ),
-    'dkan_dataset_teaser_link_original' => array(
+    'dkan_dataset_teaser_preview_link' => array(
       'variables' => array('node' => NULL),
     ),
     'dkan_dataset_preview_settings_external_table_form' => array(
@@ -111,17 +105,9 @@ function theme_dkan_dataset_resource_view($vars) {
       else {
         $type = 'link_api';
       }
-      if (variable_get('dkan_dataset_teaser_preview', 'explore') == 'explore') {
-        $link = theme('dkan_dataset_teaser_link_explore', array('node' => $node, 'type' => $type));
-      }
-      elseif (variable_get('dkan_dataset_teaser_preview', 'explore') == 'open_with') {
-        $link = theme('dkan_dataset_teaser_link_open_with', array('node' => $node, 'format' => $format, 'type' => $type));
-      }
-      else {
-        $link = theme('dkan_dataset_teaser_link_original', array('node' => $node, 'type' => $type));
-      }
+      $teaser_link = theme('dkan_dataset_teaser_preview_link', array('node' => $node, 'type' => $type));
       $links[] = theme('dkan_dataset_teaser_link', array(
-        'link' => $link, 'title' => $node->title, 'nid' => $node->nid, 'desc' => $desc,
+        'link' => $teaser_link, 'title' => $node->title, 'nid' => $node->nid, 'desc' => $desc,
         'format' => $format, 'type' => $type, 'node' => $node,
       ));
     }
@@ -162,93 +148,6 @@ function dkan_dataset_resource_direct_link($node) {
   return $url;
 }
 
-/**
- * Provides "Open With" preview calling implementing modules.
- */
-function dkan_dataset_teaser_link_external_previews($node) {
-  $previews = dkan_dataset_teaser_external_previews_for_resource($node);
-  if (count($previews)) {
-    $open_with_text = t('Open With');
-    $open_with =
-    '<div class="btn-group">
-      <button class="btn btn-primary" data-toggle="dropdown">' . $open_with_text . '</button>
-        <button class="btn btn-primary" data-toggle="dropdown">
-          <span class="caret"></span><span class="sr-only">Toggle dropdown</span>
-        </button>
-      <ul class="dropdown-menu">
-    ';
-    foreach ($previews as $provider => $preview) {
-      $open_with .=
-        '<li class="' . $provider . ' ">
-          <a href="' . $preview['url'] . '" title="">
-            <span> ' . $preview['name'] . '</span>
-          </a>
-        </li>';
-    }
-    $open_with .= '</ul></div>';
-    return $open_with;
-  }
-
-}
-
-/**
- * Theme function to create original version of teaser links on Datasets.
- */
-function theme_dkan_dataset_teaser_link_original($vars) {
-  $download_link = '';
-  $explore_link = l(
-    t('Explore Data'),
-    'node/' . $vars['node']->nid,
-    array(
-      'attributes' => array(
-        'class' => array('btn', 'btn-primary'),
-      ),
-    )
-  );
-  if ($vars['type'] == 'file_upload') {
-    $download_link = l(
-      '<i class="fa fa-download"><span> Download</span></i>',
-      dkan_dataset_resource_direct_link($vars['node']),
-      array(
-        'html' => TRUE,
-        'attributes' => array(
-          'class' => array('btn', 'btn-primary', 'orig'),
-        ),
-      )
-    );
-  }
-  $link = $explore_link . $download_link;
-  return $link;
-}
-
-/**
- * Theme function to create "Explore" version of teaser links on Datasets.
- */
-function theme_dkan_dataset_teaser_link_explore($vars) {
-  $url = dkan_dataset_resource_direct_link($vars['node']);
-  $resource_link = url('node/' . $vars['node']->nid);
-  $link = '
-  <div class="dropdown btn-group dkan-explore">
-    <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-      <i class="fa fa-share"></i>' .
-        t('Explore') .
-      '<span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu">
-  ';
-  if ($vars['type'] == 'file_upload' || $vars['type'] == 'link_remote_file') {
-    $link .=
-    '<li><a href="' . $resource_link . '"><i class="fa fa-bar-chart"></i>' . t('Preview') . '</a></li>
-     <li><a href="' . $url . '" class="resource-url-analytics" target="_blank"><i class="fa fa-download"></i>' . t('Download') . '</a></li>';
-  }
-  else {
-    $link .=
-    '<li><a href="' . $resource_link . '"><i class="fa fa-info-circle"></i>' . t('More information') . '</a></li>
-     <li><a href="' . $url . '" target="_blank"><i class="fa fa-external-link"></i>' . t('Go to resource') . '</a></li>';
-  }
-  $link .= '</ul></div>';
-  return $link;
-}
 
 /**
  * Theme function for DKAN Dataset teaser link.
@@ -276,11 +175,11 @@ function theme_dkan_dataset_teaser_link($vars) {
 /**
  * Theme function to create "open with" version of teaser links on Datasets.
  */
-function theme_dkan_dataset_teaser_link_open_with($vars) {
+function theme_dkan_dataset_teaser_preview_link($vars) {
   $url = dkan_dataset_resource_direct_link($vars['node']);
   if ($vars['type'] == 'file_upload' || $vars['type'] == 'link_remote_file') {
     $link = l(
-      '<i class="fa fa-download"></i>' . t('Download'),
+      '<i class="fa fa-download"></i>',
       $url,
       array(
         'html' => TRUE,
@@ -292,7 +191,7 @@ function theme_dkan_dataset_teaser_link_open_with($vars) {
   }
   else {
     $link = l(
-      '<i class="fa fa-external-link"></i>' . t('Visit page'),
+      '<i class="fa fa-external-link"></i>',
       $url,
       array(
         'html' => TRUE,
@@ -303,8 +202,43 @@ function theme_dkan_dataset_teaser_link_open_with($vars) {
     );
   }
 
-  $link = dkan_dataset_teaser_link_external_previews($vars['node']) . $link;
-
+  $node = $vars['node'];
+  $previews = dkan_dataset_teaser_external_previews_for_resource($node);
+  if (count($previews)) {
+    // If multiple previews, use the "open with" format
+    if (count($previews) > 1) {
+      $preview_link =
+      '<div class="btn-group">
+        <button class="btn btn-primary" data-toggle="dropdown">' . t('Open With') . '</button>
+          <button class="btn btn-primary" data-toggle="dropdown">
+            <span class="caret"></span><span class="sr-only">Toggle dropdown</span>
+          </button>
+        <ul class="dropdown-menu">
+      ';
+      foreach ($previews as $provider => $preview) {
+        $preview_link .=
+          '<li class="' . $provider . ' ">
+            <a href="' . $preview['url'] . '" title="">
+              <span> ' . $preview['name'] . '</span>
+            </a>
+          </li>';
+      }
+      $preview_link .= '</ul></div>';
+    }
+    // Otherwise use "Explore Data" button
+    else {
+      $preview_link = l(
+        t('Explore Data'),
+        'node/' . $vars['node']->nid,
+        array(
+          'attributes' => array(
+            'class' => array('btn', 'btn-primary'),
+          ),
+        )
+      );
+    }
+    $link = $preview_link . $link;
+  }
   return $link;
 
 }

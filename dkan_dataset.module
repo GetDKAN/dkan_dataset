@@ -747,7 +747,7 @@ function dkan_dataset_teaser_get_external_previews() {
   $previews['dkan'] = array(
     'name' => variable_get('dkan_dataset_teaser_preview_label', variable_get('site_name', t('Local'))) . ' ' . t('Preview'),
     'link_callback' => 'dkan_dataset_preview_url_local',
-    'format' => array('csv'),
+    'format' => array('csv', 'xls'),
     'description' => t('Local preview'),
   );
   $previews['arcgis'] = array(
@@ -763,7 +763,30 @@ function dkan_dataset_teaser_get_external_previews() {
     'description' => t('CartoDB preview'),
   );
 
-  drupal_alter('dkan_dataset_external_previews', $previews, $node);
+  drupal_alter('dkan_dataset_external_previews', $previews);
+
+  // Now modify the formats array according to any overrides from the admin page
+  $format_vocabulary = taxonomy_vocabulary_machine_name_load('format');
+  $formats = taxonomy_get_tree($format_vocabulary->vid);
+
+  foreach ($formats as $format) {
+    $var_name = "dkan_dataset_format_previews_tid{$format->tid}";
+    $format_settings = variable_get($var_name, array());
+    $default_value = array();
+    if (!empty($format_settings)) {
+      foreach ($format_settings as $machine_name => $value) {
+        // If the preview is specifically set to off, remove from format array
+        if ($value == 0 && in_array($format->name, $previews[$machine_name]['format'])) {
+          $format_key = array_search($format->name, $previews[$machine_name]['format']);
+          unset($previews[$machine_name]['format'][$format_key]);
+        }
+        if ($value && !in_array($format->name, $previews[$machine_name]['format'])) {
+          $previews[$machine_name]['format'][] = $format->name;
+        }
+      }
+    }
+  }
+
   return $previews;
 }
 

@@ -240,9 +240,9 @@ div.vertical-tabs #edit-path-alias {
   padding: 7px 6px 7px 0;
   margin-left: -1px;
   margin-right: 8px;
-} 
-#url-edit-prefix, 
-#url-slug, 
+}
+#url-edit-prefix,
+#url-slug,
 #url-edit-preview .btn-small {
   float: left;
 }
@@ -309,9 +309,6 @@ li .heading:hover {
 }
 .open_with .node-dataset .resource-list li {
   padding: 0 295px 0 45px;
-}
-.node-dataset .resource-list li.last i {
-  padding-left: 10px;
 }
 .node-resource .download .format-label {
   display: block;
@@ -489,23 +486,23 @@ li .heading:hover {
 }
 .format-label[data-format=txt]:before {
   content: "\e6a1";
-  color:#70C6E5;  
+  color:#70C6E5;
 }
 .format-label[data-format=xls]:before {
   content: "\e6af";
-  color: #2db55d;  
+  color: #2db55d;
 }
 .format-label[data-format=xlsx]:before {
   content: "\e6b0";
-  color:#70C6E5;  
+  color:#70C6E5;
 }
 .format-label[data-format=xml]:before {
   content: "\e6b1";
-  color: #ef7100;  
+  color: #ef7100;
 }
 .format-label[data-format=zip]:before {
   content: "\e6b3";
-  color: #686868;  
+  color: #686868;
 }
 
 .node-resource .download .format-label {

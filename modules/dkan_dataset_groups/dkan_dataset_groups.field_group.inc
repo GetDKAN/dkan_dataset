@@ -134,9 +134,8 @@ function dkan_dataset_groups_field_group_info() {
     'label' => '',
     'weight' => '0',
     'children' => array(
-      0 => 'group_tab_datasets',
-      1 => 'group_tab_about',
-      2 => 'group_tab_members',
+      0 => 'groups_search_entity_view_1',
+      1 => 'groups_search_entity_view_1_form',
     ),
     'format_type' => 'htabs',
     'format_settings' => array(

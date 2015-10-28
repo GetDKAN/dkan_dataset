@@ -365,6 +365,8 @@ function dkan_dataset_groups_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = '%1 Members';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: OG membership: State */
@@ -382,7 +384,6 @@ function dkan_dataset_groups_views_default_views() {
   $handler->display->display_options['filters']['uid_raw']['operator'] = '>';
   $handler->display->display_options['filters']['uid_raw']['value']['value'] = '1';
   $handler->display->display_options['path'] = 'node/%/members';
-  $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'Members';
   $handler->display->display_options['menu']['description'] = 'Group members';
   $handler->display->display_options['menu']['weight'] = '1';

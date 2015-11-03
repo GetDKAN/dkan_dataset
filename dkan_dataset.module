@@ -738,55 +738,82 @@ function dkan_dataset_page_alter(&$page) {
  *   The dataset node object.
  *
  * @return array
- *   An array keyed by preview machine name of arrays with the keys "name,"
- *   "pattern", "arguments", and "url". "name" and "url" will be used by the
- *   theme to generate individual links for each preview.
+ *   An array of associative arrays, keyed by "machine name" and containing:
+ *     - name: Full name of preview type.
+ *     - link_callback: Callback function for generating the preview link, given
+ *       a node object
+ *     - suggested_formats: array of formats suggested for use with this preview.
+ *       Will populate the format vocabulary and be used in preview definitions.
+ *     - description: Full description of the preview type.
+ *     - format: Array of the formats this preview is currently enabled for.
  */
 function dkan_dataset_teaser_get_external_previews() {
   $previews = array();
   $previews['dkan'] = array(
     'name' => variable_get('dkan_dataset_teaser_preview_label', variable_get('site_name', t('Local'))) . ' ' . t('Preview'),
     'link_callback' => 'dkan_dataset_preview_url_local',
-    'format' => array('csv', 'xls'),
+    'suggested_formats' => array('csv', 'xls'),
     'description' => t('Local preview'),
   );
+  // For DKAN, we don't add the format mannually, so copy the values from suggested_formats
+  $previews['dkan']['format'] = $previews['dkan']['suggested_formats'];
+
   $previews['arcgis'] = array(
     'name' => t('ArcGIS Preview'),
     'link_callback' => 'dkan_dataset_preview_url_local',
-    'format' => array('rest', 'esri rest', 'arcgis'),
-    'description' => t('ArcGIS preview'),
+    'suggested_formats' => array('rest', 'esri rest', 'arcgis'),
+    'description' => t('ArcGIS preview for ESRI endpoints and other ArcGIS-compatible resources.'),
   );
   $previews['cartodb'] = array(
     'name' => t('CartoDB Preview'),
     'link_callback' => 'dkan_dataset_preview_url_cartodb',
-    'format' => array('csv', 'xls', 'excel', 'openxml', 'kml', 'geojson'),
-    'description' => t('CartoDB preview'),
+    'suggested_formats' => array('csv', 'xls', 'excel', 'openxml', 'kml', 'geojson'),
+    'description' => t('Previews resources with geodata in the CartoDB mapping service.'),
   );
 
   drupal_alter('dkan_dataset_external_previews', $previews);
 
-  // Now modify the formats array according to any overrides from the admin page
+  // Load format vocabulary into array of strings
   $format_vocabulary = taxonomy_vocabulary_machine_name_load('format');
   $formats = taxonomy_get_tree($format_vocabulary->vid);
+  $format_names = array();
+  // Get an array of just term names
+  foreach ($formats as $format) {
+    $format_names[] = $format->name;
+  }
 
+  // Make sure there is a taxonomy entry for every "suggested" format, and an
+  // array for each $preview[format].
+  $suggested_formats = array();
+  // Collect all suggested formats across preview types.
+  foreach ($previews as $machine_name => $preview) {
+    $suggested_formats = array_merge($suggested_formats, $preview['suggested_formats']);
+    if (!isset($preview['format'])) {
+      $previews[$machine_name]['format'] = array();
+    }
+  }
+  $suggested_formats = array_unique($suggested_formats);
+  foreach($suggested_formats as $suggested_format) {
+     if (!in_array($suggested_format, $format_names)) {
+        $new_format = new stdClass();
+        $new_format->name = $suggested_format;
+        $new_format->vid = $format_vocabulary->vid;
+        taxonomy_term_save($new_format);
+     }
+  }
+
+  // Now populate the formats array
   foreach ($formats as $format) {
     $var_name = "dkan_dataset_format_previews_tid{$format->tid}";
     $format_settings = variable_get($var_name, array());
-    $default_value = array();
     if (!empty($format_settings)) {
       foreach ($format_settings as $machine_name => $value) {
-        // If the preview is specifically set to off, remove from format array
-        if ($value == 0 && in_array($format->name, $previews[$machine_name]['format'])) {
-          $format_key = array_search($format->name, $previews[$machine_name]['format']);
-          unset($previews[$machine_name]['format'][$format_key]);
-        }
-        if ($value && !in_array($format->name, $previews[$machine_name]['format'])) {
+        if ($value) {
           $previews[$machine_name]['format'][] = $format->name;
         }
       }
     }
   }
-
   return $previews;
 }
 

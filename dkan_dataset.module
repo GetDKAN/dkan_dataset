@@ -844,12 +844,22 @@ function dkan_dataset_teaser_external_previews_for_resource($node) {
   return $previews;
 }
 
+/**
+ * Callback function for local preview URLs
+ * @param  object $node Resource node object
+ * @return string       Preview URL
+ */
 function dkan_dataset_preview_url_local($node) {
   if ($node->type == 'resource') {
     return url('node/' . $node->nid);
   }
 }
 
+/**
+ * Callback function for ArcGIS preview URLs
+ * @param  object $node Resource node object
+ * @return string       Preview URL
+ */
 function dkan_dataset_preview_url_arcgis($node) {
   // Get resource API link URL
   $resource_wrapper = entity_metadata_wrapper('node', $node);
@@ -858,11 +868,16 @@ function dkan_dataset_preview_url_arcgis($node) {
   }
 }
 
+/**
+ * Callback function for CartoDB preview URLs
+ * @param  object $node Resource node object
+ * @return string       Preview URL
+ */
 function dkan_dataset_preview_url_cartodb($node) {
   // Get resource file URL
   $resource_file_url = NULL;
   $resource_wrapper = entity_metadata_wrapper('node', $node);
-  $pattern = 'http://oneclick.cartodb.com/?file=%s&provider=%s';
+  $pattern = 'http://oneclick.cartodb.com/?file=%s';
 
   if ($resource_wrapper->field_upload->value()) {
     $resource_file_url = file_create_url($resource_wrapper->field_upload->value()->uri);
@@ -871,6 +886,6 @@ function dkan_dataset_preview_url_cartodb($node) {
     $resource_file_url = $resource_wrapper->field_link_remote_file->value()->uri;
   }
   if ($resource_file_url) {
-    return sprintf($pattern, $resource_file_url, urlencode(variable_get('site_name')));
+    return sprintf($pattern, $resource_file_url);
   }
 }

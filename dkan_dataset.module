@@ -760,7 +760,7 @@ function dkan_dataset_teaser_get_external_previews() {
 
   $previews['arcgis'] = array(
     'name' => t('ArcGIS Preview'),
-    'link_callback' => 'dkan_dataset_preview_url_local',
+    'link_callback' => 'dkan_dataset_preview_url_arcgis',
     'suggested_formats' => array('rest', 'esri rest', 'arcgis'),
     'description' => t('ArcGIS preview for ESRI endpoints and other ArcGIS-compatible resources.'),
   );
@@ -817,7 +817,11 @@ function dkan_dataset_teaser_get_external_previews() {
   return $previews;
 }
 
-
+/**
+ * Get array of previews for a specific node
+ * @param  object $node The resource node object
+ * @return array       Array of preview arrays.
+ */
 function dkan_dataset_teaser_external_previews_for_resource($node) {
   $resource_wrapper = entity_metadata_wrapper('node', $node);
   $previews = dkan_dataset_teaser_get_external_previews();

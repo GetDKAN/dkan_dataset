@@ -45,7 +45,7 @@ projects[date][subdir] = contrib
 projects[double_field][version] = 2.3
 projects[double_field][subdir] = contrib
 
-projects[entity][download][version] = 1.6
+projects[entity][download][full_version] = 7.x-1.6
 projects[entity][patch][2341611] = https://www.drupal.org/files/issues/entity-multivalue-token-replacement-fix-2341611-0.patch
 projects[entity][subdir] = contrib
 

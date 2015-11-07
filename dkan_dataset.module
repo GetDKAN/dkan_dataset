@@ -754,7 +754,7 @@ function dkan_dataset_teaser_get_external_previews() {
     'name' => variable_get('dkan_dataset_teaser_preview_label', variable_get('site_name', t('Local'))) . ' ' . t('Preview'),
     'link_callback' => 'dkan_dataset_preview_url_local',
     'suggested_formats' => array('csv', 'xls'),
-    'description' => t('Local preview'),
+    'description' => t('Local preview. Preview tabular data in a grid, basic chart or map. This preview type is not optional and will load only for the suggested formats listed.'),
   );
   // For DKAN, we don't add the format mannually, so copy the values from suggested_formats
   $previews['dkan']['format'] = $previews['dkan']['suggested_formats'];
@@ -763,7 +763,7 @@ function dkan_dataset_teaser_get_external_previews() {
     'name' => t('ArcGIS Preview'),
     'link_callback' => 'dkan_dataset_preview_url_arcgis',
     'suggested_formats' => array('rest', 'esri rest', 'arcgis'),
-    'description' => t('ArcGIS preview for ESRI endpoints and other ArcGIS-compatible resources.'),
+    'description' => t('ArcGIS preview for ESRI endpoints. Requires a URL in the reousrce API field; will not work with resource files.'),
   );
   $previews['cartodb'] = array(
     'name' => t('CartoDB Preview'),
@@ -794,7 +794,7 @@ function dkan_dataset_teaser_get_external_previews() {
     }
   }
   $suggested_formats = array_unique($suggested_formats);
-  foreach($suggested_formats as $suggested_format) {
+  foreach ($suggested_formats as $suggested_format) {
      if (!in_array($suggested_format, $format_names)) {
         $new_format = new stdClass();
         $new_format->name = $suggested_format;

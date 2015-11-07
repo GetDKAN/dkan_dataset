@@ -9,6 +9,22 @@
  */
 function dkan_dataset_preview_settings() {
   $form = array();
+
+  // Help test for formats
+  $form['preview_list'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Available preview descriptions'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+
+  $form['preview_list']['preview_list_table'] = array(
+    '#prefix' => '<div id="preview-list-table">',
+    '#suffix' => '</div>',
+    '#markup' => _dkan_dataset_preview_list_table(),
+  );
+
+
   $form['dkan_dataset_local_teaser_preview_label'] = array(
     '#type' => 'textfield',
     '#default_value' => variable_get('dkan_dataset_teaser_preview_label', variable_get('site_name', t('Local'))),
@@ -38,18 +54,22 @@ function dkan_dataset_preview_settings() {
   $format_vocabulary = taxonomy_vocabulary_machine_name_load('format');
   $formats = taxonomy_get_tree($format_vocabulary->vid);
   $previews = dkan_dataset_teaser_get_external_previews();
-  // The local preview isn't optional
-  unset($previews['dkan']);
-  $preview_options = array();
-  foreach ($previews as $machine_name => $preview) {
-    $preview_options[$machine_name] = $preview['name'];
-  }
+
 
   // We will check to see if the preview is is already toggled in the variable.
   // If not, we chekck the defaults set by the preview definition.
   foreach ($formats as $format) {
     $default_value = array();
-    foreach($previews as $machine_name => $preview) {
+    $preview_options = array();
+    foreach ($previews as $machine_name => $preview) {
+      // The local preview is not optional.
+      if ($machine_name == 'dkan') {
+        continue;
+      }
+      // Un-comment these lines to restrict available options to sugested formats
+      // if (in_array($format->name, $preview['suggested_formats'])) {
+      $preview_options[$machine_name] = $preview['name'];
+      // }
       if (in_array($format->name, $preview['format'])) {
         $default_value[] = $machine_name;
       }
@@ -100,4 +120,24 @@ function dkan_dataset_form_settings() {
     '#default_value' => variable_get('dkan_dataset_form_additional_info', 1),
   );
   return system_settings_form($form);
+}
+
+/**
+ * Create table of available formats.
+ * @todo This should be a theme function.
+ * @return string Formatted table
+ */
+function _dkan_dataset_preview_list_table() {
+  $vars = array(
+    'header' => array(t('Preview Type'), t('Information')),
+    'rows' => array(),
+  );
+
+  $previews = dkan_dataset_teaser_get_external_previews();
+  foreach ($previews as $preview) {
+    $info = $preview['description'] . '<br /><strong>' . t('Suggested formats:') . '</strong> <em>';
+    $info .= implode(', ', $preview['suggested_formats']) . '</em>';
+    $vars['rows'][] = array($preview['name'], $info);
+  }
+  return theme('table', $vars);
 }

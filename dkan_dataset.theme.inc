@@ -225,11 +225,19 @@ function theme_dkan_dataset_teaser_preview_link($vars) {
       }
       $preview_link .= '</ul></div>';
     }
-    // Otherwise use "Explore Data" button
+    // Otherwise use single button
     else {
+      $machine_name = current(array_keys($previews));
+      $preview = current($previews);
+      if ($machine_name == 'dkan') {
+        $button_text = t('Explore Data');
+      }
+      else {
+        $button_text = t('Open With @provider', array('@provider' => $preview['name']));
+      }
       $preview_link = l(
-        t('Explore Data'),
-        'node/' . $vars['node']->nid,
+        $button_text,
+        $preview['url'],
         array(
           'attributes' => array(
             'class' => array('btn', 'btn-primary'),

@@ -38,9 +38,32 @@ function dkan_dataset_groups_block_view_alter(&$data, $block) {
       if (og_is_member('node', $node->nid, 'user', $user, array(OG_STATE_PENDING))) {
         $subscribe_link = t('Your membership is pending approval.') . ' ' . l(t('Remove pending membership request'), 'group/node/' . $node->nid . '/unsubscribe');
       }
-      $data['content']['#markup'] .= '<div class="group-subscribe-message">' . $subscribe_link . '</div>';
+
+      // Get the group from the context.
+      $group = og_context();
+
+      // Remove admin user from group
+      $members = array_filter(
+        og_get_group_members_properties($node, array(), 'members', 'node'),
+        'dkan_dataset_groups_filter_admin'
+      );
+
+      $data['content']['#markup'] .= '<div class="group-owner-message"><strong>' . $subscribe_link . '</strong></div>';
+
+      // Hide member count if group is empty.
+      if (count($members)) {
+        $data['content']['#markup'] .= '<div class="group-subscribe-message"><a href="/node/'.$group['gid'].'/members">Members (' . count($members) . ')</a></div>';
+      }
+
     }
   }
+}
+
+/**
+ * Filter the admin user from an array.
+ */
+function dkan_dataset_groups_filter_admin($uid) {
+  return $uid != 1;
 }
 
 /**

@@ -176,10 +176,12 @@ function theme_dkan_dataset_teaser_link($vars) {
  * Theme function to create "open with" version of teaser links on Datasets.
  */
 function theme_dkan_dataset_teaser_preview_link($vars) {
-  $url = dkan_dataset_resource_direct_link($vars['node']);
+  $preview_link = $direct_link = '';
+  $resource = $vars['node'];
+  $url = dkan_dataset_resource_direct_link($resource);
   if ($vars['type'] == 'file_upload' || $vars['type'] == 'link_remote_file') {
-    $link = l(
-      '<i class="fa fa-download"></i>',
+    $direct_link = l(
+      '<i class="fa fa-download"><span> '. t('Download') . '</span></i>',
       $url,
       array(
         'html' => TRUE,
@@ -190,8 +192,8 @@ function theme_dkan_dataset_teaser_preview_link($vars) {
     );
   }
   else {
-    $link = l(
-      '<i class="fa fa-external-link"></i>',
+    $direct_link = l(
+      '<i class="fa fa-external-link"><span> ' . t('Go to resource') . '</i>',
       $url,
       array(
         'html' => TRUE,
@@ -201,7 +203,6 @@ function theme_dkan_dataset_teaser_preview_link($vars) {
       )
     );
   }
-
   $node = $vars['node'];
   $previews = dkan_dataset_teaser_external_previews_for_resource($node);
   if (count($previews)) {
@@ -230,23 +231,24 @@ function theme_dkan_dataset_teaser_preview_link($vars) {
       $machine_name = current(array_keys($previews));
       $preview = current($previews);
       if ($machine_name == 'dkan') {
-        $button_text = t('Explore Data');
+        $button_text = t('Preview');
       }
       else {
-        $button_text = t('Open With @provider', array('@provider' => $preview['name']));
+        $button_text = $preview['name'];
       }
       $preview_link = l(
-        $button_text,
+        '<i class="fa fa-bar-chart"><span> ' . $button_text . '</span></i>',
         $preview['url'],
         array(
+          'html' => TRUE,
           'attributes' => array(
             'class' => array('btn', 'btn-primary'),
           ),
         )
       );
     }
-    $link = $preview_link . $link;
   }
+  $link = $preview_link . $direct_link;
   return $link;
 
 }

@@ -229,7 +229,7 @@ function theme_dkan_dataset_teaser_preview_link($vars) {
     // Otherwise use single button
     else {
       $machine_name = current(array_keys($previews));
-      $preview = current($previews);
+      $preview = $previews[$machine_name];
       if ($machine_name == 'dkan') {
         $button_text = t('Preview');
       }

@@ -66,10 +66,10 @@ function dkan_dataset_preview_settings() {
       if ($machine_name == 'dkan') {
         continue;
       }
-      // Un-comment these lines to restrict available options to sugested formats
-      // if (in_array($format->name, $preview['suggested_formats'])) {
-      $preview_options[$machine_name] = $preview['name'];
-      // }
+      // Restrict available options to sugested formats
+      if (in_array($format->name, $preview['suggested_formats'])) {
+        $preview_options[$machine_name] = $preview['name'];
+      }
       if (in_array($format->name, $preview['format'])) {
         $default_value[] = $machine_name;
       }

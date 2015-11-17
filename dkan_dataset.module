@@ -763,7 +763,7 @@ function dkan_dataset_teaser_get_external_previews() {
     'name' => t('ArcGIS Preview'),
     'link_callback' => 'dkan_dataset_preview_url_arcgis',
     'suggested_formats' => array('rest', 'esri rest', 'arcgis'),
-    'description' => t('ArcGIS preview for ESRI endpoints. Requires a URL in the reousrce API field; will not work with resource files.'),
+    'description' => t('ArcGIS preview for ESRI endpoints. Requires a URL in the resource API field; will not work with resource files.'),
   );
   $previews['cartodb'] = array(
     'name' => t('CartoDB Preview'),

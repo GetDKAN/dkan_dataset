@@ -45,7 +45,7 @@ projects[date][subdir] = contrib
 projects[double_field][version] = 2.3
 projects[double_field][subdir] = contrib
 
-projects[entity][download][version] = 1.6
+projects[entity][download][full_version] = 7.x-1.6
 projects[entity][patch][2341611] = https://www.drupal.org/files/issues/entity-multivalue-token-replacement-fix-2341611-0.patch
 projects[entity][patch][2564119] = https://www.drupal.org/files/issues/Use-array-in-foreach-statement-2564119-1.patch
 projects[entity][subdir] = contrib
@@ -100,7 +100,7 @@ projects[imagecache_actions][download][revision] = cd19d2a
 projects[imagecache_actions][subdir] = contrib
 projects[imagecache_actions][type] = module
 
-projects[jquery_update][version] = 2.6
+projects[jquery_update][version] = 2.7
 projects[jquery_update][subdir] = contrib
 
 projects[libraries][version] = 2.1

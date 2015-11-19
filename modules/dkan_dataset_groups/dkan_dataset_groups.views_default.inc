@@ -754,15 +754,10 @@ function dkan_dataset_groups_views_default_views() {
     'title' => 'title',
   );
   $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
-  /* Relationship: OG membership: OG membership from Node */
-  $handler->display->display_options['relationships']['og_membership_rel']['id'] = 'og_membership_rel';
-  $handler->display->display_options['relationships']['og_membership_rel']['table'] = 'node';
-  $handler->display->display_options['relationships']['og_membership_rel']['field'] = 'og_membership_rel';
   /* Field: COUNT(OG membership: Group ID) */
   $handler->display->display_options['fields']['gid']['id'] = 'gid';
   $handler->display->display_options['fields']['gid']['table'] = 'og_membership';
   $handler->display->display_options['fields']['gid']['field'] = 'gid';
-  $handler->display->display_options['fields']['gid']['relationship'] = 'og_membership_rel';
   $handler->display->display_options['fields']['gid']['group_type'] = 'count';
   $handler->display->display_options['fields']['gid']['label'] = '';
   $handler->display->display_options['fields']['gid']['alter']['text'] = '[gid] Datasets';
@@ -799,6 +794,7 @@ function dkan_dataset_groups_views_default_views() {
     0 => 'group',
   );
   $export['og_count'] = $view;
+
 
   return $export;
 }

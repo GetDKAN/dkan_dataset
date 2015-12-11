@@ -295,9 +295,9 @@ function theme_dkan_dataset_resource_teaser_view($vars) {
       }
     }
     foreach ($links_data as $term_name => $link) {
-      $links[] = '<span class="count-resource">' . $link['count'] . 'x</span>' . l($term_name, $link['url'], $link['link']);
+      $links[] = l($term_name, $link['url'], $link['link']);
     }
-    $output = theme('item_list', array('items' => $links, 'attributes' => array('class' => array('resource-list'))));
+    $output = theme('item_list', array('items' => $links, 'attributes' => array('class' => array('resource-list', 'clearfix'))));
   }
   return $output;
 }

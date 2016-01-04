@@ -40,7 +40,6 @@ class getRemoteFileInfo {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
     $http_heading = curl_exec($ch);
-    var_dump($http_heading);
     if (!$http_heading) {
       return NULL;
     }
@@ -118,11 +117,14 @@ class getRemoteFileInfo {
   function getNameFromUrl() {
     $basename = basename($this->url);
     $name = explode('.', $basename);
-    if (count($name) == 2) {
+    if (count($name) > 2) {
       $name = parse_url($basename);
       if (isset($name['path'])) {
         return $name['path'];
       }
+    }
+    elseif (count($name) == 1) {
+      return $name[0];
     }
     return FALSE;
   }
@@ -154,7 +156,7 @@ class getRemoteFileInfo {
    * have a filename of 'this_file_name.csv' in the Content Disposition.
    */
   public function getName() {
-    if ($info = $this->getInfo()) { 
+    if ($info = $this->getInfo()) {
       // Check Location for proper URL.
       if (isset($info['header']['Location']) && valid_url($info['header']['Location'])) {
         if ($name = $this->getNameFromUrl($this->url)) {

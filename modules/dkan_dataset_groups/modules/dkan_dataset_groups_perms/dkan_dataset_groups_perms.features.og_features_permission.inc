@@ -99,7 +99,6 @@ function dkan_dataset_groups_perms_og_features_default_permissions() {
   $permissions['node:group:delete any dataset content'] = array(
     'roles' => array(
       'administrator member' => 'administrator member',
-      'member' => 'member',
     ),
   );
 
@@ -107,7 +106,6 @@ function dkan_dataset_groups_perms_og_features_default_permissions() {
   $permissions['node:group:delete any resource content'] = array(
     'roles' => array(
       'administrator member' => 'administrator member',
-      'member' => 'member',
     ),
   );
 
@@ -172,7 +170,6 @@ function dkan_dataset_groups_perms_og_features_default_permissions() {
   $permissions['node:group:update any dataset content'] = array(
     'roles' => array(
       'administrator member' => 'administrator member',
-      'member' => 'member',
     ),
   );
 
@@ -180,7 +177,6 @@ function dkan_dataset_groups_perms_og_features_default_permissions() {
   $permissions['node:group:update any resource content'] = array(
     'roles' => array(
       'administrator member' => 'administrator member',
-      'member' => 'member',
     ),
   );
 

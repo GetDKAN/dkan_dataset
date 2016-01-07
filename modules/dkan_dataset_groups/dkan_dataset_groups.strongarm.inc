@@ -61,7 +61,7 @@ function dkan_dataset_groups_strongarm() {
           ),
           'default' => array(
             'weight' => '1',
-            'visible' => TRUE,
+            'visible' => FALSE,
           ),
         ),
         'groups_search_entity_view_1' => array(

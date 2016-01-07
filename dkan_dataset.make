@@ -47,6 +47,7 @@ projects[double_field][subdir] = contrib
 
 projects[entity][download][full_version] = 7.x-1.6
 projects[entity][patch][2341611] = https://www.drupal.org/files/issues/entity-multivalue-token-replacement-fix-2341611-0.patch
+projects[entity][patch][2564119] = https://www.drupal.org/files/issues/Use-array-in-foreach-statement-2564119-1.patch
 projects[entity][subdir] = contrib
 
 projects[entity_rdf][download][type] = git
@@ -124,6 +125,7 @@ projects[multistep][type] = module
 projects[og][version] = 2.7
 projects[og][patch][1090438] = http://drupal.org/files/issues/og-add_users_and_entities_with_drush-1090438-12.patch
 projects[og][patch][2549071] = https://www.drupal.org/files/issues/og_actions-bug-vbo-delete.patch
+projects[og][patch][2301831] = https://www.drupal.org/files/issues/og-missing-permission-roles-2301831-1.patch
 projects[og][subdir] = contrib
 
 projects[og_extras][download][type] = git

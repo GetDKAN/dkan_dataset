@@ -943,3 +943,22 @@ function dkan_dataset_preview_url_cartodb($node) {
     return sprintf($pattern, $resource_file_url);
   }
 }
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function dkan_dataset_entity_info_alter(&$entity_info) {
+  $entity_info['node']['view modes']['search_result'] = array(
+      'label' => t('Search Result'),
+      'custom settings' => TRUE,
+  );
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function dkan_dataset_preprocess_node(&$vars) {
+  if($vars['view_mode'] == 'search_result') {
+    $vars['theme_hook_suggestions'][] = 'node__search_result';
+  }
+}

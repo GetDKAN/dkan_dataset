@@ -253,6 +253,30 @@ function dkan_dataset_get_resource_nodes($nid) {
 }
 
 /**
+ * Helper to get Visualization entities that are created from a Resource.
+ */
+function dkan_dataset_get_visualization_entities($uuid) {
+  $nodes = array();
+  $nids = array();
+  $query = new EntityFieldQuery();
+
+  $results = $query
+    ->entityCondition('entity_type', 'visualization')
+    ->fieldCondition('field_uuid_resource', 'target_uuid', $uuid, '=')
+    ->execute();
+
+  if ($results) {
+    foreach ($results as $node) {
+      foreach ($node as $uuid => $obj) {
+        $nids[] = $uuid;
+      }
+    }
+  }
+  $nodes = isset($nids) ? node_load_multiple($nids) : array();
+  return $nodes;
+}
+
+/**
  * Helper to get the format string for a resource node
  *
  * @param $node

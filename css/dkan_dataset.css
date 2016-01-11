@@ -5,7 +5,6 @@ Label
 Format-label
 Node resource
 */
-@import url(https://fonts.googleapis.com/css?family=Muli);
 .node-resource-form,
 #dataset-node-form {
   position: relative;
@@ -258,7 +257,6 @@ div.vertical-tabs #edit-path-alias {
 }
 .view-dkan-datasets .view-content h2 a {
   color: #000;
-  font-family: 'Muli';
   font-weight: normal;
   font-size: 1.4em;
 }

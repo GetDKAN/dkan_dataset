@@ -86,8 +86,7 @@ projects[field_group_table][type] = module
 projects[filefield_sources][version] = 1.10
 projects[filefield_sources][subdir] = contrib
 
-projects[file_resup][version] = 1.3
-projects[file_resup][patch][2562419] = https://www.drupal.org/files/issues/file_resup-add-recline-support-2562419-1.patch
+projects[file_resup][version] = 1.x-dev
 projects[file_resup][subdir] = contrib
 
 projects[gravatar][download][type] = git

@@ -25,7 +25,7 @@ function dkan_dataset_field_group_build_pre_render_alter(&$element) {
  * Implements hook_field_group_pre_render().
  */
 function dkan_dataset_field_group_pre_render(&$element, $group, &$form) {
-  
+
   // Only pre_render if additional info form should appear on separate page
   if (variable_get('dkan_dataset_form_additional_info', 1 )) {
     if (module_exists('context')) {
@@ -59,6 +59,10 @@ function dkan_dataset_field_group_pre_render(&$element, $group, &$form) {
  * Implements hook_form_FORM_ID_alter().
  */
 function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
+  if (strpos($form_id, '_node_form') !== FALSE && variable_get('dkan_dataset_form_remove_promoted_sticky', 0)) {
+    $form['options']['sticky']['#access'] = FALSE;
+    $form['options']['promote']['#access'] = FALSE;
+  }
 
   if ($form_id == 'dataset_node_form') {
 

@@ -119,6 +119,11 @@ function dkan_dataset_form_settings() {
     '#title' => t('Divide Dataset form into main form and "Additional Data" (CKAN style).'),
     '#default_value' => variable_get('dkan_dataset_form_additional_info', 1),
   );
+  $form['dkan_dataset_form_remove_promoted_sticky'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Remove "Promoted to Front page" and remove "Sticky at the top of lists"'),
+    '#default_value' => variable_get('dkan_dataset_form_remove_promoted_sticky', 0),
+  );
   return system_settings_form($form);
 }
 

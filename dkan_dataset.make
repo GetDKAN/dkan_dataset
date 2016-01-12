@@ -74,7 +74,7 @@ projects[facetapi_bonus][subdir] = contrib
 projects[features][version] = 2.6
 projects[features][subdir] = contrib
 
-projects[field_group][version] = 1.3
+projects[field_group][version] = 1.5
 projects[field_group][patch][2042681] = http://drupal.org/files/issues/field-group-show-ajax-2042681-8.patch
 projects[field_group][subdir] = contrib
 

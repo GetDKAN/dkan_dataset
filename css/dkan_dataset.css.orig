@@ -390,11 +390,13 @@ li .heading:hover {
 .resource-list {
   list-style-type: none;
 }
+<<<<<<< HEAD
 .resource-list {
   clear: left;
-}
+=======
 .data-and-resources .resource-list li {
   margin: 0;
+>>>>>>> 7.x-1.x
 }
 .node-dataset .form-group .resource-list li {
   margin: 4px 10px 4px 0;

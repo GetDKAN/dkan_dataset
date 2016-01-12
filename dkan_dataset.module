@@ -546,9 +546,9 @@ function dkan_dataset_sync_groups($node) {
   $groups_new = $node_new->__isset('og_group_ref') ? $node_new->og_group_ref->value() : '';
   if ($groups_new && $groups_orig) {
     // Resources.
-    $resources_new = $node_orig->__isset('field_resources') ? $node_orig->field_resources->value() : '';
-    $resources_orig = $node_new->__isset('field_resources') ? $node_new->field_resources->value() : '';
-    if ($resources_new && $resources_orig) {
+    $resources_orig = $node_orig->__isset('field_resources') ? $node_orig->field_resources->value() : '';
+    $resources_new = $node_new->__isset('field_resources') ? $node_new->field_resources->value() : '';
+    if ($resources_new) {
 
       $new_groups = array();
       $orig_groups = array();
@@ -571,9 +571,11 @@ function dkan_dataset_sync_groups($node) {
         foreach ($resources_new as $new_key => $new_resource) {
           $new_resources[$new_resource->nid] = $new_resource;
         }
-        foreach ($resources_orig as $orig_key => $orig_resource) {
-          if ($orig_resource) {
-            $orig_resources[$orig_resource->nid] = $orig_resource;
+        if ($resources_orig) {
+          foreach ($resources_orig as $orig_key => $orig_resource) {
+            if ($orig_resource) {
+              $orig_resources[$orig_resource->nid] = $orig_resource;
+            }
           }
         }
         // Groups have changed.
@@ -588,16 +590,23 @@ function dkan_dataset_sync_groups($node) {
       // Resources have been added.
       if (array_diff_key($new_resources, $orig_resources) && $groups_new) {
         foreach ($new_resources as $nid => $resource) {
-          foreach ($orig_resources as $orig_nid => $orig_resource) {
-            // Don't process unless the resource has a referenced dataset.
-            if (!isset($orig_resources[$nid]) && $resource->field_dataset_ref) {
-              $resources_added[$nid] = $resource;
+          if ($orig_resources) {
+            foreach ($orig_resources as $orig_nid => $orig_resource) {
+              // Don't process unless the resource has a referenced dataset.
+              if (!isset($orig_resources[$nid]) && $resource->field_dataset_ref) {
+                $resources_added[$nid] = $resource;
+              }
             }
           }
+          else {
+            $resources_added[$nid] = $resource;
+          }
         }
-        $additional_groups = dkan_dataset_resource_groups($resources_added, $node);
-        $groups_new = $groups_new + $additional_groups;
-        dkan_dataset_process_groups($resources_added, $groups_new);
+        if (!empty($resource->body)) {
+          $additional_groups = dkan_dataset_resource_groups($resources_added, $node);
+          $groups_new = $groups_new + $additional_groups;
+          dkan_dataset_process_groups($resources_added, $groups_new);
+        }
       }
       // Resources have been removed.
       if (array_diff_key($orig_resources, $new_resources)) {

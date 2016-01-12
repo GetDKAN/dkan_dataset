@@ -184,3 +184,8 @@ function dkan_dataset_groups_menu_breadcrumb_alter(&$active_trail, $item) {
     $active_trail = array_merge($part1, array( 1 => $groups_link), $part2);
   }
 }
+
+function dkan_dataset_groups_node_update($node) {
+  path_breadcrumbs_object_cache_clear("group");
+  cache_clear_all('*', PATH_BREADCRUMBS_CACHE_STORAGE, TRUE);
+}

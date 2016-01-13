@@ -143,7 +143,7 @@ function dkan_dataset_resource_direct_link($node) {
     $url = $node->field_link_api[LANGUAGE_NONE][0]['url'];
   }
   else {
-    $url = '';
+    $url = dkan_dataset_preview_url_local($node);
   }
   return $url;
 }

@@ -881,7 +881,7 @@ function dkan_dataset_teaser_external_previews_for_resource($node) {
  */
 function dkan_dataset_preview_url_local($node) {
   if ($node->type == 'resource') {
-    return url('node/' . $node->nid);
+    return 'node/' . $node->nid;
   }
 }
 

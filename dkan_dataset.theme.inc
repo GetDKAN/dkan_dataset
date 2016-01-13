@@ -217,12 +217,9 @@ function theme_dkan_dataset_teaser_preview_link($vars) {
         <ul class="dropdown-menu">
       ';
       foreach ($previews as $provider => $preview) {
-        $preview_link .=
-          '<li class="' . $provider . ' ">
-            <a href="' . $preview['url'] . '" title="">
-              <span> ' . $preview['name'] . '</span>
-            </a>
-          </li>';
+        $preview_link .= '<li class="' . $provider . ' ">';
+        $preview_link .= l('<span> ' . $preview['name'] . '</span>', $preview['url'], array('html' => TRUE));
+        $preview_link .= '</li>';
       }
       $preview_link .= '</ul></div>';
     }

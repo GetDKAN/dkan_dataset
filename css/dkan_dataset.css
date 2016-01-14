@@ -240,9 +240,9 @@ div.vertical-tabs #edit-path-alias {
   padding: 7px 6px 7px 0;
   margin-left: -1px;
   margin-right: 8px;
-} 
-#url-edit-prefix, 
-#url-slug, 
+}
+#url-edit-prefix,
+#url-slug,
 #url-edit-preview .btn-small {
   float: left;
 }
@@ -291,10 +291,13 @@ li .heading:hover {
 .item-list .list-group li {
   margin:0;
 }
-.pane-dkan-dataset-dkan-dataset-resource-nodes .item-list .list-group li {
+<<<<<<< HEAD
+.pane-dkan-dataset-dkan-dataset-resource-nodes .item-list .list-group li,
+.node-type-resource .item-list .list-group li {
   margin: -1px;
 }
-.pane-dkan-dataset-dkan-dataset-resource-nodes .list-group-item {
+.pane-dkan-dataset-dkan-dataset-resource-nodes .list-group-item,
+.node-type-resource .list-group-item {
   position: relative;
   display: block;
   padding: 10px 15px;
@@ -307,14 +310,19 @@ li .heading:hover {
 }
 /* Move border-radius values from <li> to <a> */
 .pane-dkan-dataset-dkan-dataset-resource-nodes .list-group-item:first-child,
-.pane-dkan-dataset-dkan-dataset-resource-nodes .list-group-item:last-child {
+.pane-dkan-dataset-dkan-dataset-resource-nodes .list-group-item:last-child,
+.node-type-resource .list-group-item:first-child,
+.node-type-resource .list-group-item:last-child {
   border-radius: 0px 0px 0px 0px;
   -moz-border-radius: 0px 0px 0px 0px;
   -webkit-border-radius: 0px 0px 0px 0px;
 }
 .pane-dkan-dataset-dkan-dataset-resource-nodes li.first a,
 .pane-dkan-dataset-dkan-dataset-resource-nodes li.first .list-group-item:first-child,
-.pane-dkan-dataset-dkan-dataset-resource-nodes li.first .list-group-item:last-child {
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.first .list-group-item:last-child,
+.node-type-resource li.first a,
+.node-type-resource li.first .list-group-item:first-child,
+.node-type-resource li.first .list-group-item:last-child {
   margin-bottom: 0;
   border-radius: 4px 4px 0px 0px;
   -moz-border-radius: 4px 4px 0px 0px;
@@ -322,14 +330,20 @@ li .heading:hover {
 }
 .pane-dkan-dataset-dkan-dataset-resource-nodes li.last a,
 .pane-dkan-dataset-dkan-dataset-resource-nodes li.last .list-group-item:first-child,
-.pane-dkan-dataset-dkan-dataset-resource-nodes li.last .list-group-item:last-child {
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.last .list-group-item:last-child,
+.node-type-resource li.last a,
+.node-type-resource li.last .list-group-item:first-child,
+.node-type-resource li.last .list-group-item:last-child {
   border-radius: 0px 0px 4px 4px;
   -moz-border-radius: 0px 0px 4px 4px;
   -webkit-border-radius: 0px 0px 4px 4px;
 }
 .pane-dkan-dataset-dkan-dataset-resource-nodes li.first.last a,
 .pane-dkan-dataset-dkan-dataset-resource-nodes li.first.last .list-group-item:first-child,
-.pane-dkan-dataset-dkan-dataset-resource-nodes li.first.last .list-group-item:last-child {
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.first.last .list-group-item:last-child,
+.node-type-resource li.first.last a,
+.node-type-resource li.first.last .list-group-item:first-child,
+.node-type-resource li.first.last .list-group-item:last-child {
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -359,8 +373,8 @@ li .heading:hover {
   margin: 1em 0;
   min-height: 60px;
 }
-.node-dataset .resource-list li.last i {
-  padding-left: 10px;
+.open_with .node-dataset .resource-list li {
+  padding: 0 295px 0 45px;
 }
 .node-resource .download .format-label {
   display: block;
@@ -382,7 +396,7 @@ li .heading:hover {
 .resource-list li span.links {
   margin-top: 0;
   position: absolute;
-  top: 0px;
+  top: 5px;
   right: 10px;
 }
 .resource-list a.btn {
@@ -538,23 +552,23 @@ li .heading:hover {
 }
 .format-label[data-format=txt]:before {
   content: "\e6a1";
-  color:#70C6E5;  
+  color:#70C6E5;
 }
 .format-label[data-format=xls]:before {
   content: "\e6af";
-  color: #2db55d;  
+  color: #2db55d;
 }
 .format-label[data-format=xlsx]:before {
   content: "\e6b0";
-  color:#70C6E5;  
+  color:#70C6E5;
 }
 .format-label[data-format=xml]:before {
   content: "\e6b1";
-  color: #ef7100;  
+  color: #ef7100;
 }
 .format-label[data-format=zip]:before {
   content: "\e6b3";
-  color: #686868;  
+  color: #686868;
 }
 
 .node-resource .download .format-label {
@@ -579,4 +593,47 @@ li .heading:hover {
   min-width: 65px;
   text-decoration: none;
   z-index: 2;
+}
+.node-dataset #data-and-resources ul.resource-list ul.dropdown-menu li {
+width: auto;
+min-height: auto;
+padding: 5px;
+margin: 0;
+}
+.node-dataset #data-and-resources ul.resource-list .btn-group {
+  vertical-align: top;
+}
+.node-dataset #data-and-resources ul.resource-list .btn-primary {
+  margin: 5px 0;
+}
+.node-dataset #data-and-resources ul.resource-list .btn-group button:nth-of-type(2) {
+  opacity: .75;
+  border-radius: 0 4px 4px 0;
+}
+.node-dataset #data-and-resources ul.resource-list .links .data-link {
+  margin-left: 5px;
+}
+body .node-dataset #data-and-resources ul.resource-list li .dropdown-menu > li > a {
+  padding-left: 5px;
+}
+body .node-dataset #data-and-resources ul.resource-list li .dropdown-menu > li > a i {
+  padding-right: 5px;
+}
+body .node-dataset #data-and-resources ul.resource-list li i span {
+  padding-left: 5px;
+}
+body .node-dataset #data-and-resources ul.resource-list li .fa-download span {
+  display: inline;
+}
+body .node-dataset #data-and-resources ul.resource-list li .orig .fa-download span {
+  display: none;
+}
+body .node-dataset #data-and-resources ul.resource-list li .orig {
+  margin-left: 10px;
+}
+#data-and-resources .btn .caret {
+  margin: 0 0 0 5px;
+}
+#data-and-resources .btn .fa-share {
+  padding: 0 8px 0 0;
 }

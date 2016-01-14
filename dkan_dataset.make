@@ -16,7 +16,7 @@ projects[recline][download][url] = https://github.com/NuCivic/recline.git
 projects[recline][download][branch] = 7.x-1.x
 projects[recline][subdir] = contrib
 
-includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/431ffeaf4e22845fc83d1b4361a4e1d756e055ef/recline.make
+includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/7.x-1.x/recline.make
 
 ; Contrib Modules
 projects[autocomplete_deluxe][subdir] = contrib
@@ -36,17 +36,18 @@ projects[chosen][subdir] = contrib
 projects[context][version] = 3.6
 projects[context][subdir] = contrib
 
-projects[ctools][version] = 1.7
+projects[ctools][version] = 1.9
 projects[ctools][subdir] = contrib
 
 projects[date][version] = 2.8
 projects[date][subdir] = contrib
 
-projects[double_field][version] = 2.3
+projects[double_field][version] = 2.4
 projects[double_field][subdir] = contrib
 
-projects[entity][download][version] = 1.6
+projects[entity][download][full_version] = 7.x-1.6
 projects[entity][patch][2341611] = https://www.drupal.org/files/issues/entity-multivalue-token-replacement-fix-2341611-0.patch
+projects[entity][patch][2564119] = https://www.drupal.org/files/issues/Use-array-in-foreach-statement-2564119-1.patch
 projects[entity][subdir] = contrib
 
 projects[entity_rdf][download][type] = git
@@ -73,7 +74,7 @@ projects[facetapi_bonus][subdir] = contrib
 projects[features][version] = 2.6
 projects[features][subdir] = contrib
 
-projects[field_group][version] = 1.3
+projects[field_group][version] = 1.5
 projects[field_group][patch][2042681] = http://drupal.org/files/issues/field-group-show-ajax-2042681-8.patch
 projects[field_group][subdir] = contrib
 
@@ -82,7 +83,7 @@ projects[field_group_table][download][url] = "https://github.com/nuams/field_gro
 projects[field_group_table][subdir] = contrib
 projects[field_group_table][type] = module
 
-projects[filefield_sources][version] = 1.9
+projects[filefield_sources][version] = 1.10
 projects[filefield_sources][subdir] = contrib
 
 projects[gravatar][download][type] = git
@@ -99,7 +100,7 @@ projects[imagecache_actions][download][revision] = cd19d2a
 projects[imagecache_actions][subdir] = contrib
 projects[imagecache_actions][type] = module
 
-projects[jquery_update][version] = 2.6
+projects[jquery_update][version] = 2.7
 projects[jquery_update][subdir] = contrib
 
 projects[libraries][version] = 2.1
@@ -124,6 +125,7 @@ projects[multistep][type] = module
 projects[og][version] = 2.7
 projects[og][patch][1090438] = http://drupal.org/files/issues/og-add_users_and_entities_with_drush-1090438-12.patch
 projects[og][patch][2549071] = https://www.drupal.org/files/issues/og_actions-bug-vbo-delete.patch
+projects[og][patch][2301831] = https://www.drupal.org/files/issues/og-missing-permission-roles-2301831-1.patch
 projects[og][subdir] = contrib
 
 projects[og_extras][download][type] = git
@@ -175,13 +177,13 @@ projects[select_or_other][subdir] = contrib
 projects[search_api][version] = 1.15
 projects[search_api][subdir] = contrib
 
-projects[search_api_db][version] = 1.4
+projects[search_api_db][version] = 1.5
 projects[search_api_db][subdir] = contrib
 
 projects[strongarm][version] = 2.0
 projects[strongarm][subdir] = contrib
 
-projects[token][version] = 1.5
+projects[token][version] = 1.6
 projects[token][subdir] = contrib
 
 projects[uuid][version] = 1.0-alpha5

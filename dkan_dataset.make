@@ -42,7 +42,7 @@ projects[ctools][subdir] = contrib
 projects[date][version] = 2.8
 projects[date][subdir] = contrib
 
-projects[double_field][version] = 2.3
+projects[double_field][version] = 2.4
 projects[double_field][subdir] = contrib
 
 projects[entity][download][full_version] = 7.x-1.6
@@ -83,7 +83,7 @@ projects[field_group_table][download][url] = "https://github.com/nuams/field_gro
 projects[field_group_table][subdir] = contrib
 projects[field_group_table][type] = module
 
-projects[filefield_sources][version] = 1.9
+projects[filefield_sources][version] = 1.10
 projects[filefield_sources][subdir] = contrib
 
 projects[gravatar][download][type] = git
@@ -177,13 +177,13 @@ projects[select_or_other][subdir] = contrib
 projects[search_api][version] = 1.15
 projects[search_api][subdir] = contrib
 
-projects[search_api_db][version] = 1.4
+projects[search_api_db][version] = 1.5
 projects[search_api_db][subdir] = contrib
 
 projects[strongarm][version] = 2.0
 projects[strongarm][subdir] = contrib
 
-projects[token][version] = 1.5
+projects[token][version] = 1.6
 projects[token][subdir] = contrib
 
 projects[uuid][version] = 1.0-alpha5

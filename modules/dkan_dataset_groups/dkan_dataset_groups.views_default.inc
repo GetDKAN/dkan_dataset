@@ -38,7 +38,7 @@ function dkan_dataset_groups_views_default_views() {
   $handler->display->display_options['empty']['area']['table'] = 'views';
   $handler->display->display_options['empty']['area']['field'] = 'area';
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
-  $handler->display->display_options['empty']['area']['content'] = 'There is no datasets associated with this group.';
+  $handler->display->display_options['empty']['area']['content'] = 'No datasets were found.';
   $handler->display->display_options['empty']['area']['format'] = 'html';
   /* Relationship: Indexed Node: Publisher */
   $handler->display->display_options['relationships']['og_group_ref']['id'] = 'og_group_ref';

@@ -35,7 +35,7 @@ function dkan_dataset_groups_datasets($node) {
       ->fieldCondition('og_group_ref', 'target_id', $node->nid)
       ->propertyCondition('type', 'dataset');
   $result = $query->execute();
-  return $result['node'];
+  return isset($result['node']) ? $result['node'] : array();
 }
 
 /**

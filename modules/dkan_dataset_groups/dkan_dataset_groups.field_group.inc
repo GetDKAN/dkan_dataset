@@ -8,7 +8,7 @@
  * Implements hook_field_group_info().
  */
 function dkan_dataset_groups_field_group_info() {
-  $export = array();
+  $field_groups = array();
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -36,7 +36,7 @@ function dkan_dataset_groups_field_group_info() {
       ),
     ),
   );
-  $export['group_tab_about|node|group|default'] = $field_group;
+  $field_groups['group_tab_about|node|group|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -64,7 +64,7 @@ function dkan_dataset_groups_field_group_info() {
       ),
     ),
   );
-  $export['group_tab_about|node|group|form'] = $field_group;
+  $field_groups['group_tab_about|node|group|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -89,7 +89,7 @@ function dkan_dataset_groups_field_group_info() {
       ),
     ),
   );
-  $export['group_tab_datasets|node|group|default'] = $field_group;
+  $field_groups['group_tab_datasets|node|group|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -116,7 +116,7 @@ function dkan_dataset_groups_field_group_info() {
       ),
     ),
   );
-  $export['group_tab_members|node|group|default'] = $field_group;
+  $field_groups['group_tab_members|node|group|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -142,7 +142,7 @@ function dkan_dataset_groups_field_group_info() {
       ),
     ),
   );
-  $export['group_tabs|node|group|default'] = $field_group;
+  $field_groups['group_tabs|node|group|default'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -169,7 +169,14 @@ function dkan_dataset_groups_field_group_info() {
       ),
     ),
   );
-  $export['group_tabs|node|group|form'] = $field_group;
+  $field_groups['group_tabs|node|group|form'] = $field_group;
 
-  return $export;
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('About');
+  t('Datasets');
+  t('Members');
+  t('Tabs');
+
+  return $field_groups;
 }

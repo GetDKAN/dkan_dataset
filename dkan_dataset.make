@@ -59,9 +59,6 @@ projects[entity_rdf][subdir] = contrib
 projects[entityreference][version] = 1.1
 projects[entityreference][subdir] = contrib
 
-projects[eva][version] = 1.2
-projects[eva][subdir] = contrib
-
 projects[facetapi][subdir] = contrib
 projects[facetapi][version] = 1.3
 

@@ -143,7 +143,7 @@ function dkan_dataset_resource_direct_link($node) {
     $url = $node->field_link_api[LANGUAGE_NONE][0]['url'];
   }
   else {
-    $url = '';
+    $url = dkan_dataset_preview_url_local($node);
   }
   return $url;
 }
@@ -217,12 +217,9 @@ function theme_dkan_dataset_teaser_preview_link($vars) {
         <ul class="dropdown-menu">
       ';
       foreach ($previews as $provider => $preview) {
-        $preview_link .=
-          '<li class="' . $provider . ' ">
-            <a href="' . $preview['url'] . '" title="">
-              <span> ' . $preview['name'] . '</span>
-            </a>
-          </li>';
+        $preview_link .= '<li class="' . $provider . ' ">';
+        $preview_link .= l('<span> ' . $preview['name'] . '</span>', $preview['url'], array('html' => TRUE));
+        $preview_link .= '</li>';
       }
       $preview_link .= '</ul></div>';
     }

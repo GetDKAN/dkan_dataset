@@ -26,6 +26,29 @@ function dkan_dataset_groups_menu_local_tasks_alter(&$data, $router_item, $root_
 }
 
 /**
+ * Get dataset that belongs to a group
+ */
+function dkan_dataset_groups_datasets($node) {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+      ->propertyCondition('status', 1)
+      ->fieldCondition('og_group_ref', 'target_id', $node->nid)
+      ->propertyCondition('type', 'dataset');
+  $result = $query->execute();
+  return isset($result['node']) ? $result['node'] : array();
+}
+
+/**
+ * Get group members
+ */
+function dkan_dataset_groups_node_members($node) {
+  // Remove admin user from group
+  return array_filter(og_get_group_members_properties($node, array(), 'members', 'node'), function($uid){
+    return $uid != 1;
+  });
+}
+
+/**
  * Implements hook_block_view_alter().
  */
 function dkan_dataset_groups_block_view_alter(&$data, $block) {
@@ -42,11 +65,7 @@ function dkan_dataset_groups_block_view_alter(&$data, $block) {
       // Get the group from the context.
       $group = og_context();
 
-      // Remove admin user from group
-      $members = array_filter(
-        og_get_group_members_properties($node, array(), 'members', 'node'),
-        'dkan_dataset_groups_filter_admin'
-      );
+      $members = dkan_dataset_groups_node_members($node);
 
       $data['content']['#markup'] .= '<div class="group-owner-message"><strong>' . $subscribe_link . '</strong></div>';
 
@@ -57,13 +76,6 @@ function dkan_dataset_groups_block_view_alter(&$data, $block) {
 
     }
   }
-}
-
-/**
- * Filter the admin user from an array.
- */
-function dkan_dataset_groups_filter_admin($uid) {
-  return $uid != 1;
 }
 
 /**
@@ -183,4 +195,9 @@ function dkan_dataset_groups_menu_breadcrumb_alter(&$active_trail, $item) {
     $part2 = array_slice($active_trail, 1, null, true);
     $active_trail = array_merge($part1, array( 1 => $groups_link), $part2);
   }
+}
+
+function dkan_dataset_groups_node_update($node) {
+  path_breadcrumbs_object_cache_clear("group");
+  cache_clear_all('*', PATH_BREADCRUMBS_CACHE_STORAGE, TRUE);
 }

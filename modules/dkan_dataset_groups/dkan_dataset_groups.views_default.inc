@@ -22,7 +22,6 @@ function dkan_dataset_groups_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -89,8 +88,12 @@ function dkan_dataset_groups_views_default_views() {
     4 => 0,
   );
 
+  /* Display: Master */
+  $handler = $view->new_display('block', 'Master', 'dkan_group_search_master');
+
   /* Display: DKAN Group Search */
-  $handler = $view->new_display('block', 'DKAN Group Search', 'dkan_group_search');
+  $handler = $view->new_display('panel_pane', 'DKAN Group Search', 'dkan_group_search');
+  $handler->display->display_options['exposed_block'] = TRUE;
   $export['dkan_group_search'] = $view;
 
   $view = new view();

@@ -595,8 +595,8 @@ function dkan_dataset_sync_groups($node) {
   $groups_new = $node_new->__isset('og_group_ref') ? $node_new->og_group_ref->value() : '';
   if ($groups_new && $groups_orig) {
     // Resources.
-    $resources_new = $node_orig->__isset('field_resources') ? $node_orig->field_resources->value() : '';
-    $resources_orig = $node_new->__isset('field_resources') ? $node_new->field_resources->value() : '';
+    $resources_orig = $node_orig->__isset('field_resources') ? $node_orig->field_resources->value() : '';
+    $resources_new = $node_new->__isset('field_resources') ? $node_new->field_resources->value() : '';
     if ($resources_new && $resources_orig) {
 
       $new_groups = array();

@@ -628,7 +628,6 @@ function dkan_dataset_sync_groups($node) {
     $resources_added = array();
 
     if ((array_diff($orig_groups, $new_groups) || array_diff($new_groups, $orig_groups))) {
-      dpm('groups have changed');
       $additional_groups = dkan_dataset_resource_groups($resources_new, $node);
       $groups_new = $groups_new + $additional_groups;
       dkan_dataset_process_groups($resources_new, $groups_new);

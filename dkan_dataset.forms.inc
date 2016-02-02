@@ -300,6 +300,35 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     else {
       $form['actions']['another']['#submit'] = array('node_form_submit', 'dkan_dataset_resource_form_submit');
     }
+
+    $group_description = t("This resource is not assigned to any groups. Groups can only be assigned to Datasets. Resources are always a part of the parent Datasets's groups");
+
+    if (isset($form['og_group_ref'][$form['og_group_ref']['#language']][0])
+        && isset($form['og_group_ref'][$form['og_group_ref']['#language']][0]['#entity']->og_group_ref)
+        && !empty($form['og_group_ref'][$form['og_group_ref']['#language']][0]['#entity']->og_group_ref)
+    ) {
+      $titles = array();
+      foreach ($form['og_group_ref'][$form['og_group_ref']['#language']][0]['#entity']->og_group_ref['und'] as $group) {
+        $group = node_load($group['target_id']);
+        $titles[] = l($group->title, 'node/' . $group->nid);
+      }
+      $titles = theme('item_list', array('items' => $titles));
+      $group_description = t("This resource is in the following groups: !groups Groups can only be assigned to Datasets. Resources are always a part of the parent Datasets's groups.", array('!groups' => $titles));
+    }
+    else {
+      $group_description = t('No groups are attached to this resource. Groups can only be attached on datasets that resources are linked to.');
+    }
+
+    $form['og_group_ref']['#access'] = FALSE;
+    $form['groups'] = array(
+        '#type' => 'fieldset',
+        'und' => array(
+            '#type' => 'item',
+            '#markup' => $group_description,
+        ),
+        '#title' => t('Groups'),
+        '#group' => 'additional_settings',
+    );
   }
 }
 

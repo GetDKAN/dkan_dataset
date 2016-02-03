@@ -807,16 +807,15 @@ function dkan_dataset_update_resource_groups($resources, $updated_dataset, $upda
   }
 
   // Log messages to the user.
-  if ($updated_dataset_groups && count($updated_dataset_groups)) {
+  if ($num_resources) {
     if ($use_queue) {
       drupal_set_message(t("%d resources were queued to be updated with their new groups. They will be processed during upcoming cron runs.", array(
         '%d' => $num_resources
       )));
     }
     else {
-      drupal_set_message(t("%d resource(s) were added or removed from the groups associated with %dataset.", array(
-        '%d' => $num_resources,
-        '%dataset' => $updated_dataset->title->value()
+      drupal_set_message(t("Groups were updated on %d resource(s).", array(
+        '%d' => $num_resources
       )));
     }
   }

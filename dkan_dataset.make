@@ -158,8 +158,8 @@ projects[rdfx][subdir] = contrib
 
 projects[ref_field][download][type] = git
 projects[ref_field][download][url] = "http://git.drupal.org/project/ref_field.git"
-projects[ref_field][patch][1670356] = http://drupal.org/files/removed_notice-1670356-1.patch
-projects[ref_field][patch][2360019] = https://www.drupal.org/files/issues/ref_field-delete-insert-warning-2360019-0.patch
+; Updated Patch to fix the ton of notices this module throws. Hasn't been maintained since 2012!
+projects[ref_field][patch][2360019] = https://www.drupal.org/files/issues/ref_field-delete-insert-warning-2360019-5.patch
 projects[ref_field][download][revision] = 9dbf7cf
 projects[ref_field][subdir] = contrib
 projects[ref_field][type] = module

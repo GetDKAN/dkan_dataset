@@ -88,6 +88,7 @@ projects[filefield_sources][subdir] = contrib
 
 projects[file_resup][version] = 1.x-dev
 projects[file_resup][subdir] = contrib
+projects[file_resup][patch][2562419] = https://www.drupal.org/files/issues/file_resup-add-recline-support-2562419-1.patch
 
 projects[gravatar][download][type] = git
 projects[gravatar][download][url] = "http://git.drupal.org/project/gravatar.git"

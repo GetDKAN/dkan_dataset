@@ -13,7 +13,7 @@ includes[leaflet_draw_widget_make] = https://raw.githubusercontent.com/NuCivic/l
 ; Recline specific
 projects[recline][download][type] = git
 projects[recline][download][url] = https://github.com/NuCivic/recline.git
-projects[recline][download][branch] = 7.x-1.x
+projects[recline][download][branch] =  7.x-1.x
 projects[recline][subdir] = contrib
 
 includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/7.x-1.x/recline.make
@@ -85,6 +85,9 @@ projects[field_group_table][type] = module
 
 projects[filefield_sources][version] = 1.10
 projects[filefield_sources][subdir] = contrib
+
+projects[file_resup][version] = 1.x-dev
+projects[file_resup][subdir] = contrib
 
 projects[gravatar][download][type] = git
 projects[gravatar][download][url] = "http://git.drupal.org/project/gravatar.git"

@@ -214,6 +214,8 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     $form['field_upload'][$field_upload_langcode][0]['#title'] = '';
     $form['field_upload'][$field_upload_langcode][0]['view']['#collapsible'] = TRUE;
     $form['field_upload'][$field_upload_langcode][0]['view']['#collasped'] = TRUE;
+    $file_upload_validators = $form['field_upload'][$field_upload_langcode][0]['#file_resup_upload_validators'];
+    $form['field_upload'][$field_upload_langcode][0]['#description'] = theme('file_upload_help', array('upload_validators' => $file_upload_validators));
 
     // Get langcode for field_link_file.
     $field_link_file_langcode = dkan_dataset_form_field_language($form, 'field_link_file');

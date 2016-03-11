@@ -107,5 +107,6 @@ features[variable][] = node_preview_resource
 features[variable][] = node_submitted_dataset
 features[variable][] = node_submitted_resource
 features_exclude[dependencies][og] = og
+features_exclude[dependencies][dkan_featured_topics] = dkan_featured_topics
 features_exclude[field_base][og_group_ref] = og_group_ref
 features_exclude[field_instance][node-dataset-og_group_ref] = node-dataset-og_group_ref

@@ -93,7 +93,7 @@ function dkan_dataset_content_types_strongarm() {
       'display' => array(
         'resources' => array(
           'default' => array(
-            'weight' => '1',
+            'weight' => '2',
             'visible' => TRUE,
           ),
           'teaser' => array(

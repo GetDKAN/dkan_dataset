@@ -55,7 +55,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 1,
+      'weight' => 2,
     ),
   );
 
@@ -524,7 +524,7 @@ uk-ogl|UK Open Government Licence (OGL)',
         'sort_options' => 0,
       ),
       'type' => 'select_or_other',
-      'weight' => 3,
+      'weight' => 5,
     ),
   );
 
@@ -846,7 +846,7 @@ uk-ogl|UK Open Government Licence (OGL)',
         'size' => 60,
       ),
       'type' => 'autocomplete_deluxe_taxonomy',
-      'weight' => 2,
+      'weight' => 4,
     ),
   );
 

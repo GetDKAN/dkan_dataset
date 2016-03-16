@@ -194,7 +194,8 @@ function dkan_dataset_content_types_field_group_info() {
       0 => 'body',
       1 => 'field_license',
       2 => 'field_tags',
-      3 => 'title',
+      3 => 'field_topic',
+      4 => 'title',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

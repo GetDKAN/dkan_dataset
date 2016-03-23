@@ -177,52 +177,6 @@ function dkan_dataset_node_view($node, $view_mode, $langcode) {
     $node->content['#attached']['js'][] = drupal_get_path('module', 'dkan_dataset') . '/js/dkan_tooltip.js';
   }
 }
-if (module_exists('dkan_featured_topics')) {
-  function dkan_dataset_field_formatter_info() {
-    return array(
-      'dkan_dataset_term_topic_icon' => array(
-        'label' => t('Topic with icon'),
-        'field types' => array('taxonomy_term_reference'),
-      ),
-    );
-  }
-
-  function dkan_dataset_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
-    $element = array();
-
-    // Terms whose tid is 'autocreate' do not exist
-    // yet and $item['taxonomy_term'] is not set. Theme such terms as
-    // just their name.
-    switch ($display['type']) {
-      case 'dkan_dataset_term_topic_icon':
-        foreach ($items as $delta => $item) {
-          $term = taxonomy_term_load($item['tid']);
-          $images = field_get_items('taxonomy_term', $term, 'field_image');
-          $display = array(
-            'label' => 'hidden',
-            'settings' => array(
-              'image_style' => 'small_topics_icons',
-              ),
-            );
-          $img = field_view_field('taxonomy_term', $term, 'field_image', $display, $langcode = NULL);
-          $element[$delta] = array(
-            'image' => array(
-              '#type' => 'markup',
-              '#markup' => drupal_render($img),
-              ),
-            'name' => array(
-              '#type' => 'markup',
-              '#markup' => check_plain($term->name),
-              '#prefix' => '<div class="name">',
-              '#suffix' => '</div>',
-              ),
-          );
-        }
-      break;
-    }
-    return $element;
-  }
-}
 
 /**
  * Implements hook_field_extra_fields().

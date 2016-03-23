@@ -77,36 +77,6 @@ function dkan_dataset_groups_facetapi_default_facet_settings() {
     'show_expanded' => 0,
   );
   $export['search_api@groups_di:block:changed'] = $facet;
-  
-  $facet = new stdClass();
-  $facet->disabled = FALSE; /* Edit this to true to make a default facet disabled initially */
-  $facet->api_version = 1;
-  $facet->name = 'search_api@groups_di::changed';
-  $facet->searcher = 'search_api@groups_di';
-  $facet->realm = '';
-  $facet->facet = 'changed';
-  $facet->enabled = FALSE;
-  $facet->settings = array(
-    'operator' => 'and',
-    'hard_limit' => '50',
-    'dependencies' => array(
-      'facets' => array(),
-      'force_deactivation' => TRUE,
-      'regex' => FALSE,
-      'roles' => array(),
-      'bundle' => 'none',
-      'bundle_selected' => array(),
-    ),
-    'facet_mincount' => '1',
-    'facet_missing' => '0',
-    'flatten' => 0,
-    'query_type' => 'date',
-    'default_true' => TRUE,
-    'facet_search_ids' => array(),
-    'date_granularity' => 'DAY',
-    'pretty_paths_alias' => 'changed',
-  );
-  $export['search_api@groups_di::changed'] = $facet;
 
   $facet = new stdClass();
   $facet->disabled = FALSE; /* Edit this to true to make a default facet disabled initially */

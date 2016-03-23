@@ -1,3 +1,7 @@
+7.x-1.x
+--------------------------
+- Make date facet use "day" granularity.
+
 7.x-1.11 2016-02-02
 --------------------------
 - Fix some bugs breaking the resource links on dataset pages

@@ -390,11 +390,13 @@ li .heading:hover {
 .resource-list {
   list-style-type: none;
 }
+<<<<<<< HEAD
 .resource-list {
   clear: left;
-}
+=======
 .data-and-resources .resource-list li {
   margin: 0;
+>>>>>>> 7.x-1.x
 }
 .node-dataset .form-group .resource-list li {
   margin: 4px 10px 4px 0;
@@ -671,9 +673,6 @@ body .node-dataset #data-and-resources ul.resource-list li .orig {
 }
 #data-and-resources .btn .caret {
   margin: 0 0 0 5px;
-}
-#data-and-resources .btn-group .btn .caret {
-  margin: 0;
 }
 #data-and-resources .btn .fa-share {
   padding: 0 8px 0 0;

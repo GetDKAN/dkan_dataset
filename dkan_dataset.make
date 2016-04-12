@@ -50,12 +50,6 @@ projects[entity][patch][2341611] = https://www.drupal.org/files/issues/entity-mu
 projects[entity][patch][2564119] = https://www.drupal.org/files/issues/Use-array-in-foreach-statement-2564119-1.patch
 projects[entity][subdir] = contrib
 
-projects[entity_rdf][download][type] = git
-projects[entity_rdf][download][url] = http://git.drupal.org/project/entity_rdf.git
-projects[entity_rdf][download][revision] = 7d91983
-projects[entity_rdf][type] = module
-projects[entity_rdf][subdir] = contrib
-
 projects[entityreference][version] = 1.1
 projects[entityreference][subdir] = contrib
 

@@ -232,7 +232,6 @@ function dkan_dataset_groups_default_search_api_index() {
     },
     "enabled" : "1",
     "read_only" : "0",
-    "rdf_mapping" : []
   }');
   return $items;
 }
@@ -325,7 +324,6 @@ function dkan_dataset_groups_default_search_api_server() {
       }
     },
     "enabled" : "1",
-    "rdf_mapping" : []
   }');
   return $items;
 }

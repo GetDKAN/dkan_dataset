@@ -51,7 +51,6 @@ class DkanDatasetClassWebTestCase extends DrupalWebTestCase {
     $modules[] = 'number';
     $modules[] = 'options';
     $modules[] = 'path';
-    $modules[] = 'rdf';
     $modules[] = 'taxonomy';
     $modules[] = 'text';
     $modules[] = 'user';

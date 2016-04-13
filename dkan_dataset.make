@@ -146,13 +146,6 @@ projects[open_data_schema_map_dkan][subdir] = contrib
 projects[pathauto][version] = 1.2
 projects[pathauto][subdir] = contrib
 
-projects[rdfx][download][type] = git
-projects[rdfx][download][url] = http://git.drupal.org/project/rdfx.git
-projects[rdfx][download][branch] = 7.x-2.x
-projects[rdfx][download][revision] = cc7d4fc
-projects[rdfx][patch][1271498] = http://drupal.org/files/issues/1271498_3_rdfui_form_values.patch
-projects[rdfx][subdir] = contrib
-
 projects[ref_field][download][type] = git
 projects[ref_field][download][url] = "http://git.drupal.org/project/ref_field.git"
 ; Updated Patch to fix the ton of notices this module throws. Hasn't been maintained since 2012!

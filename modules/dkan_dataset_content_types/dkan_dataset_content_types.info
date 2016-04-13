@@ -23,7 +23,6 @@ dependencies[] = link_iframe_formatter
 dependencies[] = list
 dependencies[] = options
 dependencies[] = rdf
-dependencies[] = rdfx
 dependencies[] = recline
 dependencies[] = select_or_other
 dependencies[] = strongarm

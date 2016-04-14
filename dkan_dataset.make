@@ -140,7 +140,7 @@ projects[og_extras][type] = module
 projects[open_data_schema_map][type] = module
 projects[open_data_schema_map][download][type] = git
 projects[open_data_schema_map][download][url] = https://github.com/NuCivic/open_data_schema_map.git
-projects[open_data_schema_map][download][branch] = master
+projects[open_data_schema_map][download][branch] = email_to_update
 projects[open_data_schema_map][subdir] = contrib
 
 projects[open_data_schema_map_dkan][type] = module

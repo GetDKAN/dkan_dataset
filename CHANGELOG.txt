@@ -1,5 +1,6 @@
 7.x-1.x
 --------------------------
+- Upgrade Features to 7.x-2.9
 - Make date facet use "day" granularity.
 
 7.x-1.11 2016-02-02

@@ -4,7 +4,7 @@ api = 2
 ; Leaflet Draw Widget specific
 projects[leaflet_draw_widget][download][type] = git
 projects[leaflet_draw_widget][download][url] = "https://github.com/NuCivic/leaflet_draw_widget.git"
-projects[leaflet_draw_widget][download][branch] = nucivic_northd_new_version
+projects[leaflet_draw_widget][download][revision] = "967c8bb3eb13f3b70f28a4b487074b23591f1075"
 projects[leaflet_draw_widget][subdir] = contrib
 projects[leaflet_draw_widget][type] = module
 
@@ -13,10 +13,10 @@ includes[leaflet_draw_widget_make] = https://raw.githubusercontent.com/NuCivic/l
 ; Recline specific
 projects[recline][download][type] = git
 projects[recline][download][url] = https://github.com/NuCivic/recline.git
-projects[recline][download][branch] = 7.x-1.x
+projects[recline][download][tag] = 7.x-1.12
 projects[recline][subdir] = contrib
 
-includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/7.x-1.11-RC2/recline.make
+includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/7.x-1.12/recline.make
 
 ; Contrib Modules
 projects[autocomplete_deluxe][subdir] = contrib
@@ -140,7 +140,7 @@ projects[og_extras][type] = module
 projects[open_data_schema_map][type] = module
 projects[open_data_schema_map][download][type] = git
 projects[open_data_schema_map][download][url] = https://github.com/NuCivic/open_data_schema_map.git
-projects[open_data_schema_map][download][revision] = fd6181fe9529a610de7304cae7647487bc1f77d6
+projects[open_data_schema_map][download][revision] = b7f6d255855a1c950d5a7dadd8a33860ccf66d35
 projects[open_data_schema_map][subdir] = contrib
 
 projects[open_data_schema_map_dkan][type] = module

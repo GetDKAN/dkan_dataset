@@ -45,61 +45,148 @@ Token authenticaion can be enabled using the <a href="https://www.drupal.org/pro
 #### Authentication Permissions
 The permissions with which a user is granted depend on the user role. User roles and permissions are easily configured in the user administration screen at ``admin/people``.
 
-### Creating a Dataset
+### Examples
 
-Below is an example request to create a dataset
+Below you can find examples for the most common use cases. We are going to use Session Authentication for this examples.
 
-* request uri: http://example.com/api/dataset/node 
-* request method: post
-* content-type: application/json
-* request body
+#### How to Log In and get the Session Cookie
+
 ```
-{
-    "type": "dataset",
-    "title": "Wisconsin Polling Places",
-    "og_group_ref": {
-        "und": {
-            // Node ids for two groups.
-            "target_id": "2,3"
-        }
-    },
-    "field_resources": {
-        "und": [
-            {
-                // Resource title plus node id.
-                "target_id": "Madison Polling Places (5)"
-            }
-        ]
-    },
-    "body": {
-        "und": [
-            {
-                "value": "<p>Polling places in the state of Wisconsin.</p>"
-            }
-        ]
-    },
-    "field_author": {
-        "und": [
-            {
-                "value": "Bob Lafollette"
-            }
-        ]
-    },
-    "field_contact_email": {
-        "und": [
-            {
-                "value": "admin@example.com"
-            }
-        ]
-    }
-}
+// Setup request URL.
+$request_url = 'http://example.com/api/dataset/user/login';
+
+// Prepare user data.
+$user_data = array(
+    'username' => 'theusername',
+    'password' => 'theuserpassword',
+);
+$user_data = http_build_query($user_data);
+
+// Setup request.
+$curl = curl_init($request_url);
+curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json')); // Accept JSON response.
+curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST.
+curl_setopt($curl, CURLOPT_POSTFIELDS, $user_data); // Set POST data.
+curl_setopt($curl, CURLOPT_HEADER, FALSE);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+curl_setopt($curl, CURLOPT_FAILONERROR, TRUE);
+
+// Execute request and get response.
+$response = curl_exec($curl);
+
+// Process response.
+$logged_user = json_decode($response);
+
+// Save cookie session to be used on future requests.
+$cookie_session = $logged_user->session_name . '=' . $logged_user->sessid;
 ```
-* response
+
+#### How to get the CSRF Token
+
 ```
-{
-    "nid": "131",
-    "uri": "http://example.com/api/dataset/node/131"
-}
+// Setup request URL.
+$request_url = 'http://example.com/services/session/token';
+
+// Setup request.
+$curl = curl_init($request_url);
+curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json')); // Accept JSON response.
+curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST.
+curl_setopt($curl, CURLOPT_COOKIE, "$cookie_session"); // Send the cookie session that we got after login.
+curl_setopt($curl, CURLOPT_HEADER, FALSE);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+curl_setopt($curl, CURLOPT_FAILONERROR, TRUE);
+
+// Execute request and save CSRF Token.
+$csrf_token = curl_exec($curl);
+```
+
+#### How to create a Resource
+
+```
+// Setup request URL.
+$request_url = 'http://example.com/api/dataset/node';
+
+// Setup resource data.
+// A great explanation on how to target each node field can be found on the 'Identifying field names' article linked on the 'Documentation' section.
+$resource_data = array(
+    'type' => 'resource',
+    'title' => 'Example resource',
+    'status' => 1,
+    'body[und][0][value]' => 'The description'
+);
+$resource_data = http_build_query($resource_data);
+
+// Setup request.
+$curl = curl_init($request_url); 
+curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json', 'X-CSRF-Token: ' . $csrf_token)); 
+curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST.
+curl_setopt($curl, CURLOPT_POSTFIELDS, $resource_data); // Set POST data.
+curl_setopt($curl, CURLOPT_COOKIE, "$cookie_session");
+curl_setopt($curl, CURLOPT_HEADER, FALSE);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+curl_setopt($curl, CURLOPT_FAILONERROR, TRUE);
+
+// Execute request and get response.
+$response = curl_exec($curl);
+```
+
+#### How to attach a file to a resource
+
+```
+// Setup request URL.
+$request_url = 'http://example.com/api/dataset/node/' . $resource_id . '/attach_file';
+
+// Setup file data.
+$file_data = array(
+    'files[1]' => curl_file_create($file),
+    'field_name' => 'field_upload',
+    'attach' => 1
+);
+
+// Setup request.
+$curl = curl_init($request_url); 
+curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data','Accept: application/json', 'X-CSRF-Token: ' . $csrf_token));
+curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST.
+curl_setopt($curl, CURLOPT_POSTFIELDS, $file_data); // Set POST data.
+curl_setopt($curl, CURLOPT_COOKIE, "$cookie_session");
+curl_setopt($curl, CURLOPT_HEADER, FALSE);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+curl_setopt($curl, CURLOPT_FAILONERROR, TRUE);
+
+// Execute request and get response.
+$response = curl_exec($curl);
+```
+
+#### How to create a Dataset
+
+```
+// Setup request URL.
+$request_url = 'http://example.com/api/dataset/node';
+
+// Setup dataset data.
+// A great explanation on how to target each node field can be found on the 'Identifying field names' article linked on the 'Documentation' section.
+$dataset_data = array(
+    'type' => 'dataset',
+    'title' => 'Example dataset',
+    'status' => 1,
+    'body[und][0][value]' => 'The description',
+    'field_resources[und][0][target_id]' => 'Madison Polling Places (5)' // Resource title plus node id
+    'field_author[und][0][value]' => 'Bob Lafollette'
+);
+$dataset_data = http_build_query($dataset_data);
+
+// Setup request.
+$curl = curl_init($request_url); 
+curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json', 'X-CSRF-Token: ' . $csrf_token)); 
+curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST.
+curl_setopt($curl, CURLOPT_POSTFIELDS, $dataset_data); // Set POST data.
+curl_setopt($curl, CURLOPT_COOKIE, "$cookie_session");
+curl_setopt($curl, CURLOPT_HEADER, FALSE);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+curl_setopt($curl, CURLOPT_FAILONERROR, TRUE);
+
+// Execute request and get response.
+$response = curl_exec($curl);
 ```
 
 ### Services Stack Exchange
@@ -112,4 +199,3 @@ The Sessions module has a thriving community on Stack Exchange. Questions can be
 or to the Sessions tag on the Drupal Stack Exchange:
 
 * http://drupal.stackexchange.com/questions/tagged/services
-

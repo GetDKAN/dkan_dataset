@@ -39,7 +39,7 @@ projects[context][subdir] = contrib
 projects[ctools][version] = 1.9
 projects[ctools][subdir] = contrib
 
-projects[date][version] = 2.8
+projects[date][version] = 2.9
 projects[date][subdir] = contrib
 
 projects[double_field][version] = 2.4

@@ -174,7 +174,7 @@ projects[remote_file_source][subdir] = contrib
 projects[remote_stream_wrapper][version] = 1.0-beta4
 projects[remote_stream_wrapper][subdir] = contrib
 
-projects[select_or_other][version] = 2.20
+projects[select_or_other][version] = 2.22
 projects[select_or_other][subdir] = contrib
 
 projects[search_api][version] = 1.18

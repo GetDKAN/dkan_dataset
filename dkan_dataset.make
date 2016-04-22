@@ -177,7 +177,7 @@ projects[remote_stream_wrapper][subdir] = contrib
 projects[select_or_other][version] = 2.20
 projects[select_or_other][subdir] = contrib
 
-projects[search_api][version] = 1.15
+projects[search_api][version] = 1.18
 projects[search_api][subdir] = contrib
 
 projects[search_api_db][version] = 1.5

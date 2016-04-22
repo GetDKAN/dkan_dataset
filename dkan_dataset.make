@@ -189,7 +189,7 @@ projects[strongarm][subdir] = contrib
 projects[token][version] = 1.6
 projects[token][subdir] = contrib
 
-projects[uuid][version] = 1.0-alpha5
+projects[uuid][version] = 1.0-beta1
 projects[uuid][patch][1927474] = http://drupal.org/files/unknown-column-in-field-list-fix-1927474-2.patch
 projects[uuid][subdir] = contrib
 

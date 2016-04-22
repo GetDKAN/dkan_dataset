@@ -106,7 +106,7 @@ projects[imagecache_actions][type] = module
 projects[jquery_update][version] = 2.7
 projects[jquery_update][subdir] = contrib
 
-projects[libraries][version] = 2.1
+projects[libraries][version] = 2.2
 projects[libraries][subdir] = contrib
 
 projects[link][version] = 1.4

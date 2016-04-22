@@ -30,7 +30,7 @@ projects[beautytips][patch][849232] = http://drupal.org/files/include-excanvas-v
 projects[beautytips][subdir] = contrib
 projects[beautytips][type] = module
 
-projects[chosen][version] = 2.0-beta4
+projects[chosen][version] = 2.0-beta5
 projects[chosen][subdir] = contrib
 
 projects[context][version] = 3.6

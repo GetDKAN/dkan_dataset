@@ -109,7 +109,7 @@ projects[jquery_update][subdir] = contrib
 projects[libraries][version] = 2.1
 projects[libraries][subdir] = contrib
 
-projects[link][version] = 1.1
+projects[link][version] = 1.4
 projects[link][subdir] = contrib
 
 projects[link_iframe_formatter][download][type] = git

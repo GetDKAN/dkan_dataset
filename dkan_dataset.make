@@ -193,7 +193,7 @@ projects[uuid][version] = 1.0-beta1
 projects[uuid][patch][1927474] = http://drupal.org/files/unknown-column-in-field-list-fix-1927474-2.patch
 projects[uuid][subdir] = contrib
 
-projects[views][version] = 3.11
+projects[views][version] = 3.13
 projects[views][subdir] = contrib
 
 projects[views_responsive_grid][version] = 1.3

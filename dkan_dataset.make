@@ -63,7 +63,7 @@ projects[eva][version] = 1.2
 projects[eva][subdir] = contrib
 
 projects[facetapi][subdir] = contrib
-projects[facetapi][version] = 1.3
+projects[facetapi][version] = 1.5
 
 projects[facetapi_pretty_paths][subdir] = contrib
 projects[facetapi_pretty_paths][version] = 1.1

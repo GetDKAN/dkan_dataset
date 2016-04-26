@@ -52,6 +52,7 @@ projects[entity][subdir] = contrib
 
 projects[entity_rdf][download][type] = git
 projects[entity_rdf][download][url] = http://git.drupal.org/project/entity_rdf.git
+projects[entity_rdf][download][branch] = 7.x-1.x
 projects[entity_rdf][download][revision] = 7d91983
 projects[entity_rdf][type] = module
 projects[entity_rdf][subdir] = contrib

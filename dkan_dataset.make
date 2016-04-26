@@ -122,6 +122,7 @@ projects[link_iframe_formatter][type] = module
 
 projects[multistep][download][type] = git
 projects[multistep][download][url] = "http://git.drupal.org/project/multistep.git"
+projects[multistep][download][branch] = 7.x-1.x
 projects[multistep][download][revision] = 3b0d40a
 projects[multistep][subdir] = contrib
 projects[multistep][type] = module

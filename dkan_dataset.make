@@ -92,7 +92,8 @@ projects[file_resup][subdir] = contrib
 
 projects[gravatar][download][type] = git
 projects[gravatar][download][url] = "http://git.drupal.org/project/gravatar.git"
-projects[gravatar][download][revision] = e933db3
+projects[gravatar][download][branch] = 7.x-1.x
+projects[gravatar][download][revision] = bb2f81e
 projects[gravatar][patch][1568162] = http://drupal.org/files/views-display-user-picture-doesn-t-display-gravatar-1568162-10.patch
 projects[gravatar][subdir] = contrib
 projects[gravatar][type] = module

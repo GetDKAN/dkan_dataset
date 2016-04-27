@@ -134,9 +134,7 @@ projects[og][patch][2549071] = https://www.drupal.org/files/issues/og_actions-bu
 projects[og][patch][2301831] = https://www.drupal.org/files/issues/og-missing-permission-roles-2301831-1.patch
 projects[og][subdir] = contrib
 
-projects[og_extras][download][type] = git
-projects[og_extras][download][url] = "http://git.drupal.org/project/og_extras.git"
-projects[og_extras][download][revision] = "b7e3587"
+projects[og_extras][version] = 1.2
 projects[og_extras][subdir] = contrib
 projects[og_extras][type] = module
 

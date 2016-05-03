@@ -13,7 +13,7 @@ includes[leaflet_draw_widget_make] = https://raw.githubusercontent.com/NuCivic/l
 ; Recline specific
 projects[recline][download][type] = git
 projects[recline][download][url] = https://github.com/NuCivic/recline.git
-projects[recline][download][branch] =  7.x-1.x
+projects[recline][download][branch] = 7.x-1.x
 projects[recline][subdir] = contrib
 
 includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/7.x-1.x/recline.make
@@ -71,7 +71,7 @@ projects[facetapi_pretty_paths][version] = 1.1
 projects[facetapi_bonus][version] = 1.1
 projects[facetapi_bonus][subdir] = contrib
 
-projects[features][version] = 2.6
+projects[features][version] = 2.9
 projects[features][subdir] = contrib
 
 projects[field_group][version] = 1.5

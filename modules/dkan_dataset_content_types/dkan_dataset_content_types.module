@@ -108,9 +108,6 @@ function dkan_dataset_content_types_alter_dataset_license(&$dataset, $key) {
       if (isset($license['uri'])) {
         $dataset[$key] = $license['uri'];
       }
-      else {
-        unset($dataset[$key]);
-      }
     }
     else {
       unset($dataset[$key]);

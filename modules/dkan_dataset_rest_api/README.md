@@ -1,17 +1,19 @@
 ## DKAN Dataset REST API
 
-DKAN Dataset API uses the <a href="https://www.drupal.org/project/services">Services</a> module to create CRUD endpoint at ``api/dataset/node``. Any entity can have an endpoint such as users, groups, taxonomy terms. Entities can be enabled through the services module administrative interface at ``/admin/structure/services/list/dkan_dataset_api/resources``.
+DKAN Dataset REST API uses the <a href="https://www.drupal.org/project/services">Services</a> module to create CRUD endpoint at ``api/dataset/node``. By default, this endpoint provides full CRUD access to a website's content nodes, and limited access to users (to allow authentication). The endpoint can be customized at ``/admin/structure/services/list/dkan_dataset_api/resources``.
 
 ### Documentation
-The <a href="https://www.drupal.org/project/services">Services module</a> has extensive documentation. Here are some entries of interest:
+The DKAN Dataset API module is only a light wrapper around the <a href="https://www.drupal.org/project/services">Services module</a>, which has extensive documentation. Here are some entries of interest:
 
 * <a href="https://www.drupal.org/node/783722">Testing Resources</a>
 * <a href="https://www.drupal.org/node/1354202">Identifying field names</a>
 * <a href="https://www.drupal.org/node/1827698">Using REST Server with 2-Legged OAuth Authentication (Example with Java Servlet)</a>
 * <a href="http://tylerfrankenstein.com/code/drupal-services-csrf-token-firefox-poster">Services CSRF Token with FireFox Poster</a>
 
+The Sessions module also [has a thriving community on the Drupal Stack Exchange](http://drupal.stackexchange.com/questions/tagged/services).
+
 ### Server Types
-DKAN Dataset API comes with a REST Server. Other server types are also incldued but not turned on. Those include:
+DKAN Dataset REST API comes with a REST Server. Other server types are also incldued in the Services module but not turned on. Those include:
 
 * OAUTH
 * XML-RPC
@@ -40,14 +42,14 @@ DKAN Dataset API comes with a REST Server. Other server types are also incldued 
 Session authentication is enabled by default. With session authentication an inital request is made to the user login to requet a session cookie. That session cookie is then stored locally and sent with a request in the X-CSRF-Token header to authenticate the request.
 
 #### Token Authentication
-Token authenticaion can be enabled using the <a href="https://www.drupal.org/project/services_token_access">Services Token Access</a> module. This is less secure but is easier for community members to use.
+Token authenticaion is not currently available out of the box. However, it can be enabled by adding the <a href="https://www.drupal.org/project/services_token_access">Services Token Access</a> module to your site. This is less secure but is easier for community members to use, and may be added to the DKAN distribution in a future release.
 
 #### Authentication Permissions
-The permissions with which a user is granted depend on the user role. User roles and permissions are easily configured in the user administration screen at ``admin/people``.
+The permissions with which a user is granted depend on the user role. User roles and permissions are easily configured in the user administration screen at ``admin/people``, and DKAN comes with a number of pre-configured default roles via the [DKAN Permissions](https://github.com/NuCivic/dkan/tree/7.x-1.x/modules/dkan/dkan_permissions) module.
 
 ### Examples
 
-Below you can find examples for the most common use cases. We are going to use Session Authentication for this examples.
+Below you can find examples in PHP for the most common use cases, using session authentication.
 
 #### How to Log In and get the Session Cookie
 
@@ -117,8 +119,8 @@ $resource_data = array(
 $resource_data = http_build_query($resource_data);
 
 // Setup request.
-$curl = curl_init($request_url); 
-curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json', 'X-CSRF-Token: ' . $csrf_token)); 
+$curl = curl_init($request_url);
+curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json', 'X-CSRF-Token: ' . $csrf_token));
 curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST.
 curl_setopt($curl, CURLOPT_POSTFIELDS, $resource_data); // Set POST data.
 curl_setopt($curl, CURLOPT_COOKIE, "$cookie_session");
@@ -144,7 +146,7 @@ $file_data = array(
 );
 
 // Setup request.
-$curl = curl_init($request_url); 
+$curl = curl_init($request_url);
 curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data','Accept: application/json', 'X-CSRF-Token: ' . $csrf_token));
 curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST.
 curl_setopt($curl, CURLOPT_POSTFIELDS, $file_data); // Set POST data.
@@ -176,8 +178,8 @@ $dataset_data = array(
 $dataset_data = http_build_query($dataset_data);
 
 // Setup request.
-$curl = curl_init($request_url); 
-curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json', 'X-CSRF-Token: ' . $csrf_token)); 
+$curl = curl_init($request_url);
+curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json', 'X-CSRF-Token: ' . $csrf_token));
 curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST.
 curl_setopt($curl, CURLOPT_POSTFIELDS, $dataset_data); // Set POST data.
 curl_setopt($curl, CURLOPT_COOKIE, "$cookie_session");
@@ -188,14 +190,3 @@ curl_setopt($curl, CURLOPT_FAILONERROR, TRUE);
 // Execute request and get response.
 $response = curl_exec($curl);
 ```
-
-### Services Stack Exchange
-
-The Sessions module has a thriving community on Stack Exchange. Questions can be posted to DKAN community resources:
-
-* http://gitub.com/nucvic/dkan/issues
-* https://groups.google.com/forum/#!forum/dkan-dev
-
-or to the Sessions tag on the Drupal Stack Exchange:
-
-* http://drupal.stackexchange.com/questions/tagged/services

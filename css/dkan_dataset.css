@@ -361,24 +361,24 @@ li .heading:hover {
   -moz-border-radius: 0px 0px 0px 0px;
   -webkit-border-radius: 0px 0px 0px 0px;
 }
-.node-type-resource li.first a,
-.node-type-resource li.first .list-group-item:first-child,
-.node-type-resource li.first .list-group-item:last-child {
+.node-type-resource .list-group li.first a,
+.node-type-resource .list-group li.first .list-group-item:first-child,
+.node-type-resource .list-group li.first .list-group-item:last-child {
   margin-bottom: 0;
   border-radius: 4px 4px 0px 0px;
   -moz-border-radius: 4px 4px 0px 0px;
   -webkit-border-radius: 4px 4px 0px 0px;
 }
-.node-type-resource li.last a,
-.node-type-resource li.last .list-group-item:first-child,
-.node-type-resource li.last .list-group-item:last-child {
+.node-type-resource .list-group li.last a,
+.node-type-resource .list-group li.last .list-group-item:first-child,
+.node-type-resource .list-group li.last .list-group-item:last-child {
   border-radius: 0px 0px 4px 4px;
   -moz-border-radius: 0px 0px 4px 4px;
   -webkit-border-radius: 0px 0px 4px 4px;
 }
-.node-type-resource li.first.last a,
-.node-type-resource li.first.last .list-group-item:first-child,
-.node-type-resource li.first.last .list-group-item:last-child {
+.node-type-resource .list-group li.first.last a,
+.node-type-resource .list-group li.first.last .list-group-item:first-child,
+.node-type-resource .list-group li.first.last .list-group-item:last-child {
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;

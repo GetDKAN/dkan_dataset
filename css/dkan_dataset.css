@@ -340,9 +340,12 @@ li .heading:hover {
 .item-list .list-group li {
   margin:0;
 }
+<<<<<<< HEAD
+.pane-dkan-dataset-dkan-dataset-resource-nodes .item-list .list-group li,
 .node-type-resource .item-list .list-group li {
   margin: -1px;
 }
+.pane-dkan-dataset-dkan-dataset-resource-nodes .list-group-item,
 .node-type-resource .list-group-item {
   position: relative;
   display: block;
@@ -355,12 +358,17 @@ li .heading:hover {
   -webkit-border-radius: 0px 0px 0px 0px;
 }
 /* Move border-radius values from <li> to <a> */
+.pane-dkan-dataset-dkan-dataset-resource-nodes .list-group-item:first-child,
+.pane-dkan-dataset-dkan-dataset-resource-nodes .list-group-item:last-child,
 .node-type-resource .list-group-item:first-child,
 .node-type-resource .list-group-item:last-child {
   border-radius: 0px 0px 0px 0px;
   -moz-border-radius: 0px 0px 0px 0px;
   -webkit-border-radius: 0px 0px 0px 0px;
 }
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.first a,
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.first .list-group-item:first-child,
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.first .list-group-item:last-child,
 .node-type-resource li.first a,
 .node-type-resource li.first .list-group-item:first-child,
 .node-type-resource li.first .list-group-item:last-child {
@@ -369,6 +377,9 @@ li .heading:hover {
   -moz-border-radius: 4px 4px 0px 0px;
   -webkit-border-radius: 4px 4px 0px 0px;
 }
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.last a,
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.last .list-group-item:first-child,
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.last .list-group-item:last-child,
 .node-type-resource li.last a,
 .node-type-resource li.last .list-group-item:first-child,
 .node-type-resource li.last .list-group-item:last-child {
@@ -376,6 +387,9 @@ li .heading:hover {
   -moz-border-radius: 0px 0px 4px 4px;
   -webkit-border-radius: 0px 0px 4px 4px;
 }
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.first.last a,
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.first.last .list-group-item:first-child,
+.pane-dkan-dataset-dkan-dataset-resource-nodes li.first.last .list-group-item:last-child,
 .node-type-resource li.first.last a,
 .node-type-resource li.first.last .list-group-item:first-child,
 .node-type-resource li.first.last .list-group-item:last-child {

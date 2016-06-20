@@ -52,7 +52,6 @@ projects[entity][subdir] = contrib
 
 projects[entity_rdf][download][type] = git
 projects[entity_rdf][download][url] = http://git.drupal.org/project/entity_rdf.git
-projects[entity_rdf][download][branch] = 7.x-1.x
 projects[entity_rdf][download][revision] = 7d91983
 projects[entity_rdf][type] = module
 projects[entity_rdf][subdir] = contrib
@@ -81,6 +80,7 @@ projects[field_group][subdir] = contrib
 
 projects[field_group_table][download][type] = git
 projects[field_group_table][download][url] = "https://github.com/nuams/field_group_table.git"
+projects[field_group_table][download][revision] = 5b0aed9396a8cfd19a5b623a5952b3b8cacd361c
 projects[field_group_table][subdir] = contrib
 projects[field_group_table][type] = module
 
@@ -100,7 +100,6 @@ projects[gravatar][type] = module
 
 projects[imagecache_actions][download][type] = git
 projects[imagecache_actions][download][url] = "http://git.drupal.org/project/imagecache_actions.git"
-projects[imagecache_actions][download][branch] = 7.x-1.x
 projects[imagecache_actions][download][revision] = cd19d2a
 projects[imagecache_actions][subdir] = contrib
 projects[imagecache_actions][type] = module
@@ -123,7 +122,6 @@ projects[link_iframe_formatter][type] = module
 
 projects[multistep][download][type] = git
 projects[multistep][download][url] = "http://git.drupal.org/project/multistep.git"
-projects[multistep][download][branch] = 7.x-1.x
 projects[multistep][download][revision] = 3b0d40a
 projects[multistep][subdir] = contrib
 projects[multistep][type] = module

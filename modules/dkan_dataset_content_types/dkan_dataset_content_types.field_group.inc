@@ -132,14 +132,14 @@ function dkan_dataset_content_types_field_group_info() {
   $field_group->mode = 'form';
   $field_group->parent_name = 'group_data';
   $field_group->data = array(
-    'label' => 'Link to an API',
+    'label' => 'URL',
     'weight' => '11',
     'children' => array(
       0 => 'field_link_api',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
-      'label' => 'Link to an API',
+      'label' => 'URL',
       'instance_settings' => array(
         'required_fields' => 1,
         'classes' => 'htab_link_api group-link-api field-group-htab',
@@ -160,14 +160,14 @@ function dkan_dataset_content_types_field_group_info() {
   $field_group->mode = 'form';
   $field_group->parent_name = 'group_data';
   $field_group->data = array(
-    'label' => 'Link to a file',
-    'weight' => '9',
+    'label' => 'Remote file',
+    'weight' => '12',
     'children' => array(
       0 => 'field_link_remote_file',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
-      'label' => 'Link to a file',
+      'label' => 'Remote file',
       'instance_settings' => array(
         'required_fields' => 1,
         'classes' => 'htab_link_file group-link-file field-group-htab',
@@ -221,7 +221,7 @@ function dkan_dataset_content_types_field_group_info() {
   $field_group->parent_name = 'group_data';
   $field_group->data = array(
     'label' => 'Upload a file',
-    'weight' => '12',
+    'weight' => '9',
     'children' => array(
       0 => 'field_upload',
     ),
@@ -242,8 +242,8 @@ function dkan_dataset_content_types_field_group_info() {
   // Included for use with string extractors like potx.
   t('Dataset Info');
   t('Dataset Information');
-  t('Link to a file');
-  t('Link to an API');
+  t('Remote file');
+  t('URL');
   t('Primary');
   t('Resource');
   t('Upload a file');

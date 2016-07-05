@@ -132,14 +132,14 @@ function dkan_dataset_content_types_field_group_info() {
   $field_group->mode = 'form';
   $field_group->parent_name = 'group_data';
   $field_group->data = array(
-    'label' => 'URL',
+    'label' => 'API or Website URL',
     'weight' => '11',
     'children' => array(
       0 => 'field_link_api',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
-      'label' => 'URL',
+      'label' => 'API or Website URL',
       'instance_settings' => array(
         'required_fields' => 1,
         'classes' => 'htab_link_api group-link-api field-group-htab',
@@ -220,14 +220,14 @@ function dkan_dataset_content_types_field_group_info() {
   $field_group->mode = 'form';
   $field_group->parent_name = 'group_data';
   $field_group->data = array(
-    'label' => 'Upload a file',
+    'label' => 'Upload',
     'weight' => '9',
     'children' => array(
       0 => 'field_upload',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
-      'label' => 'Upload a file',
+      'label' => 'Upload',
       'instance_settings' => array(
         'required_fields' => 1,
         'classes' => 'htab_link_upload group-upload field-group-htab',
@@ -243,10 +243,10 @@ function dkan_dataset_content_types_field_group_info() {
   t('Dataset Info');
   t('Dataset Information');
   t('Remote file');
-  t('URL');
+  t('API or Website URL');
   t('Primary');
   t('Resource');
-  t('Upload a file');
+  t('Upload');
 
   return $field_groups;
 }

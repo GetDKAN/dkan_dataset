@@ -13,10 +13,10 @@ includes[leaflet_draw_widget_make] = https://raw.githubusercontent.com/NuCivic/l
 ; Recline specific
 projects[recline][download][type] = git
 projects[recline][download][url] = https://github.com/NuCivic/recline.git
-projects[recline][download][branch] = 7.x-1.x
+projects[recline][download][branch] = dkan_data_proxy
 projects[recline][subdir] = contrib
 
-includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/7.x-1.x/recline.make
+includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/dkan_data_proxy/recline.make
 
 ; Contrib Modules
 projects[autocomplete_deluxe][subdir] = contrib

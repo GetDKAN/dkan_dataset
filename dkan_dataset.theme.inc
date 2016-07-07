@@ -55,11 +55,7 @@ function theme_dkan_dataset_identifier_view($vars) {
  * Outputs the modified date content.
  */
 function theme_dkan_dataset_modified_date_view($vars) {
-  $node = entity_metadata_wrapper('node', $vars['node']);
-  $harvested_date = $node->field_modified_source_date->value();
-  
-  // Harvested times can be dates or periods then we don't format them.
-  $date = ($harvested_date) ? $harvested_date : date('Y-m-d', $node->changed->value());
+  $date = dkan_dataset_modified_date($vars['node']);
   return '<div property="dcterms:modified" class="field-name-field-modified-date">' . $date . '</div>';
 }
 

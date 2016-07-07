@@ -35,10 +35,9 @@ function dkan_dataset_content_types_field_group_info() {
       9 => 'field_spatial_geographical_cover',
       10 => 'field_temporal_coverage',
       11 => 'og_group_ref',
-      12 => 'field_modified_source_date',
-      13 => 'release_date',
-      14 => 'modified_date',
-      15 => 'identifier',
+      12 => 'release_date',
+      13 => 'modified_date',
+      14 => 'identifier',
     ),
     'format_type' => 'table',
     'format_settings' => array(

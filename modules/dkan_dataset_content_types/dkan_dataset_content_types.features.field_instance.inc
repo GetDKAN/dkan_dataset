@@ -537,9 +537,8 @@ uk-ogl|UK Open Government Licence (OGL)',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
-        'module' => 'text',
         'settings' => array(),
-        'type' => 'text_default',
+        'type' => 'hidden',
         'weight' => 20,
       ),
       'search_result' => array(

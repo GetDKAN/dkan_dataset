@@ -19,6 +19,7 @@ function dkan_dataset_content_types_form_alter(&$form, &$form_state, $form_id) {
       dkan_dataset_content_types_license_allowed_values()
     );
     $form['field_license'][LANGUAGE_NONE]['#options'] = $allowed_values;
+    $form['field_modified_source_date']['#access'] = FALSE;
 
   }
 }
@@ -161,3 +162,16 @@ function dkan_dataset_content_types_frequency2iso($frecuencyIndex) {
   $map = array_flip(dkan_dataset_content_types_iso_frecuency_map());
   return $map[$accrualPeriodicity];
 }
+
+/**
+ * Implements hook_field_group_pre_render().
+ */
+function dkan_dataset_content_types_field_group_pre_render(&$element) {
+  if($element['field_modified_source_date']) {
+    $element['field_modified_source_date']['#weight'] = $element['modified_date']['#weight'];
+    $element['modified_date'] = $element['field_modified_source_date'];
+    $element['modified_date']['#title'] = 'Modified Date';
+    unset($element['field_modified_source_date']);
+  }
+}
+

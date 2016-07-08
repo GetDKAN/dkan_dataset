@@ -81,6 +81,7 @@ function dkan_dataset_content_types_field_group_info() {
       11 => 'field_spatial_geographical_cover',
       12 => 'field_temporal_coverage',
       13 => 'og_group_ref',
+      14 => 'field_modified_source_date',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

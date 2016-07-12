@@ -1021,3 +1021,48 @@ function dkan_dataset_preprocess_node(&$vars) {
     $vars['theme_hook_suggestions'][] = 'node__search_result';
   }
 }
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function dkan_datasett_field_formatter_info() {
+  return array(
+    'harvest_info_formatter' => array(
+      'label' => t('Harvest Info'),
+      'field types' => array('entityreference'),
+      'settings'  => array(),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function dkan_dataset_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  $rows = array();
+
+  if (isset($entity->field_harvest_source_ref) && isset($entity->field_harvest_source_ref[LANGUAGE_NONE][0]['target_id'])) {
+    $harvest_node = node_load($entity->field_harvest_source_ref[LANGUAGE_NONE][0]['target_id']);
+    if ($harvest_node) {
+      $harvestSource = HarvestSource::getHarvestSourceFromNode($harvest_node);
+      $migrate_table = 'migrate_map_dkan_harvest_migrate_' . $harvestSource->machine_name;
+      $migrate_info = db_query("SELECT * FROM {$migrate_table} WHERE destid1=:destid1", array(':destid1' => $entity->nid))->fetchObject();
+      $sourceid = isset($migrate_info->sourceid1) ? $migrate_info->sourceid1 : '';
+      $rows[] = array(t('<strong>Harvest Object Id</strong>'), $harvest_node->uuid);
+      $rows[] = array(t('<strong>Harvest Source Id</strong>'), $sourceid);
+      $rows[] = array(t('<strong>Harvest Source Title</strong>'), $harvest_node->title);
+      $rows[] = array(t('<strong>Harvest Source URI</strong>'), $harvest_node->field_dkan_harvest_source_uri[LANGUAGE_NONE][0]['value']);
+      $rows[] = array(t('<strong>Last Harvest Performed</strong>'), dkan_harvest_get_last_event_log($harvest_node));
+      $caption = t('Harvested from !link', array('!link' => l($harvest_node->title, $harvest_node->field_dkan_harvest_source_uri[LANGUAGE_NONE][0]['value'])));
+      $markup = theme('table', array('rows' => $rows, 'caption' => $caption));
+    }
+  }
+  else {
+    $markup = '';
+  }
+
+  $element[0]['#markup'] = $markup;
+
+  return $element;
+}

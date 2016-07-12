@@ -455,6 +455,55 @@ function dkan_dataset_content_types_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-dataset-field_harvest_source_ref'.
+  $field_instances['node-dataset-field_harvest_source_ref'] = array(
+    'bundle' => 'dataset',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 20,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_harvest_source_ref',
+    'label' => 'Harvest Source',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 24,
+    ),
+  );
+
   // Exported field_instance: 'node-dataset-field_license'.
   $field_instances['node-dataset-field_license'] = array(
     'bundle' => 'dataset',

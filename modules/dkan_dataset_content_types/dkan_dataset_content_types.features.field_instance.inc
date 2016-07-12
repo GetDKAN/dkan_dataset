@@ -464,11 +464,9 @@ function dkan_dataset_content_types_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'hidden',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
+        'module' => 'dkan_harvest',
+        'settings' => array(),
+        'type' => 'harvest_info_formatter',
         'weight' => 20,
       ),
       'search_result' => array(

@@ -680,3 +680,6 @@ body .node-dataset #data-and-resources ul.resource-list li .orig {
 }
 .field-name-field-additional-info table p,
 .field-name-field-additional-info table p:last-child { margin: 0; }
+.field-name-field-dkan-harvest-source-uri {
+  word-break: break-word; 
+}

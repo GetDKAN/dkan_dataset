@@ -1025,7 +1025,7 @@ function dkan_dataset_preprocess_node(&$vars) {
 /**
  * Implements hook_field_formatter_info().
  */
-function dkan_datasett_field_formatter_info() {
+function dkan_dataset_field_formatter_info() {
   return array(
     'harvest_info_formatter' => array(
       'label' => t('Harvest Info'),

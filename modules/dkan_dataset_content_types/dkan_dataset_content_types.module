@@ -110,7 +110,7 @@ function dkan_dataset_content_types_alter_dataset_license(&$dataset, $key) {
         $dataset[$key] = $license['uri'];
       }
       else {
-        unset($dataset[$key]);
+        $dataset[$key] = $license['label'];
       }
     }
     else {

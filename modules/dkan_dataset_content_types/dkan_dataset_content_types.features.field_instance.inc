@@ -464,7 +464,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'hidden',
-        'module' => 'dkan_harvest',
+        'module' => 'dkan_dataset',
         'settings' => array(),
         'type' => 'harvest_info_formatter',
         'weight' => 20,

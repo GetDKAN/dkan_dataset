@@ -1049,12 +1049,10 @@ function dkan_dataset_field_formatter_view($entity_type, $entity, $field, $insta
       $migrate_table = 'migrate_map_dkan_harvest_migrate_' . $harvestSource->machine_name;
       $migrate_info = db_query("SELECT * FROM {$migrate_table} WHERE destid1=:destid1", array(':destid1' => $entity->nid))->fetchObject();
       $sourceid = isset($migrate_info->sourceid1) ? $migrate_info->sourceid1 : '';
-      $rows[] = array(t('<strong>Harvest Object Id</strong>'), $harvest_node->uuid);
-      $rows[] = array(t('<strong>Harvest Source Id</strong>'), $sourceid);
       $rows[] = array(t('<strong>Harvest Source Title</strong>'), $harvest_node->title);
-      $rows[] = array(t('<strong>Harvest Source URI</strong>'), $harvest_node->field_dkan_harvest_source_uri[LANGUAGE_NONE][0]['value']);
+      $rows[] = array(t('<strong>Harvest Source URI</strong>'), l($harvest_node->field_dkan_harvest_source_uri[LANGUAGE_NONE][0]['value'], $harvest_node->field_dkan_harvest_source_uri[LANGUAGE_NONE][0]['value']));
       $rows[] = array(t('<strong>Last Harvest Performed</strong>'), dkan_harvest_get_last_event_log($harvest_node));
-      $caption = t('Harvested from !link', array('!link' => l($harvest_node->title, $harvest_node->field_dkan_harvest_source_uri[LANGUAGE_NONE][0]['value'])));
+      $caption = t('Harvested from !link', array('!link' => l($harvest_node->title, 'node/' . $harvest_node->nid)));
       $markup = theme('table', array('rows' => $rows, 'caption' => $caption));
     }
   }

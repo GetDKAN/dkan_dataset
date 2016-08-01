@@ -51,6 +51,8 @@ The permissions with which a user is granted depend on the user role. User roles
 
 Below you can find examples in PHP for the most common use cases, using session authentication.
 
+For an example of a fully-functional python-based client to the DKAN REST API, see the [pydkan](https://github.com/NuCivic/pydkan) project.
+
 #### How to Log In and get the Session Cookie
 
 ```

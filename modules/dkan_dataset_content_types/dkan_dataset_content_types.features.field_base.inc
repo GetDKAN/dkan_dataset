@@ -229,6 +229,19 @@ function dkan_dataset_content_types_field_default_field_bases() {
         3 => 'Annually',
         4 => 'Continuously',
         5 => 'Irregularly',
+        6 => 'Decennial',
+        7 => 'Quadrennial',
+        8 => 'Bimonthly',
+        9 => 'Semiweekly',
+        10 => 'Biweekly',
+        11 => 'Semiannual',
+        12 => 'Biennial',
+        13 => 'Triennial',
+        14 => 'Three times a week',
+        15 => 'Three times a month',
+        16 => 'Quarterly',
+        17 => 'Three times a year',
+        18 => 'Semimonthly',
       ),
       'allowed_values_function' => '',
     ),
@@ -364,6 +377,27 @@ function dkan_dataset_content_types_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'file',
+  );
+
+  // Exported field_base: 'field_modified_source_date'.
+  $field_bases['field_modified_source_date'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_modified_source_date',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
   );
 
   // Exported field_base: 'field_public_access_level'.

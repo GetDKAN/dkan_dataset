@@ -10,7 +10,7 @@
 function dkan_dataset_content_types_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-dataset-body'
+  // Exported field_instance: 'node-dataset-body'.
   $field_instances['node-dataset-body'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -59,7 +59,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_additional_info'
+  // Exported field_instance: 'node-dataset-field_additional_info'.
   $field_instances['node-dataset-field_additional_info'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -71,13 +71,13 @@ function dkan_dataset_content_types_field_default_field_instances() {
         'module' => 'double_field',
         'settings' => array(
           'first' => array(
-            'format' => '_none',
+            'format' => 'plain_text',
             'hidden' => 0,
             'prefix' => '',
-            'suffix' => ':&nbsp;',
+            'suffix' => '',
           ),
           'second' => array(
-            'format' => '_none',
+            'format' => 'plain_text',
             'hidden' => 0,
             'prefix' => '',
             'suffix' => '',
@@ -173,7 +173,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_author'
+  // Exported field_instance: 'node-dataset-field_author'.
   $field_instances['node-dataset-field_author'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -220,7 +220,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_contact_email'
+  // Exported field_instance: 'node-dataset-field_contact_email'.
   $field_instances['node-dataset-field_contact_email'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -267,7 +267,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_contact_name'
+  // Exported field_instance: 'node-dataset-field_contact_name'.
   $field_instances['node-dataset-field_contact_name'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -314,7 +314,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_data_dictionary'
+  // Exported field_instance: 'node-dataset-field_data_dictionary'.
   $field_instances['node-dataset-field_data_dictionary'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -361,7 +361,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_frequency'
+  // Exported field_instance: 'node-dataset-field_frequency'.
   $field_instances['node-dataset-field_frequency'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -407,7 +407,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_granularity'
+  // Exported field_instance: 'node-dataset-field_granularity'.
   $field_instances['node-dataset-field_granularity'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -455,7 +455,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_license'
+  // Exported field_instance: 'node-dataset-field_license'.
   $field_instances['node-dataset-field_license'] = array(
     'bundle' => 'dataset',
     'default_value' => array(
@@ -528,7 +528,52 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_public_access_level'
+  // Exported field_instance: 'node-dataset-field_modified_source_date'.
+  $field_instances['node-dataset-field_modified_source_date'] = array(
+    'bundle' => 'dataset',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 20,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_modified_source_date',
+    'label' => 'Modified Source Date',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 23,
+    ),
+  );
+
+  // Exported field_instance: 'node-dataset-field_public_access_level'.
   $field_instances['node-dataset-field_public_access_level'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -574,7 +619,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_related_content'
+  // Exported field_instance: 'node-dataset-field_related_content'.
   $field_instances['node-dataset-field_related_content'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -586,7 +631,7 @@ uk-ogl|UK Open Government Licence (OGL)',
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 6,
+        'weight' => 7,
       ),
       'search_result' => array(
         'label' => 'above',
@@ -607,6 +652,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     'label' => 'Related Content',
     'required' => 0,
     'settings' => array(
+      'absolute_url' => 1,
       'attributes' => array(
         'class' => '',
         'configurable_title' => 0,
@@ -620,6 +666,7 @@ uk-ogl|UK Open Government Licence (OGL)',
       'enable_tokens' => 1,
       'rel_remove' => 'default',
       'title' => 'optional',
+      'title_label_use_field_label' => FALSE,
       'title_maxlength' => 128,
       'title_value' => '',
       'url' => 0,
@@ -635,7 +682,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_resources'
+  // Exported field_instance: 'node-dataset-field_resources'.
   $field_instances['node-dataset-field_resources'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -646,7 +693,7 @@ uk-ogl|UK Open Government Licence (OGL)',
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 7,
+        'weight' => 8,
       ),
       'search_result' => array(
         'label' => 'above',
@@ -681,7 +728,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_spatial'
+  // Exported field_instance: 'node-dataset-field_spatial'.
   $field_instances['node-dataset-field_spatial'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -754,7 +801,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_spatial_geographical_cover'
+  // Exported field_instance: 'node-dataset-field_spatial_geographical_cover'.
   $field_instances['node-dataset-field_spatial_geographical_cover'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -801,7 +848,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_tags'
+  // Exported field_instance: 'node-dataset-field_tags'.
   $field_instances['node-dataset-field_tags'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -850,7 +897,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_temporal_coverage'
+  // Exported field_instance: 'node-dataset-field_temporal_coverage'.
   $field_instances['node-dataset-field_temporal_coverage'] = array(
     'bundle' => 'dataset',
     'deleted' => 0,
@@ -865,6 +912,7 @@ uk-ogl|UK Open Government Licence (OGL)',
           'multiple_from' => '',
           'multiple_number' => '',
           'multiple_to' => '',
+          'show_remaining_days' => FALSE,
         ),
         'type' => 'date_default',
         'weight' => 12,
@@ -878,6 +926,7 @@ uk-ogl|UK Open Government Licence (OGL)',
           'multiple_from' => '',
           'multiple_number' => '',
           'multiple_to' => '',
+          'show_remaining_days' => FALSE,
         ),
         'type' => 'date_default',
         'weight' => 12,
@@ -916,7 +965,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
   );
 
-  // Exported field_instance: 'node-resource-body'
+  // Exported field_instance: 'node-resource-body'.
   $field_instances['node-resource-body'] = array(
     'bundle' => 'resource',
     'default_value' => NULL,
@@ -967,7 +1016,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
   );
 
-  // Exported field_instance: 'node-resource-field_dataset_ref'
+  // Exported field_instance: 'node-resource-field_dataset_ref'.
   $field_instances['node-resource-field_dataset_ref'] = array(
     'bundle' => 'resource',
     'default_value' => NULL,
@@ -1011,7 +1060,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
   );
 
-  // Exported field_instance: 'node-resource-field_format'
+  // Exported field_instance: 'node-resource-field_format'.
   $field_instances['node-resource-field_format'] = array(
     'bundle' => 'resource',
     'default_value' => NULL,
@@ -1059,7 +1108,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
   );
 
-  // Exported field_instance: 'node-resource-field_link_api'
+  // Exported field_instance: 'node-resource-field_link_api'.
   $field_instances['node-resource-field_link_api'] = array(
     'bundle' => 'resource',
     'default_value' => NULL,
@@ -1097,6 +1146,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     'label' => 'Link API',
     'required' => 0,
     'settings' => array(
+      'absolute_url' => 1,
       'attributes' => array(
         'class' => '',
         'configurable_title' => 0,
@@ -1109,6 +1159,7 @@ uk-ogl|UK Open Government Licence (OGL)',
       ),
       'enable_tokens' => 1,
       'title' => 'none',
+      'title_label_use_field_label' => FALSE,
       'title_maxlength' => 128,
       'title_value' => '',
       'url' => 0,
@@ -1124,7 +1175,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
   );
 
-  // Exported field_instance: 'node-resource-field_link_remote_file'
+  // Exported field_instance: 'node-resource-field_link_remote_file'.
   $field_instances['node-resource-field_link_remote_file'] = array(
     'bundle' => 'resource',
     'deleted' => 0,
@@ -1196,7 +1247,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
   );
 
-  // Exported field_instance: 'node-resource-field_upload'
+  // Exported field_instance: 'node-resource-field_upload'.
   $field_instances['node-resource-field_upload'] = array(
     'bundle' => 'resource',
     'deleted' => 0,
@@ -1249,7 +1300,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
   );
 
-  // Exported field_instance: 'node-resource-og_group_ref'
+  // Exported field_instance: 'node-resource-og_group_ref'.
   $field_instances['node-resource-og_group_ref'] = array(
     'bundle' => 'resource',
     'default_value' => NULL,
@@ -1333,6 +1384,7 @@ uk-ogl|UK Open Government Licence (OGL)',
   t('License definitions and additional information can be found at <a href="http://opendefinition.org">opendefinition.org</a>');
   t('Link API');
   t('Link File');
+  t('Modified Source Date');
   t('Provides some sort of description that helps understanding the data. This usually consists of a table providing explanation of columns meaning, values interpretation and acronyms/codes used in the data. Can be a URL to such a resource. See Project Open Data <a href="http://project-open-data.github.io/schema/#common-core-required-if-applicable-fields">data dictionary</a> for more info.');
   t('Public Access Level');
   t('Related Content');

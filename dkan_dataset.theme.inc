@@ -55,7 +55,8 @@ function theme_dkan_dataset_identifier_view($vars) {
  * Outputs the modified date content.
  */
 function theme_dkan_dataset_modified_date_view($vars) {
-  return '<div property="dcterms:modified" class="field-name-field-modified-date">' . date('Y-m-d', $vars['node']->changed) . '</div>';
+  $date = dkan_dataset_modified_date($vars['node']);
+  return '<div property="dcterms:modified" class="field-name-field-modified-date">' . $date . '</div>';
 }
 
 /**

@@ -46,6 +46,9 @@ function dkan_dataset_groups_strongarm() {
         'title' => array(
           'weight' => '0',
         ),
+        'path' => array(
+          'weight' => '5',
+        ),
       ),
       'display' => array(),
     ),

@@ -167,7 +167,7 @@ function dkan_dataset_content_types_frequency2iso($frecuencyIndex) {
 }
 
 /**
- * Implements allowed_values_function for field_odfe_language.
+ * Implements allowed_values_function for field_language.
  */
 function dkan_dataset_language_allowed_values() {
   $language_codes = array();

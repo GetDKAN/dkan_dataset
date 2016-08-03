@@ -163,3 +163,12 @@ function dkan_dataset_content_types_frequency2iso($frecuencyIndex) {
   return $map[$accrualPeriodicity];
 }
 
+/**
+ * Implements allowed_values_function for field_odfe_language.
+ */
+function dkan_dataset_language_allowed_values() {
+  $language_codes = array();
+  include 'includes/language_code_list.php';
+  return $language_codes;
+}
+

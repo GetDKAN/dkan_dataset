@@ -19,8 +19,11 @@ function dkan_dataset_content_types_form_alter(&$form, &$form_state, $form_id) {
       dkan_dataset_content_types_license_allowed_values()
     );
     $form['field_license'][LANGUAGE_NONE]['#options'] = $allowed_values;
-    $form['field_modified_source_date']['#access'] = FALSE;
 
+    // Hide fields.
+    $form['field_modified_source_date']['#access'] = FALSE;
+    $form['field_is_part_of']['#access'] = FALSE;
+    $form['field_category']['#access'] = FALSE;
   }
 }
 /**

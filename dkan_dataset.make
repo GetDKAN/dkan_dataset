@@ -74,6 +74,7 @@ projects[field_group][subdir] = contrib
 
 projects[field_group_table][download][type] = git
 projects[field_group_table][download][url] = "https://github.com/nuams/field_group_table.git"
+projects[field_group_table][download][revision] = 5b0aed9396a8cfd19a5b623a5952b3b8cacd361c
 projects[field_group_table][subdir] = contrib
 projects[field_group_table][type] = module
 
@@ -93,7 +94,6 @@ projects[gravatar][type] = module
 
 projects[imagecache_actions][download][type] = git
 projects[imagecache_actions][download][url] = "http://git.drupal.org/project/imagecache_actions.git"
-projects[imagecache_actions][download][branch] = 7.x-1.x
 projects[imagecache_actions][download][revision] = cd19d2a
 projects[imagecache_actions][subdir] = contrib
 projects[imagecache_actions][type] = module
@@ -116,7 +116,6 @@ projects[link_iframe_formatter][type] = module
 
 projects[multistep][download][type] = git
 projects[multistep][download][url] = "http://git.drupal.org/project/multistep.git"
-projects[multistep][download][branch] = 7.x-1.x
 projects[multistep][download][revision] = 3b0d40a
 projects[multistep][subdir] = contrib
 projects[multistep][type] = module
@@ -155,7 +154,7 @@ projects[ref_field][subdir] = contrib
 projects[ref_field][type] = module
 
 projects[remote_file_source][version] = 1.x
-projects[remote_file_source][patch][2362487] = https://www.drupal.org/files/issues/remote_file_source-location-content-dist.patch
+projects[remote_file_source][patch][2362487] = https://www.drupal.org/files/issues/remote_file_source-location-content-dist_1.patch
 projects[remote_file_source][subdir] = contrib
 
 projects[remote_stream_wrapper][version] = 1.0-rc1
@@ -180,7 +179,7 @@ projects[uuid][version] = 1.0-beta1
 projects[uuid][patch][1927474] = http://drupal.org/files/unknown-column-in-field-list-fix-1927474-2.patch
 projects[uuid][subdir] = contrib
 
-projects[views][version] = 3.13
+projects[views][version] = 3.14
 projects[views][subdir] = contrib
 
 projects[views_responsive_grid][version] = 1.3

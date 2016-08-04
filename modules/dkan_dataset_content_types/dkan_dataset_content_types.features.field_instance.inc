@@ -169,7 +169,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
         ),
       ),
       'type' => 'textfield_&_textfield',
-      'weight' => 21,
+      'weight' => 22,
     ),
   );
 
@@ -220,50 +220,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_category'
-  $field_instances['node-dataset-field_category'] = array(
-    'bundle' => 'dataset',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'module' => 'taxonomy',
-        'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 15,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_category',
-    'label' => 'Category',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'autocomplete_deluxe',
-      'settings' => array(
-        'autocomplete_deluxe_path' => 'autocomplete_deluxe/taxonomy',
-        'delimiter' => ',',
-        'limit' => 10,
-        'min_length' => 0,
-        'size' => 60,
-      ),
-      'type' => 'autocomplete_deluxe_taxonomy',
-      'weight' => 35,
-    ),
-  );
-
-  // Exported field_instance: 'node-dataset-field_conforms_to'
+  // Exported field_instance: 'node-dataset-field_conforms_to'.
   $field_instances['node-dataset-field_conforms_to'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -277,6 +234,12 @@ function dkan_dataset_content_types_field_default_field_instances() {
         'type' => 'link_default',
         'weight' => 10,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
@@ -289,6 +252,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     'label' => 'Data Standard',
     'required' => 0,
     'settings' => array(
+      'absolute_url' => 1,
       'attributes' => array(
         'class' => '',
         'configurable_title' => 0,
@@ -302,6 +266,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
       'enable_tokens' => 0,
       'rel_remove' => 'default',
       'title' => 'none',
+      'title_label_use_field_label' => FALSE,
       'title_maxlength' => 255,
       'title_value' => '',
       'url' => 0,
@@ -313,7 +278,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 29,
+      'weight' => 28,
     ),
   );
 
@@ -360,7 +325,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 19,
+      'weight' => 20,
     ),
   );
 
@@ -407,7 +372,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 18,
+      'weight' => 19,
     ),
   );
 
@@ -454,11 +419,11 @@ function dkan_dataset_content_types_field_default_field_instances() {
         'rows' => 3,
       ),
       'type' => 'text_textarea',
-      'weight' => 17,
+      'weight' => 18,
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_data_dictionary_type'
+  // Exported field_instance: 'node-dataset-field_data_dictionary_type'.
   $field_instances['node-dataset-field_data_dictionary_type'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -471,6 +436,12 @@ function dkan_dataset_content_types_field_default_field_instances() {
         'settings' => array(),
         'type' => 'text_default',
         'weight' => 17,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -592,7 +563,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_is_part_of'
+  // Exported field_instance: 'node-dataset-field_is_part_of'.
   $field_instances['node-dataset-field_is_part_of'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -605,6 +576,12 @@ function dkan_dataset_content_types_field_default_field_instances() {
         'settings' => array(),
         'type' => 'text_default',
         'weight' => 12,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -628,11 +605,11 @@ function dkan_dataset_content_types_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 31,
+      'weight' => 29,
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_landing_page'
+  // Exported field_instance: 'node-dataset-field_landing_page'.
   $field_instances['node-dataset-field_landing_page'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -646,6 +623,12 @@ function dkan_dataset_content_types_field_default_field_instances() {
         'type' => 'link_default',
         'weight' => 9,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
@@ -658,6 +641,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     'label' => 'Homepage URL',
     'required' => 0,
     'settings' => array(
+      'absolute_url' => 1,
       'attributes' => array(
         'class' => '',
         'configurable_title' => 0,
@@ -671,6 +655,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
       'enable_tokens' => 1,
       'rel_remove' => 'default',
       'title' => 'none',
+      'title_label_use_field_label' => FALSE,
       'title_maxlength' => 128,
       'title_value' => '',
       'url' => 0,
@@ -682,11 +667,11 @@ function dkan_dataset_content_types_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 27,
+      'weight' => 26,
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_language'
+  // Exported field_instance: 'node-dataset-field_language'.
   $field_instances['node-dataset-field_language'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -699,6 +684,12 @@ function dkan_dataset_content_types_field_default_field_instances() {
         'settings' => array(),
         'type' => 'list_default',
         'weight' => 13,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -722,7 +713,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
         'apply_chosen' => 1,
       ),
       'type' => 'options_select',
-      'weight' => 32,
+      'weight' => 30,
     ),
   );
 
@@ -840,7 +831,53 @@ uk-ogl|UK Open Government Licence (OGL)',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 23,
+      'weight' => 25,
+    ),
+  );
+
+  // Exported field_instance: 'node-dataset-field_pod_theme'.
+  $field_instances['node-dataset-field_pod_theme'] = array(
+    'bundle' => 'dataset',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 21,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_pod_theme',
+    'label' => 'pod_theme',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 31,
     ),
   );
 
@@ -886,7 +923,7 @@ uk-ogl|UK Open Government Licence (OGL)',
         'apply_chosen' => 0,
       ),
       'type' => 'options_select',
-      'weight' => 20,
+      'weight' => 21,
     ),
   );
 
@@ -949,7 +986,7 @@ uk-ogl|UK Open Government Licence (OGL)',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 23,
+      'weight' => 24,
     ),
   );
 
@@ -995,11 +1032,11 @@ uk-ogl|UK Open Government Licence (OGL)',
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 22,
+      'weight' => 23,
     ),
   );
 
-  // Exported field_instance: 'node-dataset-field_rights'
+  // Exported field_instance: 'node-dataset-field_rights'.
   $field_instances['node-dataset-field_rights'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -1012,6 +1049,12 @@ uk-ogl|UK Open Government Licence (OGL)',
         'settings' => array(),
         'type' => 'text_default',
         'weight' => 8,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -1035,7 +1078,7 @@ uk-ogl|UK Open Government Licence (OGL)',
         'size' => 250,
       ),
       'type' => 'text_textfield',
-      'weight' => 28,
+      'weight' => 27,
     ),
   );
 
@@ -1680,13 +1723,13 @@ uk-ogl|UK Open Government Licence (OGL)',
   t('Additional Info');
   t('An internal link or link to an outside resource that provides additional context to the dataset.');
   t('Author');
-  t('Category');
   t('Contact Email');
   t('Contact Name');
   t('Contact person’s email address. See <a href="http://project-open-data.github.io/schema/#common-core-required-fields">Project Open Data</a> for more info.');
   t('Contact person’s name for the asset. See <a href="http://project-open-data.github.io/schema/#common-core-required-fields">Project Open Data</a> for more info. Name should be formatted as Last, First.');
   t('Data Dictionary');
   t('Data Dictionary Type');
+  t('Data Standard');
   t('Dataset');
   t('Description');
   t('Format');
@@ -1694,7 +1737,6 @@ uk-ogl|UK Open Government Licence (OGL)',
   t('Granularity');
   t('Groups audience');
   t('Homepage URL');
-  t('Indicates whether a dataset conforms to the agency’s information quality guidelines.');
   t('Is Part Of');
   t('Language');
   t('License');
@@ -1725,6 +1767,7 @@ uk-ogl|UK Open Government Licence (OGL)',
   t('This may include information regarding access or restrictions based on privacy, security, or other policies. This should also serve as an explanation for the selected “accessLevel” including instructions for how to access a restricted file, if applicable, or explanation for why a “non-public” or “restricted public” data asset is not “public,” if applicable. If the dataset can be made available through a website indirectly, use accessURL for the URL that provides such access. See <a href="https://project-open-data.cio.gov/v1.1/schema/#rights">Rights on Project Open Data</a>.');
   t('This should adhere to the RFC 5646 standard. This language subtag lookup provides a good tool for checking and verifying language codes. A language tag is comprised of either one or two parts, the language subtag (such as en for English, sp for Spanish, wo for Wolof) and the regional subtag (such as US for United States, GB for Great Britain, MX for Mexico), separated by a hyphen. Regional subtags should only be provided when needed to distinguish a language tag from another one (such as American vs. British English).');
   t('Upload');
+  t('pod_theme');
 
   return $field_instances;
 }

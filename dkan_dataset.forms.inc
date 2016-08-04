@@ -18,6 +18,21 @@ function dkan_dataset_field_group_build_pre_render_alter(&$element) {
     $element['group_primary']['body']['#weight'] = "2";
     $element['group_primary']['field_tags']['#weight'] = "3";
     unset($element['path']);
+
+    // If 'Validate dataset form according to Project Open Data' is enabled on dataset form settings then
+    // move all POD required fields to the first step if the form is a multistep form.
+    $multistep_form_enabled = variable_get('dkan_dataset_form_additional_info');
+    $pod_validation_enabled = variable_get('dkan_dataset_form_pod_validation');
+    if ($element['#action'] === '/node/add/dataset' &&  $multistep_form_enabled && $pod_validation_enabled) {
+      $element['group_primary']['field_contact_name'] = $element['group_additional']['field_contact_name'];
+      $element['group_primary']['field_contact_email'] = $element['group_additional']['field_contact_email'];
+      $element['group_primary']['field_public_access_level'] = $element['group_additional']['field_public_access_level'];
+      $element['group_primary']['field_rights'] = $element['group_additional']['field_rights'];
+      unset($element['group_additional']['field_contact_name']);
+      unset($element['group_additional']['field_contact_email']);
+      unset($element['group_additional']['field_public_access_level']);
+      unset($element['group_additional']['field_rights']);
+    }
   }
 }
 
@@ -25,7 +40,6 @@ function dkan_dataset_field_group_build_pre_render_alter(&$element) {
  * Implements hook_field_group_pre_render().
  */
 function dkan_dataset_field_group_pre_render(&$element, $group, &$form) {
-  
   // Only pre_render if additional info form should appear on separate page
   if (variable_get('dkan_dataset_form_additional_info', 1 )) {
     if (module_exists('context')) {
@@ -186,6 +200,27 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     else {
       $form['actions']['submit']['#value'] = t('Finish');
       $form['#action'] = url('node/add/dataset');
+    }
+
+    // Mark all POD related required fields as required.
+    if (variable_get('dkan_dataset_form_pod_validation')) {
+
+      $form_language_code = $form['language']['#value'];
+
+      $form['body'][$form_language_code][0]['#required'] = TRUE;
+      $form['field_tags'][$form_language_code]['#required'] = TRUE;
+      $form['field_contact_email'][$form_language_code][0]['value']['#required'] = TRUE;
+      $form['field_contact_name'][$form_language_code][0]['value']['#required'] = TRUE;
+      $form['field_public_access_level'][$form_language_code]['#required'] = TRUE;
+      $form['og_group_ref'][$form_language_code][0]['default']['#required'] = TRUE;
+      // Check if there are any groups. At least there is one option which is the 'Empty' option.
+      // If there are no groups then display a warning letting the user know that he won't be able
+      // to create the dataset since the 'Publisher' field is a POD required field.
+      $available_groups = $form['og_group_ref'][$form_language_code][0]['default'];
+      if (!isset($available_groups['#options']) || count($available_groups['#options']) <= 1) {
+        drupal_set_message(t("Adding a group to the dataset is required but you don't belong to any group. Please
+          ask your supervisor to be added to a group or you won't be able to create any datasets."), 'warning');
+      }
     }
   }
   if ($form_id == 'resource_node_form') {

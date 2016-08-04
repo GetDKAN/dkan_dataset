@@ -119,6 +119,11 @@ function dkan_dataset_form_settings() {
     '#title' => t('Divide Dataset form into main form and "Additional Data" (CKAN style).'),
     '#default_value' => variable_get('dkan_dataset_form_additional_info', 1),
   );
+  $form['dkan_dataset_form_pod_validation'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Validate dataset form according to Project Open Data (more strict than default DKAN validation).'),
+    '#default_value' => variable_get('dkan_dataset_form_pod_validation', 0),
+  );
   return system_settings_form($form);
 }
 

@@ -320,7 +320,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     'bundle' => 'dataset',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Provides some sort of description that helps understanding the data. This usually consists of a table providing explanation of columns meaning, values interpretation and acronyms/codes used in the data. Can be a URL to such a resource. See Project Open Data <a href="http://project-open-data.github.io/schema/#common-core-required-if-applicable-fields">data dictionary</a> for more info.',
+    'description' => 'Provides some sort of description that helps understanding the data. This can be a URL to such a resource. See Project Open Data <a href="http://project-open-data.github.io/schema/#common-core-required-if-applicable-fields">data dictionary</a> for more info.',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -1340,7 +1340,7 @@ uk-ogl|UK Open Government Licence (OGL)',
   t('License definitions and additional information can be found at <a href="http://opendefinition.org">opendefinition.org</a>');
   t('Link API');
   t('Link File');
-  t('Provides some sort of description that helps understanding the data. This usually consists of a table providing explanation of columns meaning, values interpretation and acronyms/codes used in the data. Can be a URL to such a resource. See Project Open Data <a href="http://project-open-data.github.io/schema/#common-core-required-if-applicable-fields">data dictionary</a> for more info.');
+  t('Provides some sort of description that helps understanding the data. This can be a URL to such a resource. See Project Open Data <a href="http://project-open-data.github.io/schema/#common-core-required-if-applicable-fields">data dictionary</a> for more info.');
   t('Public Access Level');
   t('Related Content');
   t('Resources');

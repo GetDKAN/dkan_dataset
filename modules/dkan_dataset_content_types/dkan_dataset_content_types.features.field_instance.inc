@@ -580,7 +580,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     'bundle' => 'dataset',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Modified Date of a harvested resource.',
     'display' => array(
       'default' => array(
         'label' => 'hidden',

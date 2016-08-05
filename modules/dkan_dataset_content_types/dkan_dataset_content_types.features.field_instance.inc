@@ -169,7 +169,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
         ),
       ),
       'type' => 'textfield_&_textfield',
-      'weight' => 22,
+      'weight' => 26,
     ),
   );
 
@@ -278,7 +278,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 28,
+      'weight' => 24,
     ),
   );
 
@@ -605,7 +605,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 29,
+      'weight' => 30,
     ),
   );
 
@@ -667,7 +667,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 26,
+      'weight' => 23,
     ),
   );
 
@@ -713,7 +713,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
         'apply_chosen' => 1,
       ),
       'type' => 'options_select',
-      'weight' => 30,
+      'weight' => 25,
     ),
   );
 
@@ -831,7 +831,7 @@ uk-ogl|UK Open Government Licence (OGL)',
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 25,
+      'weight' => 29,
     ),
   );
 
@@ -986,7 +986,7 @@ uk-ogl|UK Open Government Licence (OGL)',
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 24,
+      'weight' => 28,
     ),
   );
 
@@ -1032,7 +1032,7 @@ uk-ogl|UK Open Government Licence (OGL)',
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 23,
+      'weight' => 27,
     ),
   );
 
@@ -1078,7 +1078,7 @@ uk-ogl|UK Open Government Licence (OGL)',
         'size' => 250,
       ),
       'type' => 'text_textfield',
-      'weight' => 27,
+      'weight' => 22,
     ),
   );
 
@@ -1744,6 +1744,7 @@ uk-ogl|UK Open Government Licence (OGL)',
   t('Link API');
   t('Link File');
   t('Modified Source Date');
+  t('POD Theme');
   t('Provides some sort of description that helps understanding the data. This usually consists of a table providing explanation of columns meaning, values interpretation and acronyms/codes used in the data. Can be a URL to such a resource. See Project Open Data <a href="http://project-open-data.github.io/schema/#common-core-required-if-applicable-fields">data dictionary</a> for more info.');
   t('Public Access Level');
   t('Related Content');
@@ -1767,7 +1768,6 @@ uk-ogl|UK Open Government Licence (OGL)',
   t('This may include information regarding access or restrictions based on privacy, security, or other policies. This should also serve as an explanation for the selected “accessLevel” including instructions for how to access a restricted file, if applicable, or explanation for why a “non-public” or “restricted public” data asset is not “public,” if applicable. If the dataset can be made available through a website indirectly, use accessURL for the URL that provides such access. See <a href="https://project-open-data.cio.gov/v1.1/schema/#rights">Rights on Project Open Data</a>.');
   t('This should adhere to the RFC 5646 standard. This language subtag lookup provides a good tool for checking and verifying language codes. A language tag is comprised of either one or two parts, the language subtag (such as en for English, sp for Spanish, wo for Wolof) and the regional subtag (such as US for United States, GB for Great Britain, MX for Mexico), separated by a hyphen. Regional subtags should only be provided when needed to distinguish a language tag from another one (such as American vs. British English).');
   t('Upload');
-  t('pod_theme');
 
   return $field_instances;
 }

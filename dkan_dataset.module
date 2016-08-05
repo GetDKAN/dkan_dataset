@@ -1173,6 +1173,7 @@ function dkan_dataset_remotefile_value($element, &$item) {
       $item = array_merge($item, (array) $file);
     }
   }
+}
 
 /**
  * Implements hook_entity_info_alter().

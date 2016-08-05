@@ -73,3 +73,53 @@ function dkan_dataset_update_7002() {
   dkan_sitewide_rename_field('field_odfe_language', 'field_language');
 }
 
+/**
+ * Migrate values from old 'field_odfe_category' field if present to the new
+ * 'field_pod_theme'.
+ *
+ * @throws \DrupalUpdateException if the 'field_pod_theme' field is not part of the dataset content type.
+ */
+function dkan_dataset_update_7003() {
+
+  // Check if the 'field_odfe_category' field exists.
+  // If the field does not exist then no data needs to be migrated.
+  $field_exists = field_info_instance('node', 'field_odfe_category', 'dataset');
+  if (!$field_exists) {
+    return TRUE;
+  }
+
+  // Check if the 'field_pod_theme' field exists.
+  $field_exists = field_info_instance('node', 'field_pod_theme', 'dataset');
+  if (!$field_exists) {
+    throw new DrupalUpdateException("The 'field_pod_theme' does not exist. The update could not be applied.");
+  }
+
+  // Get all datasets that have some value on the 'field_odfe_category' field.
+  $dataset_ids = db_select('field_data_field_odfe_category', 'odfec')
+    ->fields('odfec', array('entity_id'))
+    ->execute()
+    ->fetchCol();
+  $dataset_ids = array_unique($dataset_ids);
+
+  // Process all datasets.
+  foreach($dataset_ids as $dataset_id) {
+    // Load dataset.
+    $dataset = node_load($dataset_id);
+    $dataset_wrapper = entity_metadata_wrapper('node', $dataset);
+    // Get all values in 'field_odfe_category' field.
+    $categories = $dataset_wrapper->field_odfe_category;
+    foreach($categories as $categorie) {
+      // Save each value on the new 'field_pod_theme' field.
+      $dataset_wrapper->field_pod_theme[] = $categorie->value()->name;
+    }
+    // Save updated dataset.
+    $dataset_wrapper->save();
+  }
+
+  // The data was migrated. Delete old field.
+  field_delete_field('field_odfe_category');
+
+  // Delete 'odfe_theme' vocabulary since it's not needed anymore.
+  $vocabulary = taxonomy_vocabulary_machine_name_load('odfe_theme');
+  taxonomy_vocabulary_delete($vocabulary->vid);
+}

@@ -41,7 +41,7 @@ function dkan_dataset_content_types_field_group_info() {
       15 => 'field_is_part_of',
       16 => 'field_data_dictionary_type',
       17 => 'field_landing_page',
-      18 => 'field_category',
+      18 => 'field_pod_theme',
       19 => 'field_conforms_to',
       20 => 'field_rights',
       21 => 'field_language',

@@ -118,9 +118,9 @@ function dkan_dataset_update_7003() {
     $dataset_wrapper = entity_metadata_wrapper('node', $dataset);
     // Get all values in 'field_odfe_category' field.
     $categories = $dataset_wrapper->field_odfe_category;
-    foreach($categories as $categorie) {
+    foreach($categories as $category) {
       // Save each value on the new 'field_pod_theme' field.
-      $dataset_wrapper->field_pod_theme[] = $categorie->value()->name;
+      $dataset_wrapper->field_pod_theme[] = $category->value()->name;
     }
     // Save updated dataset.
     $dataset_wrapper->save();

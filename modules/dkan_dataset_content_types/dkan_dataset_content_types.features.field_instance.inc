@@ -864,7 +864,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     ),
     'entity_type' => 'node',
     'field_name' => 'field_pod_theme',
-    'label' => 'pod_theme',
+    'label' => 'POD Theme',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,

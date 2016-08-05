@@ -58,7 +58,8 @@ function theme_dkan_dataset_identifier_view($vars) {
  * Outputs the modified date content.
  */
 function theme_dkan_dataset_modified_date_view($vars) {
-  return '<div property="dcterms:modified" class="field-name-field-modified-date">' . date('Y-m-d', $vars['node']->changed) . '</div>';
+  $date = dkan_dataset_modified_date($vars['node']);
+  return '<div property="dcterms:modified" class="field-name-field-modified-date">' . $date . '</div>';
 }
 
 /**
@@ -116,7 +117,7 @@ function theme_dkan_dataset_resource_view($vars) {
     }
     if ($file_count > 1) {
       $download_all = '<div property="dcat:Distribution"><span class="links">';
-      $download_all .= l('Download All<i class="fa fa-download"><span> Download</span></i>', 'node/' . $vars['node']->nid . '/dataset/download', array(
+      $download_all .= l('Download All <i class="fa fa-download"></i>', 'node/' . $vars['node']->nid . '/dataset/download', array(
         'html' => TRUE,
         'attributes' => array(
           'class' => array('btn', 'btn-primary')
@@ -146,7 +147,7 @@ function dkan_dataset_resource_direct_link($node) {
     $url = $node->field_link_api[LANGUAGE_NONE][0]['url'];
   }
   else {
-    $url = '';
+    $url = dkan_dataset_preview_url_local($node);
   }
   return $url;
 }
@@ -179,10 +180,12 @@ function theme_dkan_dataset_teaser_link($vars) {
  * Theme function to create "open with" version of teaser links on Datasets.
  */
 function theme_dkan_dataset_teaser_preview_link($vars) {
-  $url = dkan_dataset_resource_direct_link($vars['node']);
+  $preview_link = $direct_link = '';
+  $resource = $vars['node'];
+  $url = dkan_dataset_resource_direct_link($resource);
   if ($vars['type'] == 'file_upload' || $vars['type'] == 'link_remote_file') {
-    $link = l(
-      '<i class="fa fa-download"></i>',
+    $direct_link = l(
+      '<i class="fa fa-download"></i> '. t('Download'),
       $url,
       array(
         'html' => TRUE,
@@ -193,8 +196,8 @@ function theme_dkan_dataset_teaser_preview_link($vars) {
     );
   }
   else {
-    $link = l(
-      '<i class="fa fa-external-link"></i>',
+    $direct_link = l(
+      '<i class="fa fa-external-link"></i> ' . t('Go to resource'),
       $url,
       array(
         'html' => TRUE,
@@ -204,7 +207,6 @@ function theme_dkan_dataset_teaser_preview_link($vars) {
       )
     );
   }
-
   $node = $vars['node'];
   $previews = dkan_dataset_teaser_external_previews_for_resource($node);
   if (count($previews)) {
@@ -219,37 +221,35 @@ function theme_dkan_dataset_teaser_preview_link($vars) {
         <ul class="dropdown-menu">
       ';
       foreach ($previews as $provider => $preview) {
-        $preview_link .=
-          '<li class="' . $provider . ' ">
-            <a href="' . $preview['url'] . '" title="">
-              <span> ' . $preview['name'] . '</span>
-            </a>
-          </li>';
+        $preview_link .= '<li class="' . $provider . ' ">';
+        $preview_link .= l('<span> ' . $preview['name'] . '</span>', $preview['url'], array('html' => TRUE));
+        $preview_link .= '</li>';
       }
       $preview_link .= '</ul></div>';
     }
     // Otherwise use single button
     else {
       $machine_name = current(array_keys($previews));
-      $preview = current($previews);
+      $preview = $previews[$machine_name];
       if ($machine_name == 'dkan') {
-        $button_text = t('Explore Data');
+        $button_text = t('Preview');
       }
       else {
-        $button_text = t('Open With @provider', array('@provider' => $preview['name']));
+        $button_text = $preview['name'];
       }
       $preview_link = l(
-        $button_text,
+        '<i class="fa fa-bar-chart"></i> ' . $button_text,
         $preview['url'],
         array(
+          'html' => TRUE,
           'attributes' => array(
             'class' => array('btn', 'btn-primary'),
           ),
         )
       );
     }
-    $link = $preview_link . $link;
   }
+  $link = $preview_link . $direct_link;
   return $link;
 
 }
@@ -296,9 +296,9 @@ function theme_dkan_dataset_resource_teaser_view($vars) {
       }
     }
     foreach ($links_data as $term_name => $link) {
-      $links[] = '<span class="count-resource">' . $link['count'] . 'x</span>' . l($term_name, $link['url'], $link['link']);
+      $links[] = l($term_name, $link['url'], $link['link']);
     }
-    $output = theme('item_list', array('items' => $links, 'attributes' => array('class' => array('resource-list'))));
+    $output = theme('item_list', array('items' => $links, 'attributes' => array('class' => array('resource-list', 'clearfix'))));
   }
   return $output;
 }

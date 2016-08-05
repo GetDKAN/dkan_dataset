@@ -216,6 +216,8 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     $form['field_upload'][$field_upload_langcode][0]['#title'] = '';
     $form['field_upload'][$field_upload_langcode][0]['view']['#collapsible'] = TRUE;
     $form['field_upload'][$field_upload_langcode][0]['view']['#collasped'] = TRUE;
+    $file_upload_validators = $form['field_upload'][$field_upload_langcode][0]['#file_resup_upload_validators'];
+    $form['field_upload'][$field_upload_langcode][0]['#description'] = theme('file_upload_help', array('upload_validators' => $file_upload_validators));
 
     // Get langcode for field_link_file.
     $field_link_file_langcode = dkan_dataset_form_field_language($form, 'field_link_file');
@@ -302,6 +304,35 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     else {
       $form['actions']['another']['#submit'] = array('node_form_submit', 'dkan_dataset_resource_form_submit');
     }
+
+    $group_description = t("This resource is not assigned to any groups. Groups can only be assigned to Datasets. Resources are always a part of the parent Datasets's groups");
+
+    if (isset($form['og_group_ref'][$form['og_group_ref']['#language']][0])
+        && isset($form['og_group_ref'][$form['og_group_ref']['#language']][0]['#entity']->og_group_ref)
+        && !empty($form['og_group_ref'][$form['og_group_ref']['#language']][0]['#entity']->og_group_ref)
+    ) {
+      $titles = array();
+      foreach ($form['og_group_ref'][$form['og_group_ref']['#language']][0]['#entity']->og_group_ref['und'] as $group) {
+        $group = node_load($group['target_id']);
+        $titles[] = l($group->title, 'node/' . $group->nid);
+      }
+      $titles = theme('item_list', array('items' => $titles));
+      $group_description = t("This resource is in the following groups: !groups Groups can only be assigned to Datasets. Resources are always a part of the parent Datasets's groups.", array('!groups' => $titles));
+    }
+    else {
+      $group_description = t('No groups are attached to this resource. Groups can only be attached on datasets that resources are linked to.');
+    }
+
+    $form['og_group_ref']['#access'] = FALSE;
+    $form['groups'] = array(
+        '#type' => 'fieldset',
+        'und' => array(
+            '#type' => 'item',
+            '#markup' => $group_description,
+        ),
+        '#title' => t('Groups'),
+        '#group' => 'additional_settings',
+    );
   }
 }
 
@@ -613,6 +644,9 @@ function dkan_dataset_block_info() {
   $blocks['dkan_dataset_resource_nodes'] = array(
     'info' => t('Resources'),
   );
+  $blocks['dkan_dataset_visualizations_list'] = array(
+    'info' => t('Visualizations'),
+  );
   return $blocks;
 }
 
@@ -635,8 +669,13 @@ function dkan_dataset_block_view($delta = '') {
     case 'dkan_dataset_resource_nodes':
       $block['subject'] = t('Resources');
       $block['content'] = dkan_dataset_resource_nodes();
-
       break;
+
+    case 'dkan_dataset_visualizations_list':
+      $block['subject'] = t('Visualizations');
+      $block['content'] = dkan_dataset_visualizations_list();
+      break;
+
   }
 
   return $block;
@@ -681,12 +720,43 @@ function dkan_dataset_resource_nodes() {
   }
   if ($nodes) {
     foreach ($nodes as $node) {
-      $links[] = l('<span>' . $node->title . '</span>', 'node/' . $node->nid, array('html' => TRUE));
+      $attributes = array('attributes' => array('class' => array('list-group-item')),'html' => true);
+      $links[] = l('<span>' . $node->title . '</span>', 'node/' . $node->nid, $attributes);
     }
     if (!$current_node) {
       $links[] = '';
     }
-    $output = theme('item_list', array('items' => $links, 'attributes' => array('class' => array('nav-simple'))));
+    $output = theme('item_list', array('items' => $links, 'attributes' => array('class' => array('list-group'))));
+  }
+  return $output;
+}
+
+/**
+ * Returns list of visualizations based on a resource.
+ */
+function dkan_dataset_visualizations_list() {
+  $output = '';
+  $current_node = menu_get_object();
+  if (isset($current_node->type) && $current_node->type == 'resource') {
+    if($current_node->uuid) {
+      // Find all visualizations created from this resource.
+      $nodes = dkan_dataset_get_visualization_entities($current_node->uuid);
+    }
+    if ($nodes) {
+      foreach ($nodes as $node) {
+        $attributes = array('attributes' => array('class' => array('list-group-item')),'html' => true);
+        // Fetch title and type.
+        $result = db_query("SELECT type, title FROM {eck_visualization} WHERE id = :id", array(':id' => $node->nid));
+        foreach ($result as $row) {
+          // Add visualization to the list.
+          $links[] = l($row->title, 'visualization/' . $row->type . '/' . $node->nid, $attributes);
+        }
+      }
+      if (!$current_node) {
+        $links[] = '';
+      }
+      $output = theme('item_list', array('items' => $links, 'attributes' => array('class' => array('list-group'))));
+    }
   }
   return $output;
 }

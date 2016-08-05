@@ -386,7 +386,7 @@ function dkan_dataset_content_types_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(),
-      'allowed_values_function' => 'dkan_dataset_language_allowed_values',
+      'allowed_values_function' => 'dkan_dataset_content_types_allowed_language_values',
     ),
     'translatable' => 0,
     'type' => 'list_text',

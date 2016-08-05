@@ -77,8 +77,8 @@ function dkan_dataset_update_7002() {
   $field_language_base = field_info_field('field_language');
   $allowed_values_function = $field_language_base['settings']['allowed_values_function'];
 
-  if ($allowed_values_function != 'dkan_dataset_language_allowed_values') {
-    $field_language_base['settings']['allowed_values_function'] = 'dkan_dataset_language_allowed_values';
+  if ($allowed_values_function != 'dkan_dataset_content_types_allowed_language_values') {
+    $field_language_base['settings']['allowed_values_function'] = 'dkan_dataset_content_types_allowed_language_values';
     field_update_field($field_language_base);
   }
 }

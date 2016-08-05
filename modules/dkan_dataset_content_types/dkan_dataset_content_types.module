@@ -23,7 +23,7 @@ function dkan_dataset_content_types_form_alter(&$form, &$form_state, $form_id) {
     // Hide fields.
     $form['field_modified_source_date']['#access'] = FALSE;
     $form['field_is_part_of']['#access'] = FALSE;
-    $form['field_pod_theme']['#access'] = FALSE;
+    //$form['field_pod_theme']['#access'] = FALSE;
   }
 }
 /**
@@ -169,9 +169,8 @@ function dkan_dataset_content_types_frequency2iso($frecuencyIndex) {
 /**
  * Implements allowed_values_function for field_language.
  */
-function dkan_dataset_language_allowed_values() {
-  $language_codes = array();
-  include 'includes/language_code_list.php';
-  return $language_codes;
+function dkan_dataset_content_types_allowed_language_values() {
+  module_load_include('php', 'dkan_dataset_content_types', 'includes/language_code_list');
+  return dkan_dataset_content_types_get_language_codes();
 }
 

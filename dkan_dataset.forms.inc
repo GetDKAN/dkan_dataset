@@ -204,19 +204,28 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
 
     // Mark all POD related required fields as required.
     if (variable_get('dkan_dataset_form_pod_validation')) {
-
-      $form_language_code = $form['language']['#value'];
-
-      $form['body'][$form_language_code][0]['#required'] = TRUE;
-      $form['field_tags'][$form_language_code]['#required'] = TRUE;
-      $form['field_contact_email'][$form_language_code][0]['value']['#required'] = TRUE;
-      $form['field_contact_name'][$form_language_code][0]['value']['#required'] = TRUE;
-      $form['field_public_access_level'][$form_language_code]['#required'] = TRUE;
-      $form['og_group_ref'][$form_language_code][0]['default']['#required'] = TRUE;
+      // Body.
+      $body_langcode = dkan_dataset_form_field_language($form, 'body');
+      $form['body'][$body_langcode][0]['#required'] = TRUE;
+      // Tags.
+      $field_tags_langcode = dkan_dataset_form_field_language($form, 'field_tags');
+      $form['field_tags'][$field_tags_langcode]['#required'] = TRUE;
+      // Contact email.
+      $field_contact_email_langcode = dkan_dataset_form_field_language($form, 'field_contact_email');
+      $form['field_contact_email'][$field_contact_email_langcode][0]['value']['#required'] = TRUE;
+      // Contact name.
+      $field_contact_name_langcode = dkan_dataset_form_field_language($form, 'field_contact_name');
+      $form['field_contact_name'][$field_contact_name_langcode][0]['value']['#required'] = TRUE;
+      // Public access level.
+      $field_public_access_level_langcode = dkan_dataset_form_field_language($form, 'field_public_access_level');
+      $form['field_public_access_level'][$field_public_access_level_langcode]['#required'] = TRUE;
+      // Groups.
+      $og_group_ref_langcode = dkan_dataset_form_field_language($form, 'og_group_ref');
+      $form['og_group_ref'][$og_group_ref_langcode][0]['default']['#required'] = TRUE;
       // Check if there are any groups. At least there is one option which is the 'Empty' option.
       // If there are no groups then display a warning letting the user know that he won't be able
       // to create the dataset since the 'Publisher' field is a POD required field.
-      $available_groups = $form['og_group_ref'][$form_language_code][0]['default'];
+      $available_groups = $form['og_group_ref'][$og_group_ref_langcode][0]['default'];
       if (!isset($available_groups['#options']) || count($available_groups['#options']) <= 1) {
         drupal_set_message(t("Adding a group to the dataset is required but you don't belong to any group. Please
           ask your supervisor to be added to a group or you won't be able to create any datasets."), 'warning');

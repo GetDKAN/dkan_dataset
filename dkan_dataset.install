@@ -65,12 +65,22 @@ function dkan_dataset_update_7001() {
  * if they already exist on the DB.
  */
 function dkan_dataset_update_7002() {
+  // Rename fields.
   dkan_sitewide_rename_field('field_odfe_is_part_of', 'field_is_part_of');
   dkan_sitewide_rename_field('field_odfe_data_dictionary_type', 'field_data_dictionary_type');
   dkan_sitewide_rename_field('field_odfe_landing_page', 'field_landing_page');
   dkan_sitewide_rename_field('field_odfe_conforms_to', 'field_conforms_to');
   dkan_sitewide_rename_field('field_odfe_rights', 'field_rights');
   dkan_sitewide_rename_field('field_odfe_language', 'field_language');
+
+  // Change callback function on 'field_language'.
+  $field_language_base = field_info_field('field_language');
+  $allowed_values_function = $field_language_base['settings']['allowed_values_function'];
+
+  if ($allowed_values_function != 'dkan_dataset_language_allowed_values') {
+    $field_language_base['settings']['allowed_values_function'] = 'dkan_dataset_language_allowed_values';
+    field_update_field($field_language_base);
+  }
 }
 
 /**

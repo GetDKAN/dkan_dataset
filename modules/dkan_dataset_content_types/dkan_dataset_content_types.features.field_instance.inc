@@ -843,7 +843,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',

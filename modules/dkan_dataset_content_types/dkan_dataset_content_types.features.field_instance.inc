@@ -464,7 +464,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'hidden',
-        'module' => 'dkan_harvest',
+        'module' => 'dkan_dataset',
         'settings' => array(),
         'type' => 'harvest_info_formatter',
         'weight' => 20,
@@ -1432,6 +1432,7 @@ uk-ogl|UK Open Government Licence (OGL)',
   t('License definitions and additional information can be found at <a href="http://opendefinition.org">opendefinition.org</a>');
   t('Link API');
   t('Link File');
+  t('Modified Date of a harvested resource.');
   t('Modified Source Date');
   t('Provides some sort of description that helps understanding the data. This usually consists of a table providing explanation of columns meaning, values interpretation and acronyms/codes used in the data. Can be a URL to such a resource. See Project Open Data <a href="http://project-open-data.github.io/schema/#common-core-required-if-applicable-fields">data dictionary</a> for more info.');
   t('Public Access Level');

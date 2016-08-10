@@ -219,19 +219,22 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       // Public access level.
       $field_public_access_level_langcode = dkan_dataset_form_field_language($form, 'field_public_access_level');
       $form['field_public_access_level'][$field_public_access_level_langcode]['#required'] = TRUE;
-      // Groups.
-      $og_group_ref_langcode = dkan_dataset_form_field_language($form, 'og_group_ref');
-      $form['og_group_ref'][$og_group_ref_langcode][0]['default']['#required'] = TRUE;
-      // Check if there are any groups. At least there is one option which is the 'Empty' option.
-      // If there are no groups then display a warning letting the user know that he won't be able
-      // to create the dataset since the 'Publisher' field is a POD required field.
-      $available_groups = $form['og_group_ref'][$og_group_ref_langcode][0]['default'];
-      if (isset($available_groups['#options']) && count($available_groups['#options']) <= 1) {
-        drupal_set_message(t("A dataset must be added to a specific group, but you don’t belong to any groups.
-          Ask a supervisor or site administrator to add you to a group or
-          promote you to site manager to add datasets."), 'warning');
+      if (module_exists('dkan_dataset_groups')) {
+        // Groups.
+        $og_group_ref_langcode = dkan_dataset_form_field_language($form, 'og_group_ref');
+        $form['og_group_ref'][$og_group_ref_langcode][0]['default']['#required'] = TRUE;
+        // Check if there are any groups. At least there is one option which is the 'Empty' option.
+        // If there are no groups then display a warning letting the user know that he won't be able
+        // to create the dataset since the 'Publisher' field is a POD required field.
+        $available_groups = $form['og_group_ref'][$og_group_ref_langcode][0]['default'];
+        if (isset($available_groups['#options']) && count($available_groups['#options']) <= 1) {
+          // Show a warning message.
+          display_groups_warning();
+        }
       }
     }
+
+    $form['#validate'][] = 'dkan_dataset_dataset_node_form_validate';
   }
   if ($form_id == 'resource_node_form') {
     drupal_add_library('system', 'jquery.bbq');
@@ -422,6 +425,33 @@ function dkan_dataset_dataset_form_submit($form, &$form_state) {
   if (isset($form_state['node']->nid)) {
     drupal_goto('node/add/resource', array('query' => array('dataset' => $form_state['node']->nid)));
   }
+}
+
+/**
+ * Validation function for dataset node form.
+ */
+function dkan_dataset_dataset_node_form_validate($form, &$form_state) {
+  // Throw an error if the user has no groups available but the strict POD validation
+  // is enabled in DKAN Dataset Forms.
+  // The check about the field being required and empty won't work because the 'Groups'
+  // field is hidden when the user is not associated with any groups.
+  if (variable_get('dkan_dataset_form_pod_validation') && module_exists('dkan_dataset_groups')) {
+    $field_og_group_ref_langcode = dkan_dataset_form_field_language($form, 'og_group_ref');
+    $available_groups = $form['og_group_ref'][$field_og_group_ref_langcode][0]['default'];
+    if (isset($available_groups['#options']) && count($available_groups['#options']) <= 1) {
+      display_groups_warning();
+      form_set_error('', 'Error: You tried to submit a dataset with no groups assigned.');
+    }
+  }
+}
+
+/**
+ * Display groups warning on dataset form.
+ */
+function display_groups_warning() {
+  drupal_set_message(t("A dataset must be added to a specific group, but you don’t belong to any groups.
+          Ask a supervisor or site administrator to add you to a group or
+          promote you to site manager to add datasets."), 'warning');
 }
 
 /**

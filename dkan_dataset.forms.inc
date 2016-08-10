@@ -226,7 +226,7 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       // If there are no groups then display a warning letting the user know that he won't be able
       // to create the dataset since the 'Publisher' field is a POD required field.
       $available_groups = $form['og_group_ref'][$og_group_ref_langcode][0]['default'];
-      if (!isset($available_groups['#options']) || count($available_groups['#options']) <= 1) {
+      if (isset($available_groups['#options']) && count($available_groups['#options']) <= 1) {
         drupal_set_message(t("A dataset must be added to a specific group, but you don’t belong to any groups.
           Ask a supervisor or site administrator to add you to a group or
           promote you to site manager to add datasets."), 'warning');

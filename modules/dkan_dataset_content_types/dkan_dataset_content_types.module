@@ -123,6 +123,21 @@ function dkan_dataset_content_types_alter_dataset_license(&$dataset, $key) {
 }
 
 /**
+ * Add links to metadata fields.
+ */
+function dkan_dataset_content_types_preprocess_field(&$vars) {
+  switch ($vars['element']['#field_name']) {
+    case 'field_contact_email':
+      $e = $vars['element']['#items'][0]['value'];
+      $vars['items']['0']['#markup'] = '<a href="mailto:' . $e . '">' . $e . '</a>';
+      break;
+
+  }
+  return;
+
+}
+
+/**
  * Map of iso frequency ranges to field frequency allowed values.
  */
 function dkan_dataset_content_types_iso_frecuency_map() {
@@ -173,4 +188,3 @@ function dkan_dataset_content_types_allowed_language_values() {
   module_load_include('php', 'dkan_dataset_content_types', 'includes/language_code_list');
   return dkan_dataset_content_types_get_language_codes();
 }
-

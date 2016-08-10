@@ -23,7 +23,7 @@ function dkan_dataset_content_types_form_alter(&$form, &$form_state, $form_id) {
     // Hide fields.
     $form['field_modified_source_date']['#access'] = FALSE;
     $form['field_is_part_of']['#access'] = FALSE;
-    //$form['field_pod_theme']['#access'] = FALSE;
+    $form['field_pod_theme']['#access'] = FALSE;
   }
 }
 /**

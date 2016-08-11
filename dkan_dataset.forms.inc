@@ -210,6 +210,9 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       // Tags.
       $field_tags_langcode = dkan_dataset_form_field_language($form, 'field_tags');
       $form['field_tags'][$field_tags_langcode]['#required'] = TRUE;
+      // License.
+      $field_license_langcode = dkan_dataset_form_field_language($form, 'field_license');
+      $form['field_license'][$field_license_langcode]['#required'] = TRUE;
       // Contact email.
       $field_contact_email_langcode = dkan_dataset_form_field_language($form, 'field_contact_email');
       $form['field_contact_email'][$field_contact_email_langcode][0]['value']['#required'] = TRUE;

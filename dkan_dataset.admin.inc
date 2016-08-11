@@ -130,7 +130,19 @@ function dkan_dataset_form_settings() {
         this field required as well.'),
     '#default_value' => variable_get('dkan_dataset_form_pod_validation', 0),
   );
-  
+  $form['dkan_dataset_form_group_validation'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Require datasets to have a group.'),
+    '#description' => t('Enable to force users to set a specific group for every dataset.
+        If you are leaving this un-checked and therefore making groups optional for datasets,
+        be aware that you may end up with an empty "publisher" field in your data.json
+        and DCAT endpoints if you do not have a fallback value set in
+        <a href="/admin/config/services/odsm/edit/data_json_1_1">Open Data Schema Map</a> for those endpoints.
+        Also note that a user who is not a member of any group will not be able
+        to create new datasets if this is enabled.'),
+    '#default_value' => variable_get('dkan_dataset_form_group_validation', 0),
+  );
+
   return system_settings_form($form);
 }
 

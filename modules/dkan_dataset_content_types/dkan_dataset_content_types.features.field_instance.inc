@@ -884,7 +884,11 @@ uk-ogl|UK Open Government Licence (OGL)',
   // Exported field_instance: 'node-dataset-field_public_access_level'.
   $field_instances['node-dataset-field_public_access_level'] = array(
     'bundle' => 'dataset',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'value' => 'public',
+      ),
+    ),
     'deleted' => 0,
     'description' => 'The degree to which this dataset <em>could</em> be made publicly-available, regardless of whether it has been made available. See <a href="http://project-open-data.github.io/schema/#common-core-required-fields">Project Open Data</a> for more info.',
     'display' => array(
@@ -1041,7 +1045,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     'bundle' => 'dataset',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'This may include information regarding access or restrictions based on privacy, security, or other policies. This should also serve as an explanation for the selected “accessLevel” including instructions for how to access a restricted file, if applicable, or explanation for why a “non-public” or “restricted public” data asset is not “public,” if applicable. If the dataset can be made available through a website indirectly, use accessURL for the URL that provides such access. See <a href="https://project-open-data.cio.gov/v1.1/schema/#rights">Rights on Project Open Data</a>.',
+    'description' => 'If you set your dataset to a public access level other than "public", you must provide an explanation for why this dataset cannot be made fully public. Include any useful information regarding access or restrictions based on privacy, security, or other policies. See <a href="https://project-open-data.cio.gov/v1.1/schema/#rights">Rights on Project Open Data</a>.',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -1737,6 +1741,7 @@ uk-ogl|UK Open Government Licence (OGL)',
   t('Granularity');
   t('Groups audience');
   t('Homepage URL');
+  t('If you set your dataset to a public access level other than "public", you must provide an explanation for why this dataset cannot be made fully public. Include any useful information regarding access or restrictions based on privacy, security, or other policies. See <a href="https://project-open-data.cio.gov/v1.1/schema/#rights">Rights on Project Open Data</a>.');
   t('Is Part Of');
   t('Language');
   t('License');
@@ -1765,7 +1770,6 @@ uk-ogl|UK Open Government Licence (OGL)',
   t('This is used to identify a standardized specification the dataset conforms to. If this is a technical specification associated with a particular serialization of a distribution, this should be specified with <a href="#distribution-conformsTo">conformsTo</a> at the distribution level. It’s recommended that this be a URI that serves as a unique identifier for the standard. The URI may or may not also be a URL that provides documentation of the specification. See <a href="https://project-open-data.cio.gov/v1.1/schema/#dataset-conformsTo">Data Standard at Project Open Data</a>.');
   t('This is used to identify the media type (IANA Media Type also known as MIME Type) of the URL used for the dataset’s describedBy field. This should be specified if describedBy is not an HTML webpage.');
   t('This is usually geographical or temporal but can also be other dimension e.g. Person can be used to describe granularity of a dataset about average income. See <a href="http://project-open-data.github.io/schema/#expanded-fields">DCAT Granularity</a> for more info.');
-  t('This may include information regarding access or restrictions based on privacy, security, or other policies. This should also serve as an explanation for the selected “accessLevel” including instructions for how to access a restricted file, if applicable, or explanation for why a “non-public” or “restricted public” data asset is not “public,” if applicable. If the dataset can be made available through a website indirectly, use accessURL for the URL that provides such access. See <a href="https://project-open-data.cio.gov/v1.1/schema/#rights">Rights on Project Open Data</a>.');
   t('This should adhere to the RFC 5646 standard. This language subtag lookup provides a good tool for checking and verifying language codes. A language tag is comprised of either one or two parts, the language subtag (such as en for English, sp for Spanish, wo for Wolof) and the regional subtag (such as US for United States, GB for Great Britain, MX for Mexico), separated by a hyphen. Regional subtags should only be provided when needed to distinguish a language tag from another one (such as American vs. British English).');
   t('Upload');
 

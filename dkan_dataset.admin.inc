@@ -121,9 +121,16 @@ function dkan_dataset_form_settings() {
   );
   $form['dkan_dataset_form_pod_validation'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Validate dataset form according to Project Open Data (more strict than default DKAN validation).'),
+    '#title' => t('Validate dataset form according to Project Open Data (more strict
+        than default DKAN validation).'),
+    '#description' => t('By default, DKAN make only a small number of metadata fields required to
+        create datasets. Enable this setting to make all fields required by Project Open Data
+        be required fields on the dataset form. Note: "Publisher" is a required Project Open Data
+        field that is usually mapped to the "Group" field in DKAN. Use the setting below to make
+        this field required as well.'),
     '#default_value' => variable_get('dkan_dataset_form_pod_validation', 0),
   );
+  
   return system_settings_form($form);
 }
 

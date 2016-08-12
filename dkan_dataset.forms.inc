@@ -211,9 +211,6 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       // Tags.
       $field_tags_langcode = dkan_dataset_form_field_language($form, 'field_tags');
       $form['field_tags'][$field_tags_langcode]['#required'] = TRUE;
-      // License.
-      $field_license_langcode = dkan_dataset_form_field_language($form, 'field_license');
-      $form['field_license'][$field_license_langcode]['#required'] = TRUE;
       // Contact email.
       $field_contact_email_langcode = dkan_dataset_form_field_language($form, 'field_contact_email');
       $form['field_contact_email'][$field_contact_email_langcode][0]['value']['#required'] = TRUE;
@@ -223,6 +220,9 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       // Public access level.
       $field_public_access_level_langcode = dkan_dataset_form_field_language($form, 'field_public_access_level');
       $form['field_public_access_level'][$field_public_access_level_langcode]['#required'] = TRUE;
+      // Remove the custom '_none' option since the License field is required on POD.
+      $field_license_langcode = dkan_dataset_form_field_language($form, 'field_license');
+      unset($form['field_license'][$field_license_langcode]['#options']['_none']);
     }
 
     // Mark 'Groups' field as required if the group validation is enabled on DKAN Dataset forms.

@@ -16,6 +16,9 @@ function dkan_dataset_theme() {
     'dkan_dataset_release_date_view' => array(
       'variables' => array('node' => NULL),
     ),
+    'filefield_source_dkan_remotefile_element' => array(
+      'render element' => 'element',
+    ),
     'dkan_dataset_modified_date_view' => array(
       'variables' => array('node' => NULL),
     ),
@@ -328,7 +331,7 @@ function theme_dkan_dataset_preview_settings_external_table_form(&$vars) {
 
 }
 
-/*
+/**
  * Hides the link to API (URL) iframe when either the field
  * upload or the remote field are also present.
  */
@@ -355,4 +358,13 @@ function dkan_dataset_preprocess_field(&$variables) {
       unset($variables['items'][0]['iframe']);
     }
   }
+}
+
+/**
+ * Theme the output of the autocomplete field.
+ */
+function theme_filefield_source_dkan_remotefile_element($variables) {
+  $element = $variables['element'];
+  $element['url']['#field_suffix'] = drupal_render($element['select']);
+  return '<div class="filefield-source filefield-source-remotefile clear-block">' . drupal_render($element['url']) . '</div>';
 }

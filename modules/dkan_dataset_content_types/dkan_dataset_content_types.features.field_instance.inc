@@ -355,7 +355,7 @@ function dkan_dataset_content_types_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => 3,
+        'rows' => 1,
       ),
       'type' => 'text_textarea',
       'weight' => 17,

@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Implements hook_update_N().
+ */
+function dkan_dataset_content_types_update_7000() {
+  // Add data dictionary textarea id to bueditor excludes list.
+  db_update('bueditor_editors')
+    ->fields(array(
+      'excludes' => 'edit-log
+edit-menu-description
+*data-dictionary*',
+    ))
+    ->condition('eid', '5')
+    ->execute();
+
+  drupal_flush_all_caches();
+}

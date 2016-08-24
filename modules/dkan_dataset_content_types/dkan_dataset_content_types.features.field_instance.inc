@@ -1117,7 +1117,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
-        'module' => 'link_iframe_formatter',
+        'module' => 'recline',
         'settings' => array(
           'class' => '',
           'height' => 480,
@@ -1125,7 +1125,7 @@ uk-ogl|UK Open Government Licence (OGL)',
           'style' => '',
           'width' => 900,
         ),
-        'type' => 'link_iframe_formatter_iframe',
+        'type' => 'recline_default_formatter',
         'weight' => 3,
       ),
       'search_result' => array(

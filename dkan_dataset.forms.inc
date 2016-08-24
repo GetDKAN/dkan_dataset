@@ -25,7 +25,7 @@ function dkan_dataset_field_group_build_pre_render_alter(&$element) {
  * Implements hook_field_group_pre_render().
  */
 function dkan_dataset_field_group_pre_render(&$element, $group, &$form) {
-  
+
   // Only pre_render if additional info form should appear on separate page
   if (variable_get('dkan_dataset_form_additional_info', 1 )) {
     if (module_exists('context')) {
@@ -226,6 +226,10 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     // Get langcode for field_link_api.
     $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_link_api');
     $form['field_link_api'][$field_link_api_langcode][0]['#description'] = 'Link to a public API or information source.';
+
+    // Get langcode for field_format.
+    $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_format');
+    $form['field_format'][$field_link_api_langcode]['#description'] = 'Leave blank to auto-detect resource format';
 
     $form['title']['#attributes']['placeholder'] = t('eg. January Gold Prices');
     $form['title']['#required'] = TRUE;

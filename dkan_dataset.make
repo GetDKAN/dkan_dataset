@@ -130,18 +130,6 @@ projects[og_extras][version] = 1.2
 projects[og_extras][subdir] = contrib
 projects[og_extras][type] = module
 
-projects[open_data_schema_map][type] = module
-projects[open_data_schema_map][download][type] = git
-projects[open_data_schema_map][download][url] = https://github.com/NuCivic/open_data_schema_map.git
-projects[open_data_schema_map][download][branch] = dcat
-projects[open_data_schema_map][subdir] = contrib
-
-projects[open_data_schema_map_dkan][type] = module
-projects[open_data_schema_map_dkan][download][type] = git
-projects[open_data_schema_map_dkan][download][url] = https://github.com/NuCivic/open_data_schema_map_dkan.git
-projects[open_data_schema_map_dkan][download][branch] = dcat
-projects[open_data_schema_map_dkan][subdir] = contrib
-
 projects[pathauto][version] = 1.2
 projects[pathauto][subdir] = contrib
 

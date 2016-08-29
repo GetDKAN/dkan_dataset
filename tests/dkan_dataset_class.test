@@ -51,7 +51,6 @@ class DkanDatasetClassWebTestCase extends DrupalWebTestCase {
     $modules[] = 'number';
     $modules[] = 'options';
     $modules[] = 'path';
-    $modules[] = 'rdf';
     $modules[] = 'taxonomy';
     $modules[] = 'text';
     $modules[] = 'user';
@@ -89,7 +88,6 @@ class DkanDatasetClassWebTestCase extends DrupalWebTestCase {
     $modules[] = 'remote_stream_wrapper';
     $modules[] = 'strongarm';
     $modules[] = 'token';
-    $modules[] = 'rdfx';
     $modules[] = 'search_api';
     $modules[] = 'search_api_db';
     $modules[] = 'search_api_views';

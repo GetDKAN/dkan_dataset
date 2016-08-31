@@ -240,7 +240,7 @@ function dkan_dataset_groups_node_presave($node) {
     $fid = $wrap->field_image->value();
     if(!isset($fid)) {
       $source = drupal_get_path('module', 'dkan_dataset_groups') . '/default_images/group.png';
-      if (file_exists($source) && empty($instance['settings']['default_image'])) {
+      if (file_exists($source)) {
         $file = new stdClass;
         $file->filename = 'group.png';
         $file->timestamp = REQUEST_TIME;

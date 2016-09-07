@@ -231,6 +231,7 @@ function dkan_dataset_groups_form_alter(&$form, $form_state, $form_id) {
 }
 
 /**
+<<<<<<< HEAD
  * Implements hook_node_presave
  * Add a default group image if the group image field is empty.
  */
@@ -255,11 +256,7 @@ function dkan_dataset_groups_node_presave($node) {
         $node->field_image[$node->language][0]['fid'] = (string) $fid;
         $node->field_image[$node->language][0]['alt'] = t('Default group image');
       }
-    }
-  }
-}
-
-/**
+=======
  * Implements hook_node_validate().
  *
  * Check if we have some group with same title.
@@ -271,6 +268,7 @@ function dkan_dataset_groups_node_validate($node, $form, &$form_state) {
 
     if ($duplicate) {
       form_set_error('title', t('A group with title %title exists on the site. Please use another title.', array('%title' => $node->title)));
+>>>>>>> release-1-12
     }
   }
 }

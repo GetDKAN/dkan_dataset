@@ -76,6 +76,9 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
 
   if ($form_id == 'dataset_node_form') {
 
+    global $user;
+    $has_admin_role = in_array('site manager', $user->roles) || in_array('administrator', $user->roles);
+
     $form['#attached']['css'][] = drupal_get_path('module', 'dkan_dataset') . '/css/dkan_dataset.css';
     $form['#attached']['js'][] = drupal_get_path('module', 'dkan_dataset') . '/js/dkan_forms.js';
     beautytips_add_beautytips();
@@ -143,11 +146,12 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       // Get langcode for og_group_ref.
       $og_group_ref_langcode = dkan_dataset_form_field_language($form, 'og_group_ref');
 
-      // Don't show groups if user doesn't have any groups to add.
+      // Don't show groups if user doesn't have any groups to add and is not an admin user.
       if (isset($form['og_group_ref'][$og_group_ref_langcode][0]['default'])) {
         $groups = $form['og_group_ref'][$og_group_ref_langcode][0]['default']['#options'];
       }
-      if (isset($groups) and (count($groups) < 2)) {
+
+      if (isset($groups) && (count($groups) < 2) && (!$has_admin_role)) {
         $form['og_group_ref']['#access'] = FALSE;
       }
       // Move groups to vertical tabs.

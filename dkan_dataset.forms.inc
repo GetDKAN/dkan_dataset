@@ -76,9 +76,6 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
 
   if ($form_id == 'dataset_node_form') {
 
-    global $user;
-    $has_admin_role = in_array('site manager', $user->roles) || in_array('administrator', $user->roles);
-
     $form['#attached']['css'][] = drupal_get_path('module', 'dkan_dataset') . '/css/dkan_dataset.css';
     $form['#attached']['js'][] = drupal_get_path('module', 'dkan_dataset') . '/js/dkan_forms.js';
     beautytips_add_beautytips();
@@ -151,7 +148,7 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
         $groups = $form['og_group_ref'][$og_group_ref_langcode][0]['default']['#options'];
       }
 
-      if (isset($groups) && (count($groups) < 2) && (!$has_admin_role)) {
+      if (isset($groups) && (count($groups) < 2) && (!user_access('administer group'))) {
         $form['og_group_ref']['#access'] = FALSE;
       }
       // Move groups to vertical tabs.
@@ -480,9 +477,11 @@ function dkan_dataset_dataset_node_form_validate($form, &$form_state) {
  * Display groups warning on dataset form.
  */
 function dkan_dataset_display_groups_warning() {
-  drupal_set_message(t("A dataset must be added to a specific group, but you don’t belong to any groups.
+  if (!user_access('administer group')) {
+    drupal_set_message(t("A dataset must be added to a specific group, but you don’t belong to any groups.
           Ask a supervisor or site administrator to add you to a group or
           promote you to site manager to add datasets."), 'warning');
+  }
 }
 
 /**

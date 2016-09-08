@@ -236,7 +236,7 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       $available_groups = $form['og_group_ref'][$og_group_ref_langcode][0]['default'];
       if (isset($available_groups['#options']) && count($available_groups['#options']) <= 1) {
         // Show a warning message.
-        display_groups_warning();
+        dkan_dataset_display_groups_warning();
       }
     }
 
@@ -451,7 +451,7 @@ function dkan_dataset_dataset_node_form_validate($form, &$form_state) {
     $available_groups = $form['og_group_ref'][$field_og_group_ref_langcode][0]['default'];
     // If there are no options or only one (-None-) then display an error.
     if (isset($available_groups['#options']) && count($available_groups['#options']) <= 1) {
-      display_groups_warning();
+      dkan_dataset_display_groups_warning();
       form_set_error('', 'Error: You tried to submit a dataset with no groups assigned.');
     }
   }
@@ -460,7 +460,7 @@ function dkan_dataset_dataset_node_form_validate($form, &$form_state) {
 /**
  * Display groups warning on dataset form.
  */
-function display_groups_warning() {
+function dkan_dataset_display_groups_warning() {
   drupal_set_message(t("A dataset must be added to a specific group, but you don’t belong to any groups.
           Ask a supervisor or site administrator to add you to a group or
           promote you to site manager to add datasets."), 'warning');

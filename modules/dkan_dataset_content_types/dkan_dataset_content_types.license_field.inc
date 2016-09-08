@@ -52,7 +52,8 @@ function dkan_dataset_content_types_license_subscribed_values() {
  * Implements hook_license_subscribe().
  */
 function dkan_dataset_content_types_license_subscribe() {
-  return array(
+
+  $licenses = array(
     "cc-by" => array(
       "label" => "Creative Commons Attribution",
       "uri" => "http://opendefinition.org/licenses/cc-by/",
@@ -92,7 +93,22 @@ function dkan_dataset_content_types_license_subscribe() {
     "uk-ogl" => array(
       "label" => "UK Open Government Licence (OGL)",
       "url" => 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/'
-    ),
+    )
+  );
+
+  // If strict POD validation is not enabled then allow other licenses.
+  if (!variable_get('dkan_dataset_form_pod_validation')) {
+    $licenses = array_merge($licenses, dkan_dataset_content_types_non_pod_license_values());
+  }
+
+  return $licenses;
+}
+
+/**
+ * If POD validation is not enabled then licenses without URI can be used.
+ */
+function dkan_dataset_content_types_non_pod_license_values() {
+  return array(
     "other-at" => array(
       "label" => "Other (Attribution)"
     ),
@@ -110,6 +126,6 @@ function dkan_dataset_content_types_license_subscribe() {
     ),
     "notspecified" => array(
       "label" => "License Not Specified",
-    ),
+    )
   );
 }

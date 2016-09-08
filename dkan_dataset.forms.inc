@@ -220,9 +220,24 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       // Public access level.
       $field_public_access_level_langcode = dkan_dataset_form_field_language($form, 'field_public_access_level');
       $form['field_public_access_level'][$field_public_access_level_langcode]['#required'] = TRUE;
-      // Remove the custom '_none' option since the License field is required on POD.
+      // License.
       $field_license_langcode = dkan_dataset_form_field_language($form, 'field_license');
+      // Remove the custom '_none' option from license field since is required for POD.
       unset($form['field_license'][$field_license_langcode]['#options']['_none']);
+      // Set 'Open Data Commons Open Database License (ODbL)' as default value.
+      $selected_license = $form['field_license'][$field_license_langcode]['#default_value'];
+      $non_pod_licenses = dkan_dataset_content_types_non_pod_license_values();
+      if (array_key_exists($selected_license, $non_pod_licenses)) {
+        $form['field_license'][$field_license_langcode]['#default_value'] = 'odc-odbl';
+        if ($selected_license != 'notspecified') {
+          // The dataset had a license that is not allowd by POD.
+          drupal_set_message(
+            t('The "') . $non_pod_licenses[$selected_license]['label'] .
+            t('" license value is not valid on Project Open Data so it was changed automatically. ') .
+            t('Please check the new value before saving any changes.')
+          );
+        }
+      }
     }
 
     // Mark 'Groups' field as required if the group validation is enabled on DKAN Dataset forms.

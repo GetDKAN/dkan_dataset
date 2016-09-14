@@ -152,9 +152,7 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
         $form['og_group_ref']['#access'] = FALSE;
       }
       // Move groups to vertical tabs.
-      $form['og_group_ref']['#group'] = 'additional_settings';
       $form['og_group_ref']['#title'] = t('Groups');
-      $form['og_group_ref']['#type'] = 'fieldset';
     }
 
     if (arg(1) == 'add') {
@@ -311,9 +309,7 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
 
     // Move groups to vertical tabs.
     if (isset($form['og_group_ref'])) {
-      $form['og_group_ref']['#group'] = 'additional_settings';
       $form['og_group_ref']['#title'] = t('Groups');
-      $form['og_group_ref']['#type'] = 'fieldset';
     }
 
     if ($query = drupal_get_query_parameters()) {

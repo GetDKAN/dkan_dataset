@@ -17,6 +17,7 @@ function dkan_dataset_field_group_build_pre_render_alter(&$element) {
     $element['group_primary']['path']['#weight'] = "1";
     $element['group_primary']['body']['#weight'] = "2";
     $element['group_primary']['field_tags']['#weight'] = "3";
+    $element['group_primary']['og_group_ref']['#weight'] = "4";
     unset($element['path']);
 
     // If 'Validate dataset form according to Project Open Data' is enabled on dataset form settings then
@@ -67,6 +68,38 @@ function dkan_dataset_field_group_pre_render(&$element, $group, &$form) {
       }
     }
   }
+}
+
+/**
+ * Helper function to get the node title without loading the whole node object.
+ */
+function dkan_dataset_get_node_title($nid) {
+  return db_query('SELECT title FROM {node} WHERE nid = :nid', array(':nid' => $nid))->fetchField();
+}
+
+/**
+ * Returns an array with the available group options for the current user.
+ */
+function dkan_dataset_get_group_options() {
+
+  $available_groups = array();
+
+  if (user_access('administer group')) {
+    // If the user is a group administrator then show all groups as available options.
+    $groups = og_get_all_group();
+  } else {
+    // If the user is not an administrator then only display the groups that the user is a member of.
+    // If a user is not specified for 'og_get_groups_by_user' then it defaults to the current user.
+    $groups = og_get_groups_by_user(NULL, 'node');
+  }
+
+  if ($groups) {
+    foreach ($groups as $group_id) {
+      $available_groups[$group_id] = dkan_dataset_get_node_title($group_id);
+    }
+  }
+
+  return $available_groups;
 }
 
 /**
@@ -143,16 +176,15 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       // Get langcode for og_group_ref.
       $og_group_ref_langcode = dkan_dataset_form_field_language($form, 'og_group_ref');
 
-      // Don't show groups if user doesn't have any groups to add and is not an admin user.
-      if (isset($form['og_group_ref'][$og_group_ref_langcode][0]['default'])) {
-        $groups = $form['og_group_ref'][$og_group_ref_langcode][0]['default']['#options'];
-      }
+      // Modify title of Publisher field.
+      $form['og_group_ref'][$og_group_ref_langcode]['#title'] = t('Groups');
 
-      if (isset($groups) && (count($groups) < 2) && (!user_access('administer group'))) {
+      $groups = dkan_dataset_get_group_options();
+      $form['og_group_ref'][$og_group_ref_langcode]['#options'] = $groups;
+      // Don't show groups if user doesn't have any groups to add.
+      if (empty($groups)) {
         $form['og_group_ref']['#access'] = FALSE;
       }
-      // Move groups to vertical tabs.
-      $form['og_group_ref']['#title'] = t('Groups');
     }
 
     if (arg(1) == 'add') {
@@ -243,12 +275,11 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     if (variable_get('dkan_dataset_form_group_validation') && module_exists('dkan_dataset_groups')) {
       // Groups.
       $og_group_ref_langcode = dkan_dataset_form_field_language($form, 'og_group_ref');
-      $form['og_group_ref'][$og_group_ref_langcode][0]['default']['#required'] = TRUE;
-      // Check if there are any groups. At least there is one option which is the '-None-' option.
+      $form['og_group_ref'][$og_group_ref_langcode]['#required'] = TRUE;
       // If there are no groups then display a warning letting the user know that he won't be able
       // to create the dataset since the 'Publisher' field is a POD required field.
-      $available_groups = $form['og_group_ref'][$og_group_ref_langcode][0]['default'];
-      if (isset($available_groups['#options']) && count($available_groups['#options']) <= 1) {
+      $available_groups = $form['og_group_ref'][$og_group_ref_langcode]['#options'];
+      if (empty($available_groups)) {
         // Show a warning message.
         dkan_dataset_display_groups_warning();
       }
@@ -307,10 +338,9 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     $form['field_link_file'][$field_link_file_langcode][0]['#title'] = '';
     $form['field_link_remote_file'][$field_link_file_langcode][0]['#title'] = '';
 
-    // Move groups to vertical tabs.
-    if (isset($form['og_group_ref'])) {
-      $form['og_group_ref']['#title'] = t('Groups');
-    }
+    // Resources inherit groups from parent dataset.
+    // Hide field so users cannot manually modify that information.
+    $form['og_group_ref']['#access'] = FALSE;
 
     if ($query = drupal_get_query_parameters()) {
       if (isset($query['dataset'])) {
@@ -372,35 +402,6 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     else {
       $form['actions']['another']['#submit'] = array('node_form_submit', 'dkan_dataset_resource_form_submit');
     }
-
-    $group_description = t("This resource is not assigned to any groups. Groups can only be assigned to Datasets. Resources are always a part of the parent Datasets's groups");
-
-    if (isset($form['og_group_ref'][$form['og_group_ref']['#language']][0])
-        && isset($form['og_group_ref'][$form['og_group_ref']['#language']][0]['#entity']->og_group_ref)
-        && !empty($form['og_group_ref'][$form['og_group_ref']['#language']][0]['#entity']->og_group_ref)
-    ) {
-      $titles = array();
-      foreach ($form['og_group_ref'][$form['og_group_ref']['#language']][0]['#entity']->og_group_ref['und'] as $group) {
-        $group = node_load($group['target_id']);
-        $titles[] = l($group->title, 'node/' . $group->nid);
-      }
-      $titles = theme('item_list', array('items' => $titles));
-      $group_description = t("This resource is in the following groups: !groups Groups can only be assigned to Datasets. Resources are always a part of the parent Datasets's groups.", array('!groups' => $titles));
-    }
-    else {
-      $group_description = t('No groups are attached to this resource. Groups can only be attached on datasets that resources are linked to.');
-    }
-
-    $form['og_group_ref']['#access'] = FALSE;
-    $form['groups'] = array(
-        '#type' => 'fieldset',
-        'und' => array(
-            '#type' => 'item',
-            '#markup' => $group_description,
-        ),
-        '#title' => t('Groups'),
-        '#group' => 'additional_settings',
-    );
   }
 }
 
@@ -460,9 +461,9 @@ function dkan_dataset_dataset_node_form_validate($form, &$form_state) {
   if (variable_get('dkan_dataset_form_group_validation') && module_exists('dkan_dataset_groups')) {
     // Get available groups from the field options.
     $field_og_group_ref_langcode = dkan_dataset_form_field_language($form, 'og_group_ref');
-    $available_groups = $form['og_group_ref'][$field_og_group_ref_langcode][0]['default'];
-    // If there are no options or only one (-None-) then display an error.
-    if (isset($available_groups['#options']) && count($available_groups['#options']) <= 1) {
+    $available_groups = $form['og_group_ref'][$field_og_group_ref_langcode]['#options'];
+    // If there are no options then display an error.
+    if (empty($available_groups)) {
       dkan_dataset_display_groups_warning();
       form_set_error('', 'Error: You tried to submit a dataset with no groups assigned.');
     }

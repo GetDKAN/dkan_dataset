@@ -71,10 +71,12 @@ function dkan_dataset_groups_field_default_field_instances() {
     ),
     'widget' => array(
       'active' => 0,
-      'module' => 'og',
-      'settings' => array(),
-      'type' => 'og_complex',
-      'weight' => 14,
+      'module' => 'options',
+      'settings' => array(
+        'apply_chosen' => '',
+      ),
+      'type' => 'options_select',
+      'weight' => 3,
     ),
   );
 

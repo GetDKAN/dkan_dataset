@@ -786,7 +786,7 @@ uk-ogl|UK Open Government Licence (OGL)',
         'sort_options' => 0,
       ),
       'type' => 'select_or_other',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -1251,7 +1251,7 @@ uk-ogl|UK Open Government Licence (OGL)',
         'size' => 60,
       ),
       'type' => 'autocomplete_deluxe_taxonomy',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 

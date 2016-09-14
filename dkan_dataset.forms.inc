@@ -271,6 +271,17 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       }
     }
 
+    // Make 'Rights' field visible and required if 'Public Access Level' is set
+    // to 'restricted' or 'private'.
+    $access_level_values = array(
+      array('value' => t('restricted')),
+      array('value' => t('private'))
+    );
+    $form['field_rights']['#states'] = array(
+      'visible' => array('[name="field_public_access_level[und]"]' => array($access_level_values)),
+      'required' => array('[name="field_public_access_level[und]"]' => array($access_level_values))
+    );
+
     // Mark 'Groups' field as required if the group validation is enabled on DKAN Dataset forms.
     if (variable_get('dkan_dataset_form_group_validation') && module_exists('dkan_dataset_groups')) {
       // Groups.
@@ -467,6 +478,15 @@ function dkan_dataset_dataset_node_form_validate($form, &$form_state) {
       dkan_dataset_display_groups_warning();
       form_set_error('', 'Error: You tried to submit a dataset with no groups assigned.');
     }
+  }
+
+  // Display an error if the 'Public Access Level' field value is not 'public' and the 'Rights' field is empty.
+  $field_public_access_level_langcode = dkan_dataset_form_field_language($form, 'field_public_access_level');
+  $public_access_level = $form_state['values']['field_public_access_level'][$field_public_access_level_langcode][0]['value'];
+  $field_rights_langcode = dkan_dataset_form_field_language($form, 'field_rights');
+  $rights = $form_state['values']['field_rights'][$field_rights_langcode][0]['value'];
+  if ($public_access_level != 'public' && empty($rights)) {
+    form_set_error('field_rights', 'Rights field is required.');
   }
 }
 

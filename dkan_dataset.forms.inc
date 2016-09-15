@@ -253,8 +253,6 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       $form['field_public_access_level'][$field_public_access_level_langcode]['#required'] = TRUE;
       // License.
       $field_license_langcode = dkan_dataset_form_field_language($form, 'field_license');
-      // Remove the custom '_none' option from license field since is required for POD.
-      unset($form['field_license'][$field_license_langcode]['#options']['_none']);
       // Set 'Open Data Commons Open Database License (ODbL)' as default value.
       $selected_license = $form['field_license'][$field_license_langcode]['#default_value'];
       $non_pod_licenses = dkan_dataset_content_types_non_pod_license_values();
@@ -613,6 +611,11 @@ function dkan_dataset_recline_format_alter(&$format, $entity) {
  * After build function for resource and dataset nodes.
  */
 function dkan_dataset_resource_form_after_build($form, &$form_state) {
+  // Hide 'Other' options if strict POD validation is enabled.
+  if (isset($form['field_license']) && variable_get('dkan_dataset_form_pod_validation')) {
+    unset($form['field_license']['und']['select']['#options']['select_or_other']);
+    unset($form['field_license']['und']['select']['#options']['_none']);
+  }
   if (isset($form['field_link_file'])) {
     // Get langcode for field_link_file.
     $field_link_file_langcode = dkan_dataset_form_field_language($form, 'field_link_file');

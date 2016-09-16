@@ -378,10 +378,11 @@ function dkan_dataset_content_types_field_default_field_instances() {
 
   // Exported field_instance: 'node-dataset-field_data_dictionary'.
   $field_instances['node-dataset-field_data_dictionary'] = array(
+    'bueditor_profile' => -1,
     'bundle' => 'dataset',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Provides some sort of description that helps understanding the data. This usually consists of a table providing explanation of columns meaning, values interpretation and acronyms/codes used in the data. Can be a URL to such a resource. See Project Open Data <a href="http://project-open-data.github.io/schema/#common-core-required-if-applicable-fields">data dictionary</a> for more info.',
+    'description' => 'Provides some sort of description that helps understanding the data. This can be a URL to such a resource. See Project Open Data <a href="http://project-open-data.github.io/schema/#common-core-required-if-applicable-fields">data dictionary</a> for more info.',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -409,14 +410,14 @@ function dkan_dataset_content_types_field_default_field_instances() {
     'label' => 'Data Dictionary',
     'required' => 0,
     'settings' => array(
-      'text_processing' => 0,
+      'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => 3,
+        'rows' => 1,
       ),
       'type' => 'text_textarea',
       'weight' => 18,

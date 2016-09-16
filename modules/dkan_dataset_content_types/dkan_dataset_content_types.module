@@ -24,7 +24,16 @@ function dkan_dataset_content_types_form_alter(&$form, &$form_state, $form_id) {
     $form['field_modified_source_date']['#access'] = FALSE;
     $form['field_is_part_of']['#access'] = FALSE;
     $form['field_pod_theme']['#access'] = FALSE;
+
+    $form['field_data_dictionary'][LANGUAGE_NONE]['#after_build'][] = 'data_dictionary_after_build';
   }
+}
+/**
+ * After build for data dictionary field. Removes format selector and guidelines.
+ */
+function data_dictionary_after_build(&$form) {
+  unset($form[0]['format']);
+  return $form;
 }
 /**
  * Implements hook_field_formatter_info().

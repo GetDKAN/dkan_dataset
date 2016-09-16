@@ -254,14 +254,15 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       // License.
       $field_license_langcode = dkan_dataset_form_field_language($form, 'field_license');
       // Set 'Open Data Commons Open Database License (ODbL)' as default value.
-      $selected_license = $form['field_license'][$field_license_langcode]['#default_value'];
-      $non_pod_licenses = dkan_dataset_content_types_non_pod_license_values();
-      if (array_key_exists($selected_license, $non_pod_licenses)) {
+      $selected_license_code = $form['field_license'][$field_license_langcode]['#default_value'];
+      $available_licenses = dkan_dataset_content_types_license_subscribed_values();
+      $selected_license_data = $available_licenses[$selected_license_code];
+      if (!isset($selected_license_data['uri'])) {
         $form['field_license'][$field_license_langcode]['#default_value'] = 'odc-odbl';
-        if ($selected_license != 'notspecified') {
+        if ($selected_license_code != 'notspecified') {
           // The dataset had a license that is not allowd by POD.
           drupal_set_message(
-            t('The "') . $non_pod_licenses[$selected_license]['label'] .
+            t('The "') . $selected_license_data['label'] .
             t('" license value is not valid on Project Open Data so it was changed automatically. ') .
             t('Please check the new value before saving any changes.')
           );

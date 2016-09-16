@@ -456,6 +456,53 @@ function dkan_dataset_content_types_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-dataset-field_harvest_source_ref'.
+  $field_instances['node-dataset-field_harvest_source_ref'] = array(
+    'bundle' => 'dataset',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'dkan_dataset',
+        'settings' => array(),
+        'type' => 'harvest_info_formatter',
+        'weight' => 20,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_harvest_source_ref',
+    'label' => 'Harvest Source',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 24,
+    ),
+  );
+
   // Exported field_instance: 'node-dataset-field_license'.
   $field_instances['node-dataset-field_license'] = array(
     'bundle' => 'dataset',
@@ -809,7 +856,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     'bundle' => 'dataset',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Modified Date of a harvested resource.',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -1336,10 +1383,12 @@ uk-ogl|UK Open Government Licence (OGL)',
   t('Frequency');
   t('Granularity');
   t('Groups audience');
+  t('Harvest Source');
   t('License');
   t('License definitions and additional information can be found at <a href="http://opendefinition.org">opendefinition.org</a>');
   t('Link API');
   t('Link File');
+  t('Modified Date of a harvested resource.');
   t('Provides some sort of description that helps understanding the data. This can be a URL to such a resource. See Project Open Data <a href="http://project-open-data.github.io/schema/#common-core-required-if-applicable-fields">data dictionary</a> for more info.');
   t('Public Access Level');
   t('Related Content');

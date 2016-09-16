@@ -275,9 +275,12 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       array('value' => t('restricted')),
       array('value' => t('private'))
     );
+    $field_public_access_level_langcode = dkan_dataset_form_field_language($form, 'field_public_access_level');
     $form['field_rights']['#states'] = array(
-      'visible' => array('[name="field_public_access_level[und]"]' => array($access_level_values)),
-      'required' => array('[name="field_public_access_level[und]"]' => array($access_level_values))
+      'visible' => array(
+        '[name="field_public_access_level[' . $field_public_access_level_langcode . ']"]' => array($access_level_values)),
+      'required' => array(
+        '[name="field_public_access_level[' . $field_public_access_level_langcode . ']"]' => array($access_level_values))
     );
 
     // Mark 'Groups' field as required if the group validation is enabled on DKAN Dataset forms.

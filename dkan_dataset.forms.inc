@@ -22,7 +22,7 @@ function dkan_dataset_field_group_build_pre_render_alter(&$element) {
 
     // If 'Validate dataset form according to Project Open Data' is enabled on dataset form settings then
     // move all POD required fields to the first step if the form is a multistep form.
-    $multistep_form_enabled = variable_get('dkan_dataset_form_additional_info');
+    $multistep_form_enabled = variable_get('dkan_dataset_form_additional_info', 1);
     $pod_validation_enabled = variable_get('dkan_dataset_form_pod_validation');
     if ($element['#action'] === '/node/add/dataset' &&  $multistep_form_enabled && $pod_validation_enabled) {
       $element['group_primary']['field_contact_name'] = $element['group_additional']['field_contact_name'];
@@ -254,19 +254,25 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       // License.
       $field_license_langcode = dkan_dataset_form_field_language($form, 'field_license');
       // Set 'Open Data Commons Open Database License (ODbL)' as default value.
+      $valid_pod_license = true;
       $selected_license_code = $form['field_license'][$field_license_langcode]['#default_value'];
-      $available_licenses = dkan_dataset_content_types_license_subscribed_values();
-      $selected_license_data = $available_licenses[$selected_license_code];
-      if (!isset($selected_license_data['uri'])) {
-        $form['field_license'][$field_license_langcode]['#default_value'] = 'odc-odbl';
-        if ($selected_license_code != 'notspecified') {
-          // The dataset had a license that is not allowd by POD.
+      // If the license is not specified then it's not a POD valid license.
+      if ($selected_license_code === 'notspecified') {
+        $valid_pod_license = false;
+      } else {
+        $available_licenses = dkan_dataset_content_types_license_subscribed_values();
+        // If the license is not available then is not a POD valid license.
+        if (!isset($available_licenses[$selected_license_code])) {
+          $valid_pod_license = false;
           drupal_set_message(
-            t('The "') . $selected_license_data['label'] .
-            t('" license value is not valid on Project Open Data so it was changed automatically. ') .
+            t('The dataset had a license value that is not valid on Project Open Data so it was changed automatically. ') .
             t('Please check the new value before saving any changes.')
           );
         }
+      }
+
+      if (!$valid_pod_license) {
+        $form['field_license'][$field_license_langcode]['#default_value'] = 'odc-odbl';
       }
     }
 

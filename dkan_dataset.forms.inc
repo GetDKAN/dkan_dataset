@@ -19,54 +19,6 @@ function dkan_dataset_field_group_build_pre_render_alter(&$element) {
     $element['group_primary']['field_tags']['#weight'] = "3";
     $element['group_primary']['og_group_ref']['#weight'] = "4";
     unset($element['path']);
-
-    // If 'Validate dataset form according to Project Open Data' is enabled on dataset form settings then
-    // move all POD required fields to the first step if the form is a multistep form.
-    $multistep_form_enabled = variable_get('dkan_dataset_form_additional_info', 1);
-    $pod_validation_enabled = variable_get('dkan_dataset_form_pod_validation');
-    if ($element['#action'] === '/node/add/dataset' &&  $multistep_form_enabled && $pod_validation_enabled) {
-      $element['group_primary']['field_contact_name'] = $element['group_additional']['field_contact_name'];
-      $element['group_primary']['field_contact_email'] = $element['group_additional']['field_contact_email'];
-      $element['group_primary']['field_public_access_level'] = $element['group_additional']['field_public_access_level'];
-      $element['group_primary']['field_rights'] = $element['group_additional']['field_rights'];
-      unset($element['group_additional']['field_contact_name']);
-      unset($element['group_additional']['field_contact_email']);
-      unset($element['group_additional']['field_public_access_level']);
-      unset($element['group_additional']['field_rights']);
-    }
-  }
-}
-
-/**
- * Implements hook_field_group_pre_render().
- */
-function dkan_dataset_field_group_pre_render(&$element, $group, &$form) {
-  // Only pre_render if additional info form should appear on separate page
-  if (variable_get('dkan_dataset_form_additional_info', 1 )) {
-    if (module_exists('context')) {
-      $contexts = context_active_contexts();
-    }
-    $query = drupal_get_query_parameters();
-    $arg2 = arg(2);
-    $additional = isset($form['#additional_processed']) && $form['#additional_processed'] ? TRUE : FALSE;
-    if ((isset($form['#groups'][$group->group_name]->disabled) && $form['#groups'][$group->group_name]->disabled) || isset($query['additional'])) {
-      if ($group->group_name == 'group_primary') {
-        $element += array(
-          '#type' => 'markup',
-          '#weight' => $group->weight,
-          '#access' => FALSE,
-        );
-      }
-    }
-    elseif (isset($form['#action']) && $form['#action'] == url('node/add/dataset') && !$additional && $arg2 != 'edit') {
-      if ($group->group_name == 'group_additional') {
-        $element += array(
-          '#type' => 'markup',
-          '#weight' => $group->weight,
-          '#access' => FALSE,
-        );
-      }
-    }
   }
 }
 
@@ -301,6 +253,30 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       if (empty($available_groups)) {
         // Show a warning message.
         dkan_dataset_display_groups_warning();
+      }
+    }
+
+    // If 'Validate dataset form according to Project Open Data' is enabled on dataset form settings then
+    // move all POD required fields to the first step if the form is a multistep form.
+    $multistep_form_enabled = variable_get('dkan_dataset_form_additional_info', 1);
+    $pod_validation_enabled = variable_get('dkan_dataset_form_pod_validation');
+    if ($multistep_form_enabled && $pod_validation_enabled) {
+      $form['#group_children']['field_contact_name'] = 'group_primary';
+      $form['#group_children']['field_contact_email'] = 'group_primary';
+      $form['#group_children']['field_public_access_level'] = 'group_primary';
+      $form['#group_children']['field_rights'] = 'group_primary';
+    }
+
+    // Hide field groups if multi step form is enabled.
+    if (variable_get('dkan_dataset_form_additional_info', 1 )) {
+      $query = drupal_get_query_parameters();
+      $arg2 = arg(2);
+      $additional = isset($form['#additional_processed']) && $form['#additional_processed'] ? TRUE : FALSE;
+      if ((isset($form['#groups']['group_primary']->disabled) && $form['#groups']['group_primary']->disabled) || isset($query['additional'])) {
+        field_group_hide_field_groups($form, array('group_primary'));
+      }
+      elseif (isset($form['#action']) && $form['#action'] == url('node/add/dataset') && !$additional && $arg2 != 'edit') {
+        field_group_hide_field_groups($form, array('group_additional'));
       }
     }
 

@@ -267,8 +267,8 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       $form['#group_children']['field_rights'] = 'group_primary';
     }
 
-    // Hide field groups if multi step form is enabled.
-    if (variable_get('dkan_dataset_form_additional_info', 1 )) {
+    // Hide field groups if multi step form is enabled and the dataset API is not being used.
+    if (variable_get('dkan_dataset_form_additional_info', 1 ) && (current_path() != 'api/dataset/node')) {
       $query = drupal_get_query_parameters();
       $arg2 = arg(2);
       $additional = isset($form['#additional_processed']) && $form['#additional_processed'] ? TRUE : FALSE;

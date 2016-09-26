@@ -274,6 +274,9 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       $additional = isset($form['#additional_processed']) && $form['#additional_processed'] ? TRUE : FALSE;
       if ((isset($form['#groups']['group_primary']->disabled) && $form['#groups']['group_primary']->disabled) || isset($query['additional'])) {
         field_group_hide_field_groups($form, array('group_primary'));
+        if (module_exists('open_data_federal_extras')) {
+          field_group_hide_field_groups($form, array('group_odfie_pod'));
+        }
       }
       elseif (isset($form['#action']) && $form['#action'] == url('node/add/dataset') && !$additional && $arg2 != 'edit') {
         field_group_hide_field_groups($form, array('group_additional'));

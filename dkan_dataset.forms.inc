@@ -182,7 +182,6 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     }
     else {
       $form['actions']['submit']['#value'] = t('Finish');
-      $form['#action'] = url('node/add/dataset');
     }
 
     // Mark all POD related required fields as required except for 'Publisher'

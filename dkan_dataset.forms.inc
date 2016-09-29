@@ -361,6 +361,9 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     }
     else {
       $form['#action'] = url('node/add/resource');
+      if (drupal_match_path(current_path(), 'node/*/edit')) {
+        $form['#action'] = url('node/' . $form['#node']->nid . '/edit');
+      }
     }
     if (variable_get('dkan_dataset_form_additional_info', 1 )) {
       if (isset($query['dataset']) || (isset($form_state['input']['field_dataset_ref']['und'][0]))) {

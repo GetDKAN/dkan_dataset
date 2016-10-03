@@ -19,6 +19,12 @@ function dkan_dataset_content_types_form_alter(&$form, &$form_state, $form_id) {
       dkan_dataset_content_types_license_allowed_values()
     );
     $form['field_license'][LANGUAGE_NONE]['#options'] = $allowed_values;
+
+    // Hide fields.
+    $form['field_modified_source_date']['#access'] = FALSE;
+    $form['field_is_part_of']['#access'] = FALSE;
+    $form['field_pod_theme']['#access'] = FALSE;
+
     $form['field_data_dictionary'][LANGUAGE_NONE]['#after_build'][] = 'data_dictionary_after_build';
   }
 }
@@ -182,4 +188,12 @@ function dkan_dataset_content_types_iso2frequency($accrualPeriodicity) {
 function dkan_dataset_content_types_frequency2iso($frecuencyIndex) {
   $map = array_flip(dkan_dataset_content_types_iso_frecuency_map());
   return $map[$accrualPeriodicity];
+}
+
+/**
+ * Implements allowed_values_function for field_language.
+ */
+function dkan_dataset_content_types_allowed_language_values() {
+  module_load_include('php', 'dkan_dataset_content_types', 'includes/language_code_list');
+  return dkan_dataset_content_types_get_language_codes();
 }

@@ -229,3 +229,48 @@ function dkan_dataset_groups_form_alter(&$form, $form_state, $form_id) {
       break;
   }
 }
+
+/**
+ * Implements hook_node_presave
+ * Add a default group image if the group image field is empty.
+ */
+function dkan_dataset_groups_node_presave($node) {
+  if(is_object($node) && $node->type == "group") {
+    $wrap = entity_metadata_wrapper('node', $node);
+    $fid = $wrap->field_image->value();
+    if(!isset($fid)) {
+      $source = drupal_get_path('module', 'dkan_dataset_groups') . '/default_images/group.png';
+      if (file_exists($source)) {
+        $file = new stdClass;
+        $file->filename = 'group.png';
+        $file->timestamp = REQUEST_TIME;
+        $file->uri = $source;
+        $file->filemime = file_get_mimetype($source);
+        $file->uid = 1;
+        $file->status = 1;
+        $file = file_copy($file, 'public://', FILE_EXISTS_REPLACE);
+        $fid = $file->fid;
+
+        // Set group image fid.
+        $node->field_image[$node->language][0]['fid'] = (string) $fid;
+        $node->field_image[$node->language][0]['alt'] = t('Default group image');
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_node_validate().
+ *
+ * Check if we have some group with same title.
+ */
+function dkan_dataset_groups_node_validate($node, $form, &$form_state) {
+  if ($node->type == 'group') {
+    $nid = isset($node->nid) ? $node->nid : 0;
+    $duplicate = db_query("SELECT nid FROM {node} WHERE LOWER(title)=LOWER(:title) AND nid != :nid AND type='group'", array(':title' => $node->title, ':nid' => $nid))->fetchField();
+
+    if ($duplicate) {
+      form_set_error('title', t('A group with title %title exists on the site. Please use another title.', array('%title' => $node->title)));
+    }
+  }
+}

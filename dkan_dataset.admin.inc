@@ -104,16 +104,6 @@ function dkan_dataset_api_menu_settings() {
  */
 function dkan_dataset_form_settings() {
   $form = array();
-  $form['dkan_dataset_form_ajax'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Use Ajax on dataset node.'),
-    '#default_value' => variable_get('dkan_dataset_form_ajax', 0),
-  );
-  $form['dkan_resource_form_ajax'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Use Ajax on resource node.'),
-    '#default_value' => variable_get('dkan_resource_form_ajax', 0),
-  );
   $form['dkan_dataset_form_additional_info'] = array(
     '#type' => 'checkbox',
     '#title' => t('Divide Dataset form into main form and "Additional Data" (CKAN style).'),

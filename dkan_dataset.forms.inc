@@ -551,6 +551,7 @@ function dkan_dataset_resource_node_form_validate($form, &$form_state) {
         $file = file_load($link_fid);
         $type = isset($file->filemime) ? recline_get_data_type($file->filemime) : '';
       }
+      // @todo Probably remove all this
       elseif ($api) {
         $request = drupal_http_request($api);
         if (!isset($request->error)) {
@@ -568,6 +569,24 @@ function dkan_dataset_resource_node_form_validate($form, &$form_state) {
       else {
         $type = substr($link, strrpos($link, '.') + 1);
       }
+      // Check for geojson
+      if ($type == 'json' && isset($file)) {
+        $response = drupal_http_request($file->uri, array('timeout' => 5));
+        // dpm($response);
+        if ($response->code == '200') {
+          $data = $response->data;
+          $decoded = drupal_json_decode($data);
+          $geojson_types = array('FeatureCollection', 'GeometryCollection', 'Feature', 'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon');
+          foreach ($geojson_types as $geojson_type) {
+            foreach ($decoded as $key => $value) {
+              if ($geojson_type === $value) {
+                $type = 'geojson';
+              }
+            }
+          }
+        }
+      }
+
     }
   }
   $vocabs = taxonomy_vocabulary_get_names();

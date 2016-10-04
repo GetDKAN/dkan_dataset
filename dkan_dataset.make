@@ -16,7 +16,7 @@ projects[recline][download][url] = https://github.com/NuCivic/recline.git
 projects[recline][download][branch] = preview-bugs-3782
 projects[recline][subdir] = contrib
 
-includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/7.x-1.x/recline.make
+includes[recline_make] = https://raw.githubusercontent.com/NuCivic/recline/preview-bugs-3782/recline.make
 
 ; Contrib Modules
 projects[autocomplete_deluxe][subdir] = contrib

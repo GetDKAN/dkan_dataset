@@ -22,7 +22,6 @@ dependencies[] = libraries
 dependencies[] = link
 dependencies[] = link_iframe_formatter
 dependencies[] = multistep
-dependencies[] = rdfx
 dependencies[] = ref_field_sync
 dependencies[] = remote_stream_wrapper
 dependencies[] = search_api

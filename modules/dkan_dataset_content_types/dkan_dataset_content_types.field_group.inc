@@ -38,6 +38,13 @@ function dkan_dataset_content_types_field_group_info() {
       12 => 'release_date',
       13 => 'modified_date',
       14 => 'identifier',
+      15 => 'field_is_part_of',
+      16 => 'field_data_dictionary_type',
+      17 => 'field_landing_page',
+      18 => 'field_pod_theme',
+      19 => 'field_conforms_to',
+      20 => 'field_rights',
+      21 => 'field_language',
     ),
     'format_type' => 'table',
     'format_settings' => array(
@@ -69,19 +76,25 @@ function dkan_dataset_content_types_field_group_info() {
     'children' => array(
       0 => 'field_additional_info',
       1 => 'field_author',
-      2 => 'field_contact_email',
-      3 => 'field_contact_name',
-      4 => 'field_data_dictionary',
-      5 => 'field_frequency',
-      6 => 'field_granularity',
-      7 => 'field_public_access_level',
-      8 => 'field_related_content',
-      9 => 'field_resources',
-      10 => 'field_spatial',
-      11 => 'field_spatial_geographical_cover',
-      12 => 'field_temporal_coverage',
-      13 => 'og_group_ref',
-      14 => 'field_modified_source_date',
+      2 => 'field_conforms_to',
+      3 => 'field_contact_email',
+      4 => 'field_contact_name',
+      5 => 'field_data_dictionary',
+      6 => 'field_data_dictionary_type',
+      7 => 'field_frequency',
+      8 => 'field_granularity',
+      9 => 'field_is_part_of',
+      10 => 'field_landing_page',
+      11 => 'field_language',
+      12 => 'field_modified_source_date',
+      13 => 'field_pod_theme',
+      14 => 'field_public_access_level',
+      15 => 'field_related_content',
+      16 => 'field_resources',
+      17 => 'field_rights',
+      18 => 'field_spatial',
+      19 => 'field_spatial_geographical_cover',
+      20 => 'field_temporal_coverage',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -133,14 +146,14 @@ function dkan_dataset_content_types_field_group_info() {
   $field_group->mode = 'form';
   $field_group->parent_name = 'group_data';
   $field_group->data = array(
-    'label' => 'Link to an API',
+    'label' => 'API or Website URL',
     'weight' => '11',
     'children' => array(
       0 => 'field_link_api',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
-      'label' => 'Link to an API',
+      'label' => 'API or Website URL',
       'instance_settings' => array(
         'required_fields' => 1,
         'classes' => 'htab_link_api group-link-api field-group-htab',
@@ -161,14 +174,14 @@ function dkan_dataset_content_types_field_group_info() {
   $field_group->mode = 'form';
   $field_group->parent_name = 'group_data';
   $field_group->data = array(
-    'label' => 'Link to a file',
-    'weight' => '9',
+    'label' => 'Remote file',
+    'weight' => '12',
     'children' => array(
       0 => 'field_link_remote_file',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
-      'label' => 'Link to a file',
+      'label' => 'Remote file',
       'instance_settings' => array(
         'required_fields' => 1,
         'classes' => 'htab_link_file group-link-file field-group-htab',
@@ -195,8 +208,9 @@ function dkan_dataset_content_types_field_group_info() {
       0 => 'body',
       1 => 'field_license',
       2 => 'field_tags',
-      3 => 'field_topic',
-      4 => 'title',
+      3 => 'og_group_ref',
+      4 => 'field_topic',
+      5 => 'title',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -221,14 +235,14 @@ function dkan_dataset_content_types_field_group_info() {
   $field_group->mode = 'form';
   $field_group->parent_name = 'group_data';
   $field_group->data = array(
-    'label' => 'Upload a file',
-    'weight' => '12',
+    'label' => 'Upload',
+    'weight' => '9',
     'children' => array(
       0 => 'field_upload',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
-      'label' => 'Upload a file',
+      'label' => 'Upload',
       'instance_settings' => array(
         'required_fields' => 1,
         'classes' => 'htab_link_upload group-upload field-group-htab',
@@ -241,13 +255,13 @@ function dkan_dataset_content_types_field_group_info() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('API or Website URL');
   t('Dataset Info');
   t('Dataset Information');
-  t('Link to a file');
-  t('Link to an API');
   t('Primary');
+  t('Remote file');
   t('Resource');
-  t('Upload a file');
+  t('Upload');
 
   return $field_groups;
 }

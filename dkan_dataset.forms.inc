@@ -547,17 +547,29 @@ function dkan_dataset_resource_node_form_validate($form, &$form_state) {
     if ($upload_fid || $link_fid || $api) {
       if ($upload_fid) {
         $file = file_load($upload_fid);
-        $type = isset($file->filemime) ? recline_get_data_type($file->filemime) : '';
+        $type = isset($file->filemime) ? dkan_dataset_discovery_extension($file->filemime) : '';
       }
       elseif ($link_fid) {
         $file = file_load($link_fid);
-        $type = isset($file->filemime) ? recline_get_data_type($file->filemime) : '';
+        // If you have a file that provides a content-type header or filemime of
+        // octet-stream we can look if the file has a filename with an extension
+        // we can use.
+        if (isset($file->filemime) && $file->filemime == 'application/octet-stream') {
+          $name = explode(".", $file->filename);
+          if (count($name) > 1) {
+            $type = $name[count($name) - 1];
+          }
+        }
+        else {
+          $type = isset($file->filemime) ? dkan_dataset_discovery_extension($file->filemime) : '';
+        }
+
       }
       // @todo Probably remove all this
       elseif ($api) {
         $file = new dkanDataset\getRemoteFileInfo($api, t('!site_name crawler', array('!site_name' => variable_get('site_name'))) , TRUE, file_directory_temp());
         $filemime = $file->getType();
-        $type = recline_get_data_type($filemime);
+        $type = dkan_dataset_discovery_extension($filemime);
       }
       // Check for geojson
       if ($type == 'json' && isset($file)) {

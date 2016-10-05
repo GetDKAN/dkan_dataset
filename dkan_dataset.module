@@ -485,9 +485,15 @@ function dkan_dataset_discovery_extension($mimetype) {
     $type = array_search($offset, $mapping['extensions']);
   }
   if (!$type) {
+    // Allows for custom mappings despite file_mimetype_mapping only allowing one
+    // mimetype per extension
     switch ($offset) {
       case 998:
         $type = 'xml';
+        break;
+      default:
+        $type = $mimetype;
+        break;
     }
   }
   return $type;
@@ -1137,16 +1143,6 @@ function dkan_dataset_remotefile_value($element, &$item) {
       }
       if ($filemime = $file_info->getType()) {
         $file->filemime = $filemime;
-      }
-
-      // If you have a file that provides a content-type header or filemime of
-      // octet-stream we can look if the file has a filename with an extension
-      // we can use.
-      if ($filemime == 'application/octet-stream' || $file->filemime == 'application/octet-stream') {
-        $name = explode(".", $file->filename);
-        if (count($name) > 1) {
-          $file->filemime = $name[count($name) - 1];
-        }
       }
 
       $file->status = FALSE;

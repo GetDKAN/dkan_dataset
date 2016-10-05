@@ -10,6 +10,8 @@ include_once 'dkan_dataset.theme.inc';
 include_once 'includes/getRemoteFileInfo.php';
 include_once 'dkan_dataset.forms.inc';
 
+define('DKAN_REMOTE_FILE_SOURCE_HINT_TEXT', 'http://example.com/files/file.zip');
+
 /**
  * Implements hook_preprocess_html().
  */
@@ -482,6 +484,12 @@ function dkan_dataset_discovery_extension($mimetype) {
   if ($offset) {
     $type = array_search($offset, $mapping['extensions']);
   }
+  if (!$type) {
+    switch ($offset) {
+      case 998:
+        $type = 'xml';
+    }
+  }
   return $type;
 }
 
@@ -491,6 +499,9 @@ function dkan_dataset_discovery_extension($mimetype) {
 function dkan_dataset_file_mimetype_mapping_alter(&$mapping) {
   $mapping['extensions']['json'] = 999;
   $mapping['mimetypes'][999] = 'application/json';
+  // Text/xml would map to the same extention as application/xml, so we'll
+  // fix trhat in dkan_dataset_discovery_extension()
+  $mapping['mimetypes'][998] = 'text/xml';
   // 'Htm' and 'html' have the same mapping number but 'htm' is after
   // content types of 'text/html' are alway 'htm' without this.
   unset($mapping['extensions']['htm']);
@@ -1059,7 +1070,7 @@ function dkan_dataset_remotefile_process($element, &$form_state, $form) {
     '#weight' => 100.5,
     '#theme' => 'filefield_source_dkan_remotefile_element',
     '#filefield_source' => TRUE, // Required for proper theming.
-    '#filefield_sources_hint_text' => REMOTE_FILE_SOURCE_HINT_TEXT,
+    '#filefield_sources_hint_text' => DKAN_REMOTE_FILE_SOURCE_HINT_TEXT,
   );
 
   $element['filefield_dkan_remotefile']['url'] = array(
@@ -1093,7 +1104,7 @@ function dkan_dataset_remotefile_value($element, &$item) {
   // A remote url has been entered.
   if (isset($item['filefield_dkan_remotefile']['url'])
     && drupal_strlen($item['filefield_dkan_remotefile']['url']) > 0
-    && $item['filefield_dkan_remotefile']['url'] != REMOTE_FILE_SOURCE_HINT_TEXT) {
+    && $item['filefield_dkan_remotefile']['url'] != DKAN_REMOTE_FILE_SOURCE_HINT_TEXT) {
 
     $value = $item['filefield_dkan_remotefile']['url'];
 
@@ -1123,9 +1134,6 @@ function dkan_dataset_remotefile_value($element, &$item) {
       $file_info = new dkanDataset\getRemoteFileInfo($value, t('!site_name crawler', array('!site_name' => variable_get('site_name'))) , TRUE, file_directory_temp());
       if ($filename = $file_info->getName()) {
         $file->filename = $filename;
-      }
-      else {
-        form_set_error($element, t('Unable to add file from URL %file.', array('%file' => $value)));
       }
       if ($filemime = $file_info->getType()) {
         $file->filemime = $filemime;
@@ -1167,6 +1175,7 @@ function dkan_dataset_remotefile_value($element, &$item) {
     // Run all the normal validations, minus file size restrictions.
     if (isset($element['#upload_validators']['file_validate_size'])) {
       unset($element['#upload_validators']['file_validate_size']);
+      unset($element['#upload_validators']['file_validate_extensions']);
     }
 
     if (dkan_filefield_sources_element_validate($element, (object) $file)) {
@@ -1201,7 +1210,7 @@ function dkan_dataset_preprocess_node(&$vars) {
 function dkan_dataset_modified_date($node) {
   $node = ($node instanceof EntityMetadataWrapper) ? $node : entity_metadata_wrapper('node', $node);
   $harvested_date = $node->field_modified_source_date->value();
-  
+
   // Harvested times can be dates or periods then we don't format them.
   return ($harvested_date) ? $harvested_date : format_date($node->changed->value(), 'custom', 'Y-m-d');
 }

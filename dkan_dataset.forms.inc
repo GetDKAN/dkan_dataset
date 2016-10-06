@@ -5,6 +5,8 @@
  * Form elements for DKAN.
  */
 
+include_once 'includes/getRemoteFileInfo.php';
+
 /**
  * Implements hook_field_group_build_pre_render_alter().
  */
@@ -307,11 +309,11 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     $field_link_file_langcode = dkan_dataset_form_field_language($form, 'field_link_file');
     $field_link_remote_file_langcode = dkan_dataset_form_field_language($form, 'field_link_remote_file');
     $form['field_link_file'][$field_link_file_langcode][0]['#description'] = 'Link to a CSV file that will be imported into the DKAN datastore.';
-    $form['field_link_remote_file'][$field_link_file_langcode][0]['#description'] = 'Link to a csv, html, xls, json, xlsx, doc, docx, rdf, txt, jpg, png, gif, tiff, pdf, odf, ods, odt, tsv, geojson, or xml file. CSV files can be imported into the DKAN datastore.';
+    $form['field_link_remote_file'][$field_link_file_langcode][0]['#description'] = t('Link to a file hosted on a remote server. CSV files can be imported into the DKAN datastore.');
 
     // Get langcode for field_link_api.
     $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_link_api');
-    $form['field_link_api'][$field_link_api_langcode][0]['#description'] = 'Link to a public API or information source.';
+    $form['field_link_api'][$field_link_api_langcode][0]['#description'] = t('Link to a public API or information source.');
 
     // Get langcode for field_format.
     $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_format');
@@ -507,29 +509,48 @@ function dkan_dataset_resource_node_form_validate($form, &$form_state) {
     if ($upload_fid || $link_fid || $api) {
       if ($upload_fid) {
         $file = file_load($upload_fid);
-        $type = isset($file->filemime) ? recline_get_data_type($file->filemime) : '';
+        $type = isset($file->filemime) ? dkan_dataset_discovery_extension($file->filemime) : '';
       }
       elseif ($link_fid) {
         $file = file_load($link_fid);
-        $type = isset($file->filemime) ? recline_get_data_type($file->filemime) : '';
-      }
-      elseif ($api) {
-        $request = drupal_http_request($api);
-        if (!isset($request->error)) {
-          // Remove char type or other info from content type.
-          $strpos = strpos($request->headers['content-type'], ';');
-          $mimetype = ($strpos !== FALSE) ? substr($request->headers['content-type'], 0, $strpos) : $request->headers['content-type'];
-          if (is_object(json_decode($request->data))) {
-            $type = 'json';
+        // If you have a file that provides a content-type header or filemime of
+        // octet-stream we can look if the file has a filename with an extension
+        // we can use.
+        if (isset($file->filemime) && $file->filemime == 'application/octet-stream') {
+          $name = explode(".", $file->filename);
+          if (count($name) > 1) {
+            $type = $name[count($name) - 1];
           }
-          else {
-            $type = isset($file->filemime) ? recline_get_data_type($file->filemime) : '';
+        }
+        else {
+          $type = isset($file->filemime) ? dkan_dataset_discovery_extension($file->filemime) : '';
+        }
+
+      }
+      // @todo Probably remove all this
+      elseif ($api) {
+        $file = new dkanDataset\getRemoteFileInfo($api, t('!site_name crawler', array('!site_name' => variable_get('site_name'))) , TRUE, file_directory_temp());
+        $filemime = $file->getType();
+        $type = dkan_dataset_discovery_extension($filemime);
+      }
+      // Check for geojson
+      if ($type == 'json' && isset($file)) {
+        $response = drupal_http_request($file->uri, array('timeout' => 5));
+        // dpm($response);
+        if ($response->code == '200') {
+          $data = $response->data;
+          $decoded = drupal_json_decode($data);
+          $geojson_types = array('FeatureCollection', 'GeometryCollection', 'Feature', 'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon');
+          foreach ($geojson_types as $geojson_type) {
+            foreach ($decoded as $key => $value) {
+              if ($geojson_type === $value) {
+                $type = 'geojson';
+              }
+            }
           }
         }
       }
-      else {
-        $type = substr($link, strrpos($link, '.') + 1);
-      }
+
     }
   }
   $vocabs = taxonomy_vocabulary_get_names();
@@ -575,8 +596,8 @@ function dkan_dataset_resource_form_after_build($form, &$form_state) {
     $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_link_api');
 
     $form['field_link_file'][$field_link_file_langcode][0]['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011.csv';
-    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_remotefile']['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011.csv';
-    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_remotefile']['select']['#suffix'] = '';
+    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_dkan_remotefile']['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices.csv';
+    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_dkan_remotefile']['select']['#suffix'] = '';
     $form['field_link_api'][$field_link_api_langcode][0]['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011';
   }
   if (isset($form['field_format'])) {

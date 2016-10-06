@@ -1584,7 +1584,7 @@ uk-ogl|UK Open Government Licence (OGL)',
             'clipboard' => 0,
             'reference' => 0,
             'remote' => 0,
-            'remotefile' => 'remotefile',
+            'dkan_remotefile' => 'dkan_remotefile',
             'upload' => 0,
           ),
           'source_attach' => array(

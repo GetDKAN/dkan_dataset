@@ -5,6 +5,8 @@
  * Form elements for DKAN.
  */
 
+include_once 'includes/getRemoteFileInfo.php';
+
 /**
  * Implements hook_field_group_build_pre_render_alter().
  */
@@ -153,17 +155,7 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
         '#weight' => -5,
         '#submit' => array('node_form_submit'),
       );
-      if (variable_get('dkan_dataset_form_ajax', 0)) {
-        $form['actions']['next']['#ajax'] = array(
-          'callback' => 'dkan_dataset_dataset_submit_js',
-          'wrapper' => $form['#id'],
-          'method' => 'replace',
-          'effect' => 'fade',
-        );
-      }
-      else {
-        $form['actions']['next']['#submit'] = array('node_form_submit', 'dkan_dataset_dataset_form_submit');
-      }
+      $form['actions']['next']['#submit'] = array('node_form_submit', 'dkan_dataset_dataset_form_submit');
       $form['actions']['terms'] = array(
         '#type' => 'item',
         '#markup' => '<div id="action-info">' . t('Important: By submitting content, you agree to release your contributions under the Open Database License.') . '</div>',
@@ -182,7 +174,6 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     }
     else {
       $form['actions']['submit']['#value'] = t('Finish');
-      $form['#action'] = url('node/add/dataset');
     }
 
     // Mark all POD related required fields as required except for 'Publisher'
@@ -318,11 +309,11 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     $field_link_file_langcode = dkan_dataset_form_field_language($form, 'field_link_file');
     $field_link_remote_file_langcode = dkan_dataset_form_field_language($form, 'field_link_remote_file');
     $form['field_link_file'][$field_link_file_langcode][0]['#description'] = 'Link to a CSV file that will be imported into the DKAN datastore.';
-    $form['field_link_remote_file'][$field_link_file_langcode][0]['#description'] = 'Link to a csv, html, xls, json, xlsx, doc, docx, rdf, txt, jpg, png, gif, tiff, pdf, odf, ods, odt, tsv, geojson, or xml file. CSV files can be imported into the DKAN datastore.';
+    $form['field_link_remote_file'][$field_link_file_langcode][0]['#description'] = t('Link to a file hosted on a remote server. CSV files can be imported into the DKAN datastore.');
 
     // Get langcode for field_link_api.
     $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_link_api');
-    $form['field_link_api'][$field_link_api_langcode][0]['#description'] = 'Link to a public API or information source.';
+    $form['field_link_api'][$field_link_api_langcode][0]['#description'] = t('Link to a public API or information source.');
 
     // Get langcode for field_format.
     $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_format');
@@ -355,13 +346,6 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       $form['prefix']['#markup'] = dkan_form_create_stages('resource-create', $form['#node']->field_dataset_ref['nid']);
     }
     $form['#validate'][] = 'dkan_dataset_resource_node_form_validate';
-    // This saves us on the ajax reloading.
-    if (isset($query['dataset'])) {
-      $form['#action'] = url('node/add/resource', array('query' => array('dataset' => $query['dataset'])));
-    }
-    else {
-      $form['#action'] = url('node/add/resource');
-    }
     if (variable_get('dkan_dataset_form_additional_info', 1 )) {
       if (isset($query['dataset']) || (isset($form_state['input']['field_dataset_ref']['und'][0]))) {
         $form['actions']['additional'] = array(
@@ -370,17 +354,7 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
           '#weight' => -5,
           '#submit' => array('node_form_submit'),
         );
-        if (variable_get('dkan_resource_form_ajax', 0)) {
-          $form['actions']['additional']['#ajax'] = array(
-            'callback' => 'dkan_dataset_additional_submit_js',
-            'wrapper' => $form['#id'],
-            'method' => 'replace',
-            'effect' => 'fade',
-          );
-        }
-        else {
-          $form['actions']['additional']['#submit'] = array('node_form_submit', 'dkan_dataset_resource_additional_form_submit');
-        }
+        $form['actions']['additional']['#submit'] = array('node_form_submit', 'dkan_dataset_resource_additional_form_submit');
       }
     }
     $form['actions']['another'] = array(
@@ -389,17 +363,7 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       '#weight' => 10,
       '#submit' => array('node_form_submit'),
     );
-    if (variable_get('dkan_resource_form_ajax', 0)) {
-      $form['actions']['another']['#ajax'] = array(
-        'callback' => 'dkan_dataset_resource_another_submit_js',
-        'wrapper' => $form['#id'],
-        'method' => 'replace',
-        'effect' => 'fade',
-      );
-    }
-    else {
-      $form['actions']['another']['#submit'] = array('node_form_submit', 'dkan_dataset_resource_form_submit');
-    }
+    $form['actions']['another']['#submit'] = array('node_form_submit', 'dkan_dataset_resource_form_submit');
   }
 }
 
@@ -545,29 +509,48 @@ function dkan_dataset_resource_node_form_validate($form, &$form_state) {
     if ($upload_fid || $link_fid || $api) {
       if ($upload_fid) {
         $file = file_load($upload_fid);
-        $type = isset($file->filemime) ? recline_get_data_type($file->filemime) : '';
+        $type = isset($file->filemime) ? dkan_dataset_discovery_extension($file->filemime) : '';
       }
       elseif ($link_fid) {
         $file = file_load($link_fid);
-        $type = isset($file->filemime) ? recline_get_data_type($file->filemime) : '';
-      }
-      elseif ($api) {
-        $request = drupal_http_request($api);
-        if (!isset($request->error)) {
-          // Remove char type or other info from content type.
-          $strpos = strpos($request->headers['content-type'], ';');
-          $mimetype = ($strpos !== FALSE) ? substr($request->headers['content-type'], 0, $strpos) : $request->headers['content-type'];
-          if (is_object(json_decode($request->data))) {
-            $type = 'json';
+        // If you have a file that provides a content-type header or filemime of
+        // octet-stream we can look if the file has a filename with an extension
+        // we can use.
+        if (isset($file->filemime) && $file->filemime == 'application/octet-stream') {
+          $name = explode(".", $file->filename);
+          if (count($name) > 1) {
+            $type = $name[count($name) - 1];
           }
-          else {
-            $type = isset($file->filemime) ? recline_get_data_type($file->filemime) : '';
+        }
+        else {
+          $type = isset($file->filemime) ? dkan_dataset_discovery_extension($file->filemime) : '';
+        }
+
+      }
+      // @todo Probably remove all this
+      elseif ($api) {
+        $file = new dkanDataset\getRemoteFileInfo($api, t('!site_name crawler', array('!site_name' => variable_get('site_name'))) , TRUE, file_directory_temp());
+        $filemime = $file->getType();
+        $type = dkan_dataset_discovery_extension($filemime);
+      }
+      // Check for geojson
+      if ($type == 'json' && isset($file)) {
+        $response = drupal_http_request($file->uri, array('timeout' => 5));
+        // dpm($response);
+        if ($response->code == '200') {
+          $data = $response->data;
+          $decoded = drupal_json_decode($data);
+          $geojson_types = array('FeatureCollection', 'GeometryCollection', 'Feature', 'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon');
+          foreach ($geojson_types as $geojson_type) {
+            foreach ($decoded as $key => $value) {
+              if ($geojson_type === $value) {
+                $type = 'geojson';
+              }
+            }
           }
         }
       }
-      else {
-        $type = substr($link, strrpos($link, '.') + 1);
-      }
+
     }
   }
   $vocabs = taxonomy_vocabulary_get_names();
@@ -613,8 +596,8 @@ function dkan_dataset_resource_form_after_build($form, &$form_state) {
     $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_link_api');
 
     $form['field_link_file'][$field_link_file_langcode][0]['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011.csv';
-    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_remotefile']['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011.csv';
-    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_remotefile']['select']['#suffix'] = '';
+    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_dkan_remotefile']['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices.csv';
+    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_dkan_remotefile']['select']['#suffix'] = '';
     $form['field_link_api'][$field_link_api_langcode][0]['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011';
   }
   if (isset($form['field_format'])) {
@@ -631,108 +614,6 @@ function dkan_dataset_resource_form_after_build($form, &$form_state) {
 }
 
 module_load_include('inc', 'node', 'node.pages');
-
-/**
- * Builds the additional data for the dateset form.
- */
-function dkan_dataset_additional_submit_js($form, &$form_state) {
-  form_load_include($form_state, 'inc', 'node', 'node.pages');
-  module_load_include('inc', 'node', 'node.pages');
-  $type = 'dataset';
-  global $user;
-  // Return the actual form if it contains errors.
-  if (form_get_errors()) {
-    return $form;
-  }
-  // Get langcode for field_dataset_ref.
-  $field_dataset_ref_langcode = dkan_dataset_form_field_language($form, 'field_dataset_ref');
-
-  $nid = $form_state['values']['field_dataset_ref'][$field_dataset_ref_langcode][0]['target_id'];
-  $node = node_load($nid);
-  $dataset_form = drupal_get_form($type . '_node_form', $node);
-
-  $dataset_form['#groups']['group_primary']->disabled = TRUE;
-  $dataset_form['#additional_processed'] = TRUE;
-
-  $stage = dkan_form_create_stages('dataset-additional', $nid);
-
-  $commands[] = ajax_command_replace('.node-resource-form', drupal_render($dataset_form));
-  $commands[] = ajax_command_prepend('.node-dataset-form', $stage);
-  $commands[] = ajax_command_settings(array('dkanAdditional' => array('nid' => $nid)), TRUE);
-  $output = array('#type' => 'ajax', '#commands' => $commands);
-  return $output;
-}
-
-/**
- * Builds the resource form after resource form submit.
- */
-function dkan_dataset_resource_another_submit_js($form, &$form_state) {
-  // Return the actual form if it contains errors.
-  if (form_get_errors()) {
-    return $form;
-  }
-  // Get langcode for field_dataset_ref.
-  $field_dataset_ref_langcode = dkan_dataset_form_field_language($form, 'field_dataset_ref');
-
-  $nid = isset($form_state['build_info']['args'][0]->field_dataset_ref['nid']) ? $form_state['build_info']['args'][0]->field_dataset_ref['nid'] : $form_state['values']['field_dataset_ref'][$field_dataset_ref_langcode][0]['target_id'];
-  $resource_form = dkan_dataset_prepare_resource_form($nid);
-  $stage = dkan_form_create_stages('resource-edit', $nid);
-
-  $commands[] = ajax_command_replace('ol.stages', $stage);
-  $message = '<div id="messages"><div class="messages status"> Your resource <em class="placeholder">' . $form_state['values']['title'] . '</em> has been created. View it here: ' . l($form_state['values']['title'], 'node/' . $form_state['nid']) . ' or add another.</div></div>';
-
-  $commands[] = ajax_command_replace('.node-resource-form', drupal_render($resource_form));
-  $commands[] = ajax_command_prepend('ul.nav-simple', '<li>' . l($form_state['values']['title'], 'node/' . $form_state['nid'] . '/edit') . '</li>');
-  $commands[] = ajax_command_prepend('form.node-form', $message);
-  // Needed to prepend language after ajax redirect. Ugly.
-  global $language_url;
-  if (isset($language_url->provider) && $language_url->provider == 'locale-url') {
-    $push = array('dkanPush' => array('nid' => $form_state['node']->nid, 'lang' => $language_url->prefix));
-  }
-  else {
-    $push = array('dkanPush' => array('nid' => $form_state['node']->nid));
-  }
-  $commands[] = ajax_command_settings($push, TRUE);
-  $output = array('#type' => 'ajax', '#commands' => $commands);
-  return $output;
-}
-
-/**
- * Builds the resource form after the dataset submit.
- */
-function dkan_dataset_dataset_submit_js($form, &$form_state) {
-  // Return the actual form if it contains errors.
-  if (form_get_errors()) {
-    return $form;
-  }
-  $resource_form = dkan_dataset_prepare_resource_form($form_state['node']->nid);
-
-  // Replacement elements.
-  $stage = dkan_form_create_stages('resource-edit', $form_state['node']->nid);
-  $resource_url = url('node/add/resource', array('query' => array('dataset' => $form_state['nid'])));
-  $breadcrumbs = '<ul class="breadcrumb"><li><a href="/">Home</a></li><li><a href="/dataset">Datasets</a></li><li>' . l($form_state['values']['title'], 'node/' . $form_state['nid']) . '</li><li><a href="' . $resource_url . '" class="active">Add Resource</a></li></ul>';
-  $resources_block = '<section class="block block-dkan-forms block-dkan-forms-resource-nodes block-dkan-forms-dkan-forms-resource-nodes even" id="block-dkan-forms-dkan-forms-resource-nodes"><div class="block-inner clearfix"><h2 class="block-title">Resources</h2><div class="content clearfix"><div class="item-list"><ul class="nav-simple"><li class="last"></li></ul></div><a id="context-block-dkan_dataset-dkan_forms_resource_nodes" class="context-block editable edit-resource-create"></a></div></div></section>';
-
-  $commands[] = ajax_command_append('#region-sidebar-first .region-inner', $resources_block);
-  $commands[] = ajax_command_replace('ul.breadcrumb', $breadcrumbs);
-  $commands[] = ajax_command_replace('#block-dkan-forms-dkan-forms-dataset-help h2', '<h2 class="block-title">What is data?</h2>');
-  $commands[] = ajax_command_replace('#block-dkan-forms-dkan-forms-dataset-help .content', '<div class="content">' . dkan_dataset_resource_form_help() . '</div>');
-  $commands[] = ajax_command_replace('ol.stages', $stage);
-  $commands[] = ajax_command_replace('#page-title', '<h1 class="title" id="page-title">Add data</h1>');
-  // Needed to prepend language after ajax redirect. Ugly.
-  global $language_url;
-  if (isset($language_url->provider) && $language_url->provider == 'locale-url') {
-    $push = array('dkanPush' => array('nid' => $form_state['node']->nid, 'lang' => $language_url->prefix));
-  }
-  else {
-    $push = array('dkanPush' => array('nid' => $form_state['node']->nid));
-  }
-  $commands[] = ajax_command_settings($push, TRUE);
-
-  $commands[] = ajax_command_replace('#' . $form['#id'], drupal_render($resource_form));
-  $output = array('#type' => 'ajax', '#commands' => $commands);
-  return $output;
-}
 
 /**
  * Creates initial resource node form.

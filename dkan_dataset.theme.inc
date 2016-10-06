@@ -16,6 +16,9 @@ function dkan_dataset_theme() {
     'dkan_dataset_release_date_view' => array(
       'variables' => array('node' => NULL),
     ),
+    'filefield_source_dkan_remotefile_element' => array(
+      'render element' => 'element',
+    ),
     'dkan_dataset_modified_date_view' => array(
       'variables' => array('node' => NULL),
     ),

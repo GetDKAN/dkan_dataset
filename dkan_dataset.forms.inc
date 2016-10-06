@@ -5,6 +5,8 @@
  * Form elements for DKAN.
  */
 
+include_once 'includes/getRemoteFileInfo.php';
+
 /**
  * Implements hook_field_group_build_pre_render_alter().
  */
@@ -514,21 +516,9 @@ function dkan_dataset_resource_node_form_validate($form, &$form_state) {
         $type = isset($file->filemime) ? recline_get_data_type($file->filemime) : '';
       }
       elseif ($api) {
-        $request = drupal_http_request($api);
-        if (!isset($request->error)) {
-          // Remove char type or other info from content type.
-          $strpos = strpos($request->headers['content-type'], ';');
-          $mimetype = ($strpos !== FALSE) ? substr($request->headers['content-type'], 0, $strpos) : $request->headers['content-type'];
-          if (is_object(json_decode($request->data))) {
-            $type = 'json';
-          }
-          else {
-            $type = isset($file->filemime) ? recline_get_data_type($file->filemime) : '';
-          }
-        }
-      }
-      else {
-        $type = substr($link, strrpos($link, '.') + 1);
+        $file = new dkanDataset\getRemoteFileInfo($api, t('!site_name crawler', array('!site_name' => variable_get('site_name'))) , TRUE, file_directory_temp());
+        $filemime = $file->getType();
+        $type = recline_get_data_type($filemime);
       }
     }
   }
@@ -575,8 +565,8 @@ function dkan_dataset_resource_form_after_build($form, &$form_state) {
     $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_link_api');
 
     $form['field_link_file'][$field_link_file_langcode][0]['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011.csv';
-    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_remotefile']['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011.csv';
-    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_remotefile']['select']['#suffix'] = '';
+    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_dkan_remotefile']['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices.csv';
+    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_dkan_remotefile']['select']['#suffix'] = '';
     $form['field_link_api'][$field_link_api_langcode][0]['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011';
   }
   if (isset($form['field_format'])) {

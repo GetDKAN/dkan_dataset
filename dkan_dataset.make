@@ -50,12 +50,6 @@ projects[entity][patch][2341611] = https://www.drupal.org/files/issues/entity-mu
 projects[entity][patch][2564119] = https://www.drupal.org/files/issues/Use-array-in-foreach-statement-2564119-1.patch
 projects[entity][subdir] = contrib
 
-projects[entity_rdf][download][type] = git
-projects[entity_rdf][download][url] = http://git.drupal.org/project/entity_rdf.git
-projects[entity_rdf][download][revision] = 7d91983
-projects[entity_rdf][type] = module
-projects[entity_rdf][subdir] = contrib
-
 projects[entityreference][version] = 1.1
 projects[entityreference][subdir] = contrib
 
@@ -136,27 +130,8 @@ projects[og_extras][version] = 1.2
 projects[og_extras][subdir] = contrib
 projects[og_extras][type] = module
 
-projects[open_data_schema_map][type] = module
-projects[open_data_schema_map][download][type] = git
-projects[open_data_schema_map][download][url] = https://github.com/NuCivic/open_data_schema_map.git
-projects[open_data_schema_map][download][branch] = master
-projects[open_data_schema_map][subdir] = contrib
-
-projects[open_data_schema_map_dkan][type] = module
-projects[open_data_schema_map_dkan][download][type] = git
-projects[open_data_schema_map_dkan][download][url] = https://github.com/NuCivic/open_data_schema_map_dkan.git
-projects[open_data_schema_map_dkan][download][branch] = master
-projects[open_data_schema_map_dkan][subdir] = contrib
-
 projects[pathauto][version] = 1.2
 projects[pathauto][subdir] = contrib
-
-projects[rdfx][download][type] = git
-projects[rdfx][download][url] = http://git.drupal.org/project/rdfx.git
-projects[rdfx][download][branch] = 7.x-2.x
-projects[rdfx][download][revision] = cc7d4fc
-projects[rdfx][patch][1271498] = http://drupal.org/files/issues/1271498_3_rdfui_form_values.patch
-projects[rdfx][subdir] = contrib
 
 projects[ref_field][download][type] = git
 projects[ref_field][download][url] = "http://git.drupal.org/project/ref_field.git"
@@ -188,8 +163,7 @@ projects[strongarm][subdir] = contrib
 projects[token][version] = 1.6
 projects[token][subdir] = contrib
 
-projects[uuid][version] = 1.0-beta1
-projects[uuid][patch][1927474] = http://drupal.org/files/unknown-column-in-field-list-fix-1927474-2.patch
+projects[uuid][version] = 1.0-beta2
 projects[uuid][subdir] = contrib
 
 projects[views][version] = 3.14
@@ -221,6 +195,6 @@ libraries[arc][download][url] = "https://github.com/semsol/arc2.git"
 libraries[arc][download][revision] = "44c396ab54178086c09499a1704e31a977b836d2"
 libraries[arc][subdir] = "ARC2"
 
-libraries[excanvas][download][type] = "file"
-libraries[excanvas][download][url] = "https://explorercanvas.googlecode.com/files/excanvas_r3.zip"
-libraries[excanvas][download][sha1] = "f1b9f7a44428eb0c7b27fe8ac0242d34ec94a385"
+libraries[excanvas][download][type] = git
+libraries[excanvas][download][url] = "https://github.com/arv/ExplorerCanvas.git"
+libraries[excanvas][download][sha1] = "aa989ea9d9bac748638f7c66b0fc88e619715da6"

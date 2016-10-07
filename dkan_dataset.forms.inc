@@ -346,6 +346,16 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
       $form['prefix']['#markup'] = dkan_form_create_stages('resource-create', $form['#node']->field_dataset_ref['nid']);
     }
     $form['#validate'][] = 'dkan_dataset_resource_node_form_validate';
+    // This saves us on the ajax reloading.
+    if (isset($query['dataset'])) {
+      $form['#action'] = url('node/add/resource', array('query' => array('dataset' => $query['dataset'])));
+    }
+    else {
+      $form['#action'] = url('node/add/resource');
+      if (drupal_match_path(current_path(), 'node/*/edit')) {
+        $form['#action'] = url('node/' . $form['#node']->nid . '/edit');
+      }
+    }
     if (variable_get('dkan_dataset_form_additional_info', 1 )) {
       if (isset($query['dataset']) || (isset($form_state['input']['field_dataset_ref']['und'][0]))) {
         $form['actions']['additional'] = array(

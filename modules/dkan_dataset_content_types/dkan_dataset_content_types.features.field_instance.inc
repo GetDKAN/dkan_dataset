@@ -564,6 +564,53 @@ function dkan_dataset_content_types_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-dataset-field_harvest_source_ref'.
+  $field_instances['node-dataset-field_harvest_source_ref'] = array(
+    'bundle' => 'dataset',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'dkan_dataset',
+        'settings' => array(),
+        'type' => 'harvest_info_formatter',
+        'weight' => 20,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_harvest_source_ref',
+    'label' => 'Harvest Source',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 24,
+    ),
+  );
+
   // Exported field_instance: 'node-dataset-field_is_part_of'.
   $field_instances['node-dataset-field_is_part_of'] = array(
     'bundle' => 'dataset',
@@ -796,7 +843,7 @@ uk-ogl|UK Open Government Licence (OGL)',
     'bundle' => 'dataset',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Modified Date of a harvested resource.',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -1741,6 +1788,7 @@ uk-ogl|UK Open Government Licence (OGL)',
   t('Frequency');
   t('Granularity');
   t('Groups audience');
+  t('Harvest Source');
   t('Homepage URL');
   t('If you set your dataset to a public access level other than "public", you must provide an explanation for why this dataset cannot be made fully public. Include any useful information regarding access or restrictions based on privacy, security, or other policies. See <a href="https://project-open-data.cio.gov/v1.1/schema/#rights">Rights on Project Open Data</a>.');
   t('Is Part Of');
@@ -1749,6 +1797,7 @@ uk-ogl|UK Open Government Licence (OGL)',
   t('License definitions and additional information can be found at <a href="http://opendefinition.org">opendefinition.org</a>');
   t('Link API');
   t('Link File');
+  t('Modified Date of a harvested resource.');
   t('Modified Source Date');
   t('POD Theme');
   t('Provides some sort of description that helps understanding the data. This usually consists of a table providing explanation of columns meaning, values interpretation and acronyms/codes used in the data. Can be a URL to such a resource. See Project Open Data <a href="http://project-open-data.github.io/schema/#common-core-required-if-applicable-fields">data dictionary</a> for more info.');

@@ -262,6 +262,10 @@ function dkan_dataset_get_resource_nodes($nid) {
  * Helper to get Visualization entities that are created from a Resource.
  */
 function dkan_dataset_get_visualization_entities($uuid) {
+  // The EFQ will throw an error if the uuid_resource field doesn't exist.
+  if (!field_info_instance('visualization', 'field_uuid_resource','ve_chart')) {
+  return array();
+  }
   $nodes = array();
   $nids = array();
   $query = new EntityFieldQuery();

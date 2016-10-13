@@ -1,5 +1,7 @@
 [![Circle CI](https://circleci.com/gh/NuCivic/dkan_dataset.svg?style=svg)](https://circleci.com/gh/NuCivic/dkan_dataset)
 
+**DEPRECATED:** This module has been moved into [DKAN core](https://github.com/NuCivic/dkan) for release 7.x-1.13. To maintain backward compatibility with DKAN 7.x-1.12 and subsequent patch releases this project will remain on Github but new features will be applied directly to the DKAN core folder `modules/dkan/dkan_dataset`.
+
 # DKAN Dataset
 
 This is a Drupal module containing the content types and other functionality to publish Open Data sets in Drupal.

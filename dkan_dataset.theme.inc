@@ -16,6 +16,9 @@ function dkan_dataset_theme() {
     'dkan_dataset_release_date_view' => array(
       'variables' => array('node' => NULL),
     ),
+    'filefield_source_dkan_remotefile_element' => array(
+      'render element' => 'element',
+    ),
     'dkan_dataset_modified_date_view' => array(
       'variables' => array('node' => NULL),
     ),
@@ -293,7 +296,12 @@ function theme_dkan_dataset_resource_teaser_view($vars) {
       }
     }
     foreach ($links_data as $term_name => $link) {
-      $links[] = l($term_name, $link['url'], $link['link']);
+      if($link['count'] > 1) {
+        $links[] = '<span class="count-resource">' . $link['count'] . 'x </span>' .  l($term_name, $link['url'], $link['link']);
+      }
+      else {
+        $links[] = l($term_name, $link['url'], $link['link']);
+      }
     }
     $output = theme('item_list', array('items' => $links, 'attributes' => array('class' => array('resource-list', 'clearfix'))));
   }
@@ -327,4 +335,42 @@ function theme_dkan_dataset_preview_settings_external_table_form(&$vars) {
   // Redner the table and return.
   return drupal_render($content);
 
+}
+
+/**
+ * Theme the output of the autocomplete field.
+ */
+function theme_filefield_source_dkan_remotefile_element($variables) {
+  $element = $variables['element'];
+  $element['url']['#field_suffix'] = drupal_render($element['select']);
+  return '<div class="filefield-source filefield-source-remotefile clear-block">' . drupal_render($element['url']) . '</div>';
+}
+
+/*
+ * Hides the link to API (URL) iframe when either the field
+ * upload or the remote field are also present.
+ */
+function dkan_dataset_preprocess_field(&$variables) {
+  $field_name = $variables['element']['#field_name'];
+  if ($field_name == 'field_link_api') {
+    $node = $variables['element']['#object'];
+    $resource_fields = array(
+      $node->field_link_api,
+      $node->field_link_remote_file,
+      $node->field_upload
+    );
+    $count = array_reduce($resource_fields, function($result, $field){
+      if(!empty($field)) {
+        $result += count($field);
+      }
+      return $result;
+    }, 0);
+
+    // If there is more than type of resource linked we have to be sure
+    // link to URL resource is not being displayed.
+    if($count > 1 && $node->field_link_api) {
+      unset($variables['element'][0]['iframe']);
+      unset($variables['items'][0]['iframe']);
+    }
+  }
 }

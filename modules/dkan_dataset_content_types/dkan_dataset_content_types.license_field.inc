@@ -45,6 +45,15 @@ function dkan_dataset_content_types_license_subscribed_values() {
       }
     }
   }
+
+  // Remove licenses with empty URIs if strict POD validation is enabled.
+  foreach ($subscribed_values as $key => $value) {
+    // Skip licenses with empty URIs if strict POD validation is enabled.
+    if (variable_get('dkan_dataset_form_pod_validation') && !isset($value['uri'])) {
+      unset($subscribed_values[$key]);
+    }
+  }
+
   return $subscribed_values;
 }
 

@@ -10,7 +10,7 @@
 function dkan_dataset_groups_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-dataset-og_group_ref'
+  // Exported field_instance: 'node-dataset-og_group_ref'.
   $field_instances['node-dataset-og_group_ref'] = array(
     'bundle' => 'dataset',
     'default_value' => NULL,
@@ -25,6 +25,12 @@ function dkan_dataset_groups_field_default_field_instances() {
         ),
         'type' => 'entityreference_label',
         'weight' => 5,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -65,15 +71,18 @@ function dkan_dataset_groups_field_default_field_instances() {
     ),
     'widget' => array(
       'active' => 0,
-      'module' => 'og',
-      'settings' => array(),
-      'type' => 'og_complex',
-      'weight' => 14,
+      'module' => 'options',
+      'settings' => array(
+        'apply_chosen' => '',
+      ),
+      'type' => 'options_select',
+      'weight' => 3,
     ),
   );
 
-  // Exported field_instance: 'node-group-body'
+  // Exported field_instance: 'node-group-body'.
   $field_instances['node-group-body'] = array(
+    'bueditor_profile' => -1,
     'bundle' => 'group',
     'default_value' => NULL,
     'deleted' => 0,
@@ -97,25 +106,26 @@ function dkan_dataset_groups_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'body',
-    'label' => 'Body',
-    'required' => FALSE,
+    'label' => 'Description',
+    'required' => 0,
     'settings' => array(
-      'display_summary' => TRUE,
+      'display_summary' => 0,
       'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
+      'active' => 1,
       'module' => 'text',
       'settings' => array(
         'rows' => 20,
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 6,
+      'weight' => 2,
     ),
   );
 
-  // Exported field_instance: 'node-group-field_image'
+  // Exported field_instance: 'node-group-field_image'.
   $field_instances['node-group-field_image'] = array(
     'bundle' => 'group',
     'deleted' => 0,
@@ -150,6 +160,9 @@ function dkan_dataset_groups_field_default_field_instances() {
       'max_filesize' => '',
       'max_resolution' => '',
       'min_resolution' => '',
+      'resup' => 0,
+      'resup_autostart' => 0,
+      'resup_max_filesize' => '',
       'title_field' => 0,
       'user_register_form' => FALSE,
     ),
@@ -176,29 +189,30 @@ function dkan_dataset_groups_field_default_field_instances() {
           ),
           'source_reference' => array(
             'autocomplete' => 0,
+            'search_all_fields' => 0,
           ),
         ),
-        'manualcrop_crop_info' => TRUE,
-        'manualcrop_default_crop_area' => TRUE,
-        'manualcrop_enable' => FALSE,
-        'manualcrop_inline_crop' => FALSE,
-        'manualcrop_instant_crop' => FALSE,
-        'manualcrop_instant_preview' => TRUE,
-        'manualcrop_keyboard' => TRUE,
-        'manualcrop_maximize_default_crop_area' => FALSE,
+        'manualcrop_crop_info' => 1,
+        'manualcrop_default_crop_area' => 1,
+        'manualcrop_enable' => 0,
+        'manualcrop_inline_crop' => 0,
+        'manualcrop_instant_crop' => 0,
+        'manualcrop_instant_preview' => 1,
+        'manualcrop_keyboard' => 1,
+        'manualcrop_maximize_default_crop_area' => 0,
         'manualcrop_require_cropping' => array(),
         'manualcrop_styles_list' => array(),
         'manualcrop_styles_mode' => 'include',
-        'manualcrop_thumblist' => FALSE,
+        'manualcrop_thumblist' => 0,
         'preview_image_style' => 'thumbnail',
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 5,
+      'weight' => 1,
     ),
   );
 
-  // Exported field_instance: 'node-group-group_group'
+  // Exported field_instance: 'node-group-group_group'.
   $field_instances['node-group-group_group'] = array(
     'bundle' => 'group',
     'default_value' => array(
@@ -248,13 +262,13 @@ function dkan_dataset_groups_field_default_field_instances() {
         'display_label' => 0,
       ),
       'type' => 'options_onoff',
-      'weight' => 2,
+      'weight' => 4,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('Body');
+  t('Description');
   t('Determine if this is an OG group.');
   t('Group');
   t('Image');

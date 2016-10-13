@@ -55,7 +55,6 @@ class DkanDatasetApiWebTestCase extends DrupalWebTestCase {
     $modules[] = 'number';
     $modules[] = 'options';
     $modules[] = 'path';
-    $modules[] = 'rdf';
     $modules[] = 'taxonomy';
     $modules[] = 'text';
     $modules[] = 'user';
@@ -77,7 +76,6 @@ class DkanDatasetApiWebTestCase extends DrupalWebTestCase {
     $modules[] = 'link_iframe_formatter';
     $modules[] = 'multistep';
     $modules[] = 'ref_field_sync';
-    $modules[] = 'remote_file_source';
     $modules[] = 'select_or_other';
     $modules[] = 'og';
     $modules[] = 'og_context';
@@ -93,7 +91,6 @@ class DkanDatasetApiWebTestCase extends DrupalWebTestCase {
     $modules[] = 'remote_stream_wrapper';
     $modules[] = 'strongarm';
     $modules[] = 'token';
-    $modules[] = 'rdfx';
     $modules[] = 'search_api';
     $modules[] = 'search_api_db';
     $modules[] = 'search_api_views';
@@ -102,7 +99,6 @@ class DkanDatasetApiWebTestCase extends DrupalWebTestCase {
     $modules[] = 'beautytips';
     $modules[] = 'jquery_update';
     $modules[] = 'uuid';
-    $modules[] = 'eva';
     $modules[] = 'views';
     $modules[] = 'views_bulk_operations';
 
@@ -259,7 +255,7 @@ class DkanDatasetApiWebTestCase extends DrupalWebTestCase {
 
   /**
    * Run common test to an array of package.
-   * 
+   *
    * @param object $result
    *   A dkan_dataset_api result object.
    * @param string $text
@@ -275,7 +271,7 @@ class DkanDatasetApiWebTestCase extends DrupalWebTestCase {
 
   /**
    * Run common test to an array of package.
-   * 
+   *
    * @param array $packages
    *   An array of json datasets.
    */
@@ -300,7 +296,7 @@ class DkanDatasetApiWebTestCase extends DrupalWebTestCase {
 
   /**
    * Runs querys for every hook_menu_item related to $slug.
-   * 
+   *
    * @param string $slug
    *   identifier for a specific api endpoint
    * @param string $uuid
@@ -343,7 +339,7 @@ class DkanDatasetApiWebTestCase extends DrupalWebTestCase {
 
   /**
    * Helper that gets defined hook_menu items related to a specific callback.
-   * 
+   *
    * @param string $callback
    *   a string representing a drupal callback.
    * @param string $prefix

@@ -53,7 +53,6 @@ class DkanDatasetWebTestCase extends DrupalWebTestCase {
     $modules[] = 'number';
     $modules[] = 'options';
     $modules[] = 'path';
-    $modules[] = 'rdf';
     $modules[] = 'taxonomy';
     $modules[] = 'text';
     $modules[] = 'user';
@@ -75,7 +74,6 @@ class DkanDatasetWebTestCase extends DrupalWebTestCase {
     $modules[] = 'link_iframe_formatter';
     $modules[] = 'multistep';
     $modules[] = 'ref_field_sync';
-    $modules[] = 'remote_file_source';
     $modules[] = 'select_or_other';
     $modules[] = 'og';
     $modules[] = 'og_context';
@@ -91,7 +89,6 @@ class DkanDatasetWebTestCase extends DrupalWebTestCase {
     $modules[] = 'remote_stream_wrapper';
     $modules[] = 'strongarm';
     $modules[] = 'token';
-    $modules[] = 'rdfx';
     $modules[] = 'search_api';
     $modules[] = 'search_api_db';
     $modules[] = 'search_api_views';
@@ -100,7 +97,6 @@ class DkanDatasetWebTestCase extends DrupalWebTestCase {
     $modules[] = 'beautytips';
     $modules[] = 'jquery_update';
     $modules[] = 'uuid';
-    $modules[] = 'eva';
     $modules[] = 'views';
     $modules[] = 'views_bulk_operations';
 

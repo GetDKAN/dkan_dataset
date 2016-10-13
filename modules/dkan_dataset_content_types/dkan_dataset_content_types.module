@@ -20,7 +20,20 @@ function dkan_dataset_content_types_form_alter(&$form, &$form_state, $form_id) {
     );
     $form['field_license'][LANGUAGE_NONE]['#options'] = $allowed_values;
 
+    // Hide fields.
+    $form['field_modified_source_date']['#access'] = FALSE;
+    $form['field_is_part_of']['#access'] = FALSE;
+    $form['field_pod_theme']['#access'] = FALSE;
+
+    $form['field_data_dictionary'][LANGUAGE_NONE]['#after_build'][] = 'data_dictionary_after_build';
   }
+}
+/**
+ * After build for data dictionary field. Removes format selector and guidelines.
+ */
+function data_dictionary_after_build(&$form) {
+  unset($form[0]['format']);
+  return $form;
 }
 /**
  * Implements hook_field_formatter_info().
@@ -116,4 +129,71 @@ function dkan_dataset_content_types_alter_dataset_license(&$dataset, $key) {
       unset($dataset[$key]);
     }
   }
+}
+
+/**
+ * Add links to metadata fields.
+ */
+function dkan_dataset_content_types_preprocess_field(&$vars) {
+  switch ($vars['element']['#field_name']) {
+    case 'field_contact_email':
+      $e = $vars['element']['#items'][0]['value'];
+      $vars['items']['0']['#markup'] = '<a href="mailto:' . $e . '">' . $e . '</a>';
+      break;
+
+  }
+  return;
+
+}
+
+/**
+ * Map of iso frequency ranges to field frequency allowed values.
+ */
+function dkan_dataset_content_types_iso_frecuency_map() {
+  return array(
+    'R/P10Y' => 6,
+    'R/P4Y' => 7,
+    'R/P1Y' => 3,
+    'R/P2M' => 8,
+    'R/P0.5M' => 8,
+    'R/P3.5D' => 9,
+    'R/P1D' => 0,
+    'R/P2W' => 10,
+    'R/P0.5W' => 10,
+    'R/P6M' => 11,
+    'R/P2Y' => 12,
+    'R/P3Y' => 13,
+    'R/P0.33W' => 14,
+    'R/P0.33M' => 15,
+    'R/PT1S' => 4,
+    'R/P1M' => 2,
+    'R/P3M' => 16,
+    'R/P0.5M' => 18,
+    'R/P4M' => 17,
+    'R/P1W' => 1,
+  );
+}
+
+/**
+ * Convert a frequency from iso to the field value representation.
+ */
+function dkan_dataset_content_types_iso2frequency($accrualPeriodicity) {
+  $map = dkan_dataset_content_types_iso_frecuency_map();
+  return $map[$accrualPeriodicity];
+}
+
+/**
+ * Convert a frequency from a field value to the iso representation.
+ */
+function dkan_dataset_content_types_frequency2iso($frecuencyIndex) {
+  $map = array_flip(dkan_dataset_content_types_iso_frecuency_map());
+  return $map[$accrualPeriodicity];
+}
+
+/**
+ * Implements allowed_values_function for field_language.
+ */
+function dkan_dataset_content_types_allowed_language_values() {
+  module_load_include('php', 'dkan_dataset_content_types', 'includes/language_code_list');
+  return dkan_dataset_content_types_get_language_codes();
 }

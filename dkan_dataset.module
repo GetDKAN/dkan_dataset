@@ -7,8 +7,10 @@
 
 include_once 'dkan_dataset.features.inc';
 include_once 'dkan_dataset.theme.inc';
-// TODO: make optional through admin settings.
+include_once 'includes/getRemoteFileInfo.php';
 include_once 'dkan_dataset.forms.inc';
+
+define('DKAN_REMOTE_FILE_SOURCE_HINT_TEXT', 'http://example.com/files/file.zip');
 
 /**
  * Implements hook_preprocess_html().
@@ -152,7 +154,7 @@ function dkan_dataset_node_view($node, $view_mode, $langcode) {
       '#view_mode' => $view_mode,
     );
   }
-  elseif ($view_mode == 'teaser' && ($node->type == 'dataset' || $node->type == 'resource')) {
+  elseif (($view_mode == 'teaser' || $view_mode == 'search_result') && ($node->type == 'dataset' || $node->type == 'resource')) {
     if (isset($node->content['links']['node']['#links']['node-readmore'])) {
       unset($node->content['links']['node']['#links']['node-readmore']);
     }
@@ -168,6 +170,9 @@ function dkan_dataset_node_view($node, $view_mode, $langcode) {
       '#suffix' => '</div>',
       '#weight' => '20',
     );
+    if (isset($node->content['field_topic'])) {
+      $node->content['field_topic']['#weight'] = '5';
+    }
   }
   elseif ($view_mode == 'full' && $node->type == 'resource') {
     $node->content['#attached']['css'][] = drupal_get_path('module', 'dkan_dataset') . '/css/dkan_dataset.css';
@@ -257,6 +262,10 @@ function dkan_dataset_get_resource_nodes($nid) {
  * Helper to get Visualization entities that are created from a Resource.
  */
 function dkan_dataset_get_visualization_entities($uuid) {
+  // The EFQ will throw an error if the uuid_resource field doesn't exist.
+  if (!field_info_instance('visualization', 'field_uuid_resource','ve_chart')) {
+  return array();
+  }
   $nodes = array();
   $nids = array();
   $query = new EntityFieldQuery();
@@ -479,6 +488,18 @@ function dkan_dataset_discovery_extension($mimetype) {
   if ($offset) {
     $type = array_search($offset, $mapping['extensions']);
   }
+  if (!$type) {
+    // Allows for custom mappings despite file_mimetype_mapping only allowing one
+    // mimetype per extension
+    switch ($offset) {
+      case 998:
+        $type = 'xml';
+        break;
+      default:
+        $type = $mimetype;
+        break;
+    }
+  }
   return $type;
 }
 
@@ -488,6 +509,9 @@ function dkan_dataset_discovery_extension($mimetype) {
 function dkan_dataset_file_mimetype_mapping_alter(&$mapping) {
   $mapping['extensions']['json'] = 999;
   $mapping['mimetypes'][999] = 'application/json';
+  // Text/xml would map to the same extention as application/xml, so we'll
+  // fix trhat in dkan_dataset_discovery_extension()
+  $mapping['mimetypes'][998] = 'text/xml';
   // 'Htm' and 'html' have the same mapping number but 'htm' is after
   // content types of 'text/html' are alway 'htm' without this.
   unset($mapping['extensions']['htm']);
@@ -499,16 +523,17 @@ function dkan_dataset_file_mimetype_mapping_alter(&$mapping) {
  * Implements hook_node_update().
  */
 function dkan_dataset_node_update($node) {
+
   global $user;
+
   switch ($node->type) {
     case 'dataset':
-      if (!$node->is_new && module_exists('og')) {
-        // Syncs groups across resources if a dataset is updated.
-        dkan_dataset_sync_groups($node);
-      }
+      // Update resource's groups.
+      dkan_dataset_sync_groups($node);
       break;
 
     case 'resource':
+      // Add changelog on associated datasets.
       $resource = entity_metadata_wrapper('node', $node);
       $datasets = $resource->field_dataset_ref->raw();
       if (count($datasets)) {
@@ -526,7 +551,6 @@ function dkan_dataset_node_update($node) {
 
     default:
       break;
-
   }
 }
 
@@ -537,157 +561,237 @@ function dkan_dataset_node_update($node) {
  * groups are added to a dataset or resources are added or removed from
  * a dataset.
  */
-function dkan_dataset_sync_groups($node) {
-  // Nodes.
-  $node_orig = entity_metadata_wrapper('node', $node->original);
-  $node_new = entity_metadata_wrapper('node', $node);
-  // Groups.
-  $groups_orig = $node_orig->__isset('og_group_ref') ? $node_orig->og_group_ref->value() : '';
-  $groups_new = $node_new->__isset('og_group_ref') ? $node_new->og_group_ref->value() : '';
-  if ($groups_new && $groups_orig) {
-    // Resources.
-    $resources_new = $node_orig->__isset('field_resources') ? $node_orig->field_resources->value() : '';
-    $resources_orig = $node_new->__isset('field_resources') ? $node_new->field_resources->value() : '';
-    if ($resources_new && $resources_orig) {
+function dkan_dataset_sync_groups($dataset) {
 
-      $new_groups = array();
-      $orig_groups = array();
-      $new_resources = array();
-      $orig_resources = array();
-      // If group is a singular value field process differently.
-      if (is_object($groups_new)) {
-        if ($groups_new->vuuid != $groups_orig->vuuid) {
-          dkan_dataset_process_groups($resources_new, $groups_new);
-        }
+  // This only makes sense if the 'og' module is enabled.
+  if (module_exists('og')) {
+
+    // Wrap dataset nodes as entities for easy usage.
+    $wrapped_dataset_old = entity_metadata_wrapper('node', $dataset->original);
+    $wrapped_dataset_new = entity_metadata_wrapper('node', $dataset);
+
+    // Get all (new + old) groups associated with the dataset.
+    $dataset_groups_old = dkan_dataset_get_dataset_groups($wrapped_dataset_old);
+    $dataset_groups_new = dkan_dataset_get_dataset_groups($wrapped_dataset_new);
+
+    // Get all (new + old) resources associated with the dataset.
+    $dataset_resources_old = dkan_dataset_get_dataset_resources($wrapped_dataset_old);
+    $dataset_resources_new = dkan_dataset_get_dataset_resources($wrapped_dataset_new);
+
+    // Check changes on the dataset
+    $groups_changed = ($dataset_groups_old != $dataset_groups_new) ? true : false;
+    $resources_changed = ($dataset_resources_old != $dataset_resources_new) ? true : false;
+
+    // If groups changed or resources changed then we need to update the groups on all affected resources.
+    if ($groups_changed || $resources_changed) {
+
+      // Process resources and separate them based on 'added', 'removed', 'unmodified' status.
+      $resources = dkan_dataset_process_resources($dataset_resources_old, $dataset_resources_new);
+
+      // Update 'added' resources. Append the current dataset's groups to their other groups.
+      if (isset($resources['added'])) {
+        dkan_dataset_update_resource_groups($resources['added'], $wrapped_dataset_new, $dataset_groups_new);
       }
-      else {
-        // Grouping by nid to make it easier to compare.
-        foreach ($groups_new as $new_key => $new_group) {
-          $new_groups[$new_key] = $new_group->title;
-        }
-        foreach ($groups_orig as $orig_key => $orig_group) {
-          $orig_groups[$orig_key] = $orig_group->title;
-        }
-        foreach ($resources_new as $new_key => $new_resource) {
-          $new_resources[$new_resource->nid] = $new_resource;
-        }
-        foreach ($resources_orig as $orig_key => $orig_resource) {
-          if ($orig_resource) {
-            $orig_resources[$orig_resource->nid] = $orig_resource;
-          }
-        }
-        // Groups have changed.
-        $additional_groups = array();
-        $resources_added = array();
-        if ((array_diff($orig_groups, $new_groups) || array_diff($new_groups, $orig_groups)) && $resources_new) {
-          $additional_groups = dkan_dataset_resource_groups($resources_new, $node);
-          $groups_new = $groups_new + $additional_groups;
-          dkan_dataset_process_groups($resources_new, $groups_new);
-        }
+
+      // Update 'removed' resources. Don't append the current dataset's groups to their other groups.
+      if (isset($resources['removed'])) {
+        dkan_dataset_update_resource_groups($resources['removed'], $wrapped_dataset_new, NULL);
       }
-      // Resources have been added.
-      if (array_diff_key($new_resources, $orig_resources) && $groups_new) {
-        foreach ($new_resources as $nid => $resource) {
-          foreach ($orig_resources as $orig_nid => $orig_resource) {
-            // Don't process unless the resource has a referenced dataset.
-            if (!isset($orig_resources[$nid]) && $resource->field_dataset_ref) {
-              $resources_added[$nid] = $resource;
-            }
-          }
-        }
-        $additional_groups = dkan_dataset_resource_groups($resources_added, $node);
-        $groups_new = $groups_new + $additional_groups;
-        dkan_dataset_process_groups($resources_added, $groups_new);
-      }
-      // Resources have been removed.
-      if (array_diff_key($orig_resources, $new_resources)) {
-        $resources_removed = array_diff_key($orig_resources, $new_resources);
-        $additional_groups = dkan_dataset_resource_groups($resources_removed, $node);
-        // This resource should only still have groups if it is attached to
-        // another dataset that has groups.
-        $groups_new = $additional_groups;
-        dkan_dataset_process_groups($resources_removed, $groups_new, 'removed');
+
+      // If the groups changed we need to also update the resources that were already
+      // associated with the dataset. Append the current dataset's groups to their other groups.
+      if ($groups_changed && isset($resources['unmodified'])){
+        dkan_dataset_update_resource_groups($resources['unmodified'], $wrapped_dataset_new, $dataset_groups_new);
       }
     }
   }
 }
 
 /**
- * Returns array of groups that a resource should be included in.
+ * Process resource and group them based on their 'added', 'removed' or 'unmodified' status.
  *
- * Resources should have the same group as their datasets. Resources can have
- * more than one dataset. When one dataset changes we need to update all of the
- * groups it should be associated with.
- *
- * @params array $resources
- *   An array of resource nodes.
- * @params object $new_dataset
- *   New dataset that has already been loaded.
- *
- * @return array
- *   An array of groups that resource should be associated with.
+ * @param $resources_old
+ *    The list of old resources associated with the dataset that is being updated.
+ * @param $resources_new
+ *    The list of new resources associated with the dataset that is being updated.
  */
-function dkan_dataset_resource_groups($resources, $new_dataset) {
-  $groups = array();
-  if (is_array($resources)) {
-    foreach ($resources as $key => $resource) {
-      if (isset($resource->field_dataset_ref['und'])) {
-        foreach ($resource->field_dataset_ref['und'] as $dataset_key => $dataset_id) {
-          if ($new_dataset->nid != $dataset_id['target_id']) {
-            $dataset = node_load($dataset_id['target_id']);
-            $dataset_wrapper = entity_metadata_wrapper('node', $dataset);
-            $dataset_groups = $dataset_wrapper->og_group_ref->value();
-            if ($dataset_groups) {
-              foreach ($dataset_groups as $group_id => $group) {
-                $groups[$group->nid] = $group;
-              }
-            }
-          }
-        }
+function dkan_dataset_process_resources($resources_old, $resources_new) {
+  $processed_resources = array();
+
+  // Join all resources (old + new). Remove duplicates.
+  $all_resources = $resources_old;
+  foreach($resources_new as $resource_new_key => $resource_new) {
+    $all_resources[$resource_new_key] = $resource_new;
+  }
+
+  // Organize resources separating them by their 'added', 'removed', 'unmodified' status.
+  foreach ($all_resources as $resource_key => $resource) {
+
+    $status = 'added';
+    if (isset($resources_new[$resource_key])) {
+      if (isset($resources_old[$resource_key])) {
+        $status = 'unmodified';
       }
     }
+    else {
+      $status = 'removed';
+    }
+
+    $processed_resources[$status][$resource_key] = $resource;
   }
+
+  return $processed_resources;
+}
+
+/**
+ * Get the list of groups associated with the dataset.
+ *
+ * @param $dataset
+ *    Entity wrapped version of the dataset node.
+ * @return array $groups
+ *    An array containing the list of groups associated with the dataset.
+ */
+function dkan_dataset_get_dataset_groups($dataset) {
+
+  $groups = array();
+
+  $field_groups_values = $dataset->__isset('og_group_ref') ? $dataset->og_group_ref->value() : '';
+  foreach ($field_groups_values as $field_groups_value) {
+    $groups[$field_groups_value->nid] = $field_groups_value;
+  }
+
   return $groups;
 }
 
 /**
- * Adds groups to resource nodes either by saving or adding them to a queue.
+ * Get the list of resources associated with the dataset.
  *
- * @param array $nodes
- *   Fully instantiated resource nodes.
- * @param array $groups
- *   Fully insstantiated group nodes.
- *   NOTE: This is an array if group field "Number of values" is multiple but an
- *   object if "Number of values" is singular.
+ * @param $dataset
+ *    Entity wrapped version of the dataset node.
+ * @return array $resources
+ *    An array containing the list of resources associated with the dataset.
  */
-function dkan_dataset_process_groups($nodes, $groups, $op = 'added', $limit_update_resources = 20) {
-  $counter_resource = 0;
-  $queued_items = 0;
-  if (is_array($nodes)) {
-    foreach ($nodes as $key => $node) {
-      $wrapper_resource = entity_metadata_wrapper('node', $node);
-      if ($counter_resource < $limit_update_resources) {
-        $wrapper_resource->og_group_ref->set($groups);
-        $wrapper_resource->save();
-        $counter_resource++;
-      }
-      else {
-        $queue = DrupalQueue::get('dkan_dataset_group_update');
-        $queue->createQueue();
-        $queue->createItem(array('wrapper' => $wrapper_resource, 'new_groups' => $groups));
-        $queued_items++;
+function dkan_dataset_get_dataset_resources($dataset) {
+
+  $resources = array();
+
+  $field_resources_values = $dataset->__isset('field_resources') ? $dataset->field_resources->value() : '';
+  foreach($field_resources_values as $field_resources_value) {
+    $resources[$field_resources_value->nid] = $field_resources_value;
+  }
+
+  return $resources;
+}
+
+/**
+ * Get the full list of groups associated with all the datasets where the
+ * resource was added except the ones from the dataset that is being updated.
+ *
+ * @param $resource
+ *    Entity wrapped version of the resource node.
+ * @param $updated_dataset_id
+ *    ID of the dataset that is currently being updated.
+ * @return array $groups
+ *    Array containing the full list of groups associated with all the datasets where the
+ *    resource was added except the ones from the dataset that is being updated.
+ */
+function dkan_dataset_get_resource_groups($resource, $updated_dataset_id) {
+
+  $groups = array();
+
+  // Check if the resource is associated with any datasets.
+  if (isset($resource->field_dataset_ref)) {
+
+    $referenced_datasets = $resource->field_dataset_ref->value();
+
+    // Get the groups from all the datasets associated with the resource.
+    // A resource can be associated with multiple datasets.
+    foreach ($referenced_datasets as $referenced_dataset_key => $referenced_dataset) {
+
+      // Get groups of all the associated datasets except the one that's currently
+      // being edited. Those groups will be added after if needed.
+      if ($referenced_dataset->nid != $updated_dataset_id) {
+        // Load the latest version of the referenced dataset.
+        $dataset = node_load($referenced_dataset->nid, NULL, TRUE);
+        // Wrap node as entity for easy usage.
+        $dataset_wrapper = entity_metadata_wrapper('node', $dataset);
+
+        // Get the list of groups associated with the dataset and append those to the result list.
+        $dataset_groups = $dataset_wrapper->og_group_ref->value();
+        foreach ($dataset_groups as $group_id => $group) {
+          $groups[$group->nid] = $group;
+        }
       }
     }
-    if ($counter_resource) {
-      if ($op == 'added') {
-        drupal_set_message(t("%d resource(s) were added to the group or groups for this dataset.", array('%d' => $counter_resource)));
-      }
-      elseif ($op == 'removed') {
-        drupal_set_message(t("%d resource(s) were removed from the group or groups for this dataset.", array('%d' => $counter_resource)));
-      }
+  }
+
+  return $groups;
+}
+
+/**
+ * Update the associated groups on all the resources that were modified as part of the
+ * dataset update.
+ *
+ * @param $resources
+ *    The list of resources whose resources need to be updated.
+ * @param $updated_dataset
+ *    Entity wrapped version of the dataset that was updated.
+ * @param $updated_dataset_groups
+ *    The current groups associated with the dataset that is being updated.
+ * @param int $use_queue_limit
+ *    A limit indicating when a Drupal queue should be used to update the resources.
+ */
+function dkan_dataset_update_resource_groups($resources, $updated_dataset, $updated_dataset_groups, $use_queue_limit = 20) {
+
+  $use_queue = false;
+  $queue = '';
+
+  $num_resources = count($resources);
+
+  // Check if a Drupal queue should be used to update the resources.
+  if ($num_resources > $use_queue_limit) {
+    $use_queue = true;
+    $queue = DrupalQueue::get('dkan_dataset_group_update');
+    $queue->createQueue();
+  }
+
+  foreach($resources as $resource) {
+
+    // Load latest version of the resource.
+    $resource = node_load($resource->nid, NULL, TRUE);
+    $wrapper_resource = entity_metadata_wrapper('node', $resource);
+
+    // Get all the resource groups from all the other datasets the resource was associated with.
+    $resource_groups = dkan_dataset_get_resource_groups($wrapper_resource, $updated_dataset->nid->value());
+    // If present then append the groups of the current dataset.
+    if ($updated_dataset_groups) {
+      $resource_groups = array_merge($resource_groups, $updated_dataset_groups);
     }
-    if ($queued_items) {
-      drupal_set_message(t("%d resources were queued to be updated with the new groups. They will be processed during upcoming cron runs.", array('%d' => $queued_items)));
+
+    // Update resource groups.
+    if ($use_queue) {
+      $queue->createItem(array(
+        'wrapper' => $wrapper_resource,
+        'new_groups' => $resource_groups
+      ));
+    }
+    else {
+      $wrapper_resource->og_group_ref->set($resource_groups);
+      $wrapper_resource->save();
+    }
+  }
+
+  // Log messages to the user.
+  if ($num_resources) {
+    if ($use_queue) {
+      drupal_set_message(t("%d resources were queued to be updated with their new groups. They will be processed during upcoming cron runs.", array(
+        '%d' => $num_resources
+      )));
+    }
+    else {
+      drupal_set_message(t("Groups were updated on %d resource(s).", array(
+        '%d' => $num_resources
+      )));
     }
   }
 }
@@ -881,7 +985,7 @@ function dkan_dataset_teaser_external_previews_for_resource($node) {
  */
 function dkan_dataset_preview_url_local($node) {
   if ($node->type == 'resource') {
-    return url('node/' . $node->nid);
+    return 'node/' . $node->nid;
   }
 }
 
@@ -918,4 +1022,237 @@ function dkan_dataset_preview_url_cartodb($node) {
   if ($resource_file_url) {
     return sprintf($pattern, $resource_file_url);
   }
+}
+
+/**
+ * Implements hook_filefield_sources_info().
+ */
+function dkan_dataset_filefield_sources_info() {
+  $source = array();
+  $source['dkan_remotefile'] = array(
+    'name' => t('Open Data Remote File'),
+    'label' => t('Open Data Remote File'),
+    'description' => t('Link to a file located on a remote server.'),
+    'process' => 'dkan_dataset_remotefile_process',
+    'value' => 'dkan_dataset_remotefile_value',
+    'weight' => 4,
+  );
+  return $source;
+}
+
+/**
+ * Implements hook_filefield_sources_element_validate().
+ */
+function dkan_filefield_sources_element_validate($element, $file) {
+  $validators = $element['#upload_validators'];
+  $errors = array();
+
+    foreach ($validators as $function => $args) {
+      // Add the $file variable to the list of arguments and pass it by
+      // reference (required for PHP 5.3 and higher).
+      array_unshift($args, NULL);
+      $args[0] = &$file;
+      $errors = array_merge($errors, call_user_func_array($function, $args));
+    }
+
+  // Check for validation errors.
+  if (!empty($errors)) {
+    $message = t('The selected file %name could not be referenced.', array('%name' => $file->filename));
+    if (count($errors) > 1) {
+      $message .= '<ul><li>' . implode('</li><li>', $errors) . '</li></ul>';
+    }
+    else {
+      $message .= ' ' . array_pop($errors);
+    }
+    form_error($element, $message);
+    return 0;
+  }
+
+  return 1;
+}
+
+/**
+ * A #process callback to extend the filefield_widget element type.
+ */
+function dkan_dataset_remotefile_process($element, &$form_state, $form) {
+
+  $element['filefield_dkan_remotefile'] = array(
+    '#weight' => 100.5,
+    '#theme' => 'filefield_source_dkan_remotefile_element',
+    '#filefield_source' => TRUE, // Required for proper theming.
+    '#filefield_sources_hint_text' => DKAN_REMOTE_FILE_SOURCE_HINT_TEXT,
+  );
+
+  $element['filefield_dkan_remotefile']['url'] = array(
+    '#type' => 'textfield',
+    '#maxlength' => NULL,
+  );
+
+  $element['filefield_dkan_remotefile']['select'] = array(
+    '#name' => implode('_', $element['#array_parents']) . '_select',
+    '#type' => 'submit',
+    '#value' => t('Select'),
+    '#validate' => array(),
+    '#submit' => array('filefield_sources_field_submit'),
+    '#limit_validation_errors' => array($element['#parents']),
+    '#ajax' => array(
+      'path' => 'file/ajax/' . implode('/', $element['#array_parents']) . '/' . $form['form_build_id']['#value'],
+      'wrapper' => $element['#id'] . '-ajax-wrapper',
+      'effect' => 'fade',
+      'method' => 'replace',
+    ),
+    '#suffix' => '<div class="description">' . t('This field will ignore the file size limitation') . '</div>',
+  );
+
+  return $element;
+}
+
+/**
+ * A #filefield_value_callback function.
+ */
+function dkan_dataset_remotefile_value($element, &$item) {
+  // A remote url has been entered.
+  if (isset($item['filefield_dkan_remotefile']['url'])
+    && drupal_strlen($item['filefield_dkan_remotefile']['url']) > 0
+    && $item['filefield_dkan_remotefile']['url'] != DKAN_REMOTE_FILE_SOURCE_HINT_TEXT) {
+
+    $value = $item['filefield_dkan_remotefile']['url'];
+
+    if (!valid_url($value, TRUE)) {
+      form_error($element, t('Invalid Remote File URL.'));
+      return;
+    }
+    elseif (!file_stream_wrapper_valid_scheme(file_uri_scheme($value))) {
+      // Check that the scheme is supported.
+      form_error($element, t('Remote File URLs with the %scheme scheme are not supported.', array('%scheme' => $scheme)));
+      return;
+    }
+    else {
+      // Check that the file exists.
+      $request = drupal_http_request($value, array('method' => 'HEAD'));
+      if (!empty($request->error)) {
+        if (isset($request->headers['x-error-message']) && $request->headers['x-error-message'] != 'HEAD is not supported') {
+          form_error($element, t('Unable to fetch file from Remote File URL %url (error @code: %error).', array('%url' => $value, '@code' => $request->code, '%error' => $request->error)));
+          return;
+        }
+      }
+    }
+
+    try {
+      $file = remote_stream_wrapper_file_create_by_uri($value);
+
+      $file_info = new dkanDataset\getRemoteFileInfo($value, t('!site_name crawler', array('!site_name' => variable_get('site_name'))) , TRUE, file_directory_temp());
+      if ($filename = $file_info->getName()) {
+        $file->filename = $filename;
+      }
+      if ($filemime = $file_info->getType()) {
+        $file->filemime = $filemime;
+      }
+
+      $file->status = FALSE;
+      // With file uploads if the file already exists a copy is created and
+      // stored as the unique URI. We can't copy the file since it exists on
+      // another server.
+      //
+      // Instead we update an existing record if there is one.
+      $fid = db_query("SELECT fid from {file_managed} WHERE uri = '" . check_plain($value) . "' LIMIT 1")->fetchField();
+      if ($fid) {
+        $file->fid = $fid;
+      }
+
+      $file = file_save($file);
+    }
+    catch (Exception $e) {
+      form_set_error('url', $e->getMessage());
+      return;
+    }
+
+    if (empty($file->fid)) {
+      form_set_error($element, t('Unable to add file from URL %file.', array('%file' => $value)));
+      return;
+    }
+
+    // Run all the normal validations, minus file size restrictions.
+    if (isset($element['#upload_validators']['file_validate_size'])) {
+      unset($element['#upload_validators']['file_validate_size']);
+      unset($element['#upload_validators']['file_validate_extensions']);
+    }
+
+    if (dkan_filefield_sources_element_validate($element, (object) $file)) {
+      $item = array_merge($item, (array) $file);
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function dkan_dataset_entity_info_alter(&$entity_info) {
+  $entity_info['node']['view modes']['search_result'] = array(
+      'label' => t('Search Result'),
+      'custom settings' => TRUE,
+  );
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function dkan_dataset_preprocess_node(&$vars) {
+  if($vars['view_mode'] == 'search_result') {
+    $vars['theme_hook_suggestions'][] = 'node__search_result';
+  }
+}
+
+/**
+ * Return node modified date.
+ */
+function dkan_dataset_modified_date($node) {
+  $node = ($node instanceof EntityMetadataWrapper) ? $node : entity_metadata_wrapper('node', $node);
+  $harvested_date = $node->field_modified_source_date->value();
+
+  // Harvested times can be dates or periods then we don't format them.
+  return ($harvested_date) ? $harvested_date : format_date($node->changed->value(), 'custom', 'Y-m-d');
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function dkan_dataset_field_formatter_info() {
+  return array(
+    'harvest_info_formatter' => array(
+      'label' => t('Harvest Info'),
+      'field types' => array('entityreference'),
+      'settings'  => array(),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function dkan_dataset_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  $rows = array();
+
+  if (isset($entity->field_harvest_source_ref) && isset($entity->field_harvest_source_ref[LANGUAGE_NONE][0]['target_id'])) {
+    $harvest_node = node_load($entity->field_harvest_source_ref[LANGUAGE_NONE][0]['target_id']);
+    if ($harvest_node) {
+      $harvestSource = HarvestSource::getHarvestSourceFromNode($harvest_node);
+      $migrate_table = 'migrate_map_dkan_harvest_migrate_' . $harvestSource->machine_name;
+      $migrate_info = db_query("SELECT * FROM {$migrate_table} WHERE destid1=:destid1", array(':destid1' => $entity->nid))->fetchObject();
+      $sourceid = isset($migrate_info->sourceid1) ? $migrate_info->sourceid1 : '';
+      $rows[] = array(t('<strong>Harvest Source Title</strong>'), $harvest_node->title);
+      $rows[] = array(t('<strong>Harvest Source URI</strong>'), l($harvest_node->field_dkan_harvest_source_uri[LANGUAGE_NONE][0]['value'], $harvest_node->field_dkan_harvest_source_uri[LANGUAGE_NONE][0]['value']));
+      $rows[] = array(t('<strong>Last Harvest Performed</strong>'), dkan_harvest_get_last_event_log($harvest_node));
+      $caption = t('Harvested from !link', array('!link' => l($harvest_node->title, 'node/' . $harvest_node->nid)));
+      $markup = theme('table', array('rows' => $rows, 'caption' => $caption));
+    }
+  }
+  else {
+    $markup = '';
+  }
+
+  $element[0]['#markup'] = $markup;
+
+  return $element;
 }

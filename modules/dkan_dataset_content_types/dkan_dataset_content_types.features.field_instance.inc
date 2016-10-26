@@ -1459,7 +1459,7 @@ uk-ogl|UK Open Government Licence (OGL)',
       'active' => 1,
       'module' => 'options',
       'settings' => array(
-        'apply_chosen' => 0,
+        'apply_chosen' => 1,
       ),
       'type' => 'options_select',
       'weight' => 8,

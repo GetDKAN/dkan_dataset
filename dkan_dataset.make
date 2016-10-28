@@ -136,12 +136,12 @@ projects[og_extras][version] = 1.2
 projects[og_extras][subdir] = contrib
 projects[og_extras][type] = module
 
-includes[open_data_schema_map_make] = https://raw.githubusercontent.com/NuCivic/open_data_schema_map/4618_program_and_bureau_on_json/open_data_schema_map.make
+includes[open_data_schema_map_make] = https://raw.githubusercontent.com/NuCivic/open_data_schema_map/release-1-12/open_data_schema_map.make
 
 projects[open_data_schema_map][type] = module
 projects[open_data_schema_map][download][type] = git
 projects[open_data_schema_map][download][url] = https://github.com/NuCivic/open_data_schema_map.git
-projects[open_data_schema_map][download][branch] = 4618_program_and_bureau_on_json
+projects[open_data_schema_map][download][branch] = release-1-12
 projects[open_data_schema_map][subdir] = contrib
 
 projects[open_data_schema_map_dkan][type] = module
@@ -225,3 +225,4 @@ libraries[arc][subdir] = "ARC2"
 libraries[excanvas][download][type] = git
 libraries[excanvas][download][url] = "https://github.com/arv/ExplorerCanvas.git"
 libraries[excanvas][download][sha1] = "aa989ea9d9bac748638f7c66b0fc88e619715da6"
+

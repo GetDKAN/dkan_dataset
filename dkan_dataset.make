@@ -136,6 +136,8 @@ projects[og_extras][version] = 1.2
 projects[og_extras][subdir] = contrib
 projects[og_extras][type] = module
 
+includes[open_data_schema_map_make] = https://raw.githubusercontent.com/NuCivic/open_data_schema_map/4618_program_and_bureau_on_json/open_data_schema_map.make
+
 projects[open_data_schema_map][type] = module
 projects[open_data_schema_map][download][type] = git
 projects[open_data_schema_map][download][url] = https://github.com/NuCivic/open_data_schema_map.git

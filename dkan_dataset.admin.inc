@@ -132,6 +132,11 @@ function dkan_dataset_form_settings() {
         to create new datasets if this is enabled.'),
     '#default_value' => variable_get('dkan_dataset_form_group_validation', 0),
   );
+  $form['dkan_dataset_form_remove_promoted_sticky'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Remove "Promoted to Front page" and remove "Sticky at the top of lists"'),
+    '#default_value' => variable_get('dkan_dataset_form_remove_promoted_sticky', 0),
+  );
 
   return system_settings_form($form);
 }

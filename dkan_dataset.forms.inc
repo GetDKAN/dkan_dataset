@@ -60,6 +60,10 @@ function dkan_dataset_get_group_options() {
  * Implements hook_form_FORM_ID_alter().
  */
 function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
+  if (strpos($form_id, '_node_form') !== FALSE && variable_get('dkan_dataset_form_remove_promoted_sticky', 0)) {
+    $form['options']['sticky']['#access'] = FALSE;
+    $form['options']['promote']['#access'] = FALSE;
+  }
 
   if ($form_id == 'dataset_node_form') {
 

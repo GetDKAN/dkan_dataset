@@ -35,7 +35,7 @@ dependencies:
      #- "~/backups"
      #- "test/sites/default"
   pre:
-    - echo "memory_limit = 256M" > ~/.phpenv/versions/5.6.22/etc/conf.d/memory.ini
+    - echo "memory_limit = 256M" > $PHPENV_ROOT/versions/$(phpenv global)/etc/conf.d/memory.ini
   override:
     - mkdir $CIRCLE_ARTIFACTS/junit
     - 'bash dkan-module-init.sh --deps --build=$DATABASE_URL'
@@ -50,7 +50,7 @@ dependencies:
     - java -jar selenium-server-standalone-2.48.2.jar -quiet -p 4444 -log shut_up_selenium :
         background: true
   pre:
-    - echo "memory_limit = 256M" > ~/.phpenv/versions/5.6.22/etc/conf.d/memory.ini
+    - echo "memory_limit = 256M" > $PHPENV_ROOT/versions/$(phpenv global)/etc/conf.d/memory.ini
   post:
      - sudo apt-get install -y x11vnc
      - x11vnc -forever -nopw:

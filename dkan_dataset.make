@@ -185,12 +185,6 @@ libraries[slugify][download][url] = "https://github.com/pmcelhaney/jQuery-Slugif
 libraries[slugify][directory_name] = slugify
 libraries[slugify][download][revision] = "79133a1bdfd3ac80d500d661a722b85c03a01da3"
 
-libraries[arc][type] = libraries
-libraries[arc][download][type] = git
-libraries[arc][download][url] = "https://github.com/semsol/arc2.git"
-libraries[arc][download][revision] = "44c396ab54178086c09499a1704e31a977b836d2"
-libraries[arc][subdir] = "ARC2"
-
 libraries[excanvas][download][type] = git
 libraries[excanvas][download][url] = "https://github.com/arv/ExplorerCanvas.git"
 libraries[excanvas][download][sha1] = "aa989ea9d9bac748638f7c66b0fc88e619715da6"

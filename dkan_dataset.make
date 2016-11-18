@@ -194,4 +194,3 @@ libraries[arc][subdir] = "ARC2"
 libraries[excanvas][download][type] = git
 libraries[excanvas][download][url] = "https://github.com/arv/ExplorerCanvas.git"
 libraries[excanvas][download][sha1] = "aa989ea9d9bac748638f7c66b0fc88e619715da6"
-

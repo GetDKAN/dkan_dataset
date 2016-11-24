@@ -25,6 +25,21 @@ function dkan_dataset_groups_disable() {
 }
 
 /**
+ * Implements hook_update_dependencies().
+ */
+function dkan_dataset_groups_update_dependencies() {
+
+  // We need to be sure datastore update runs before.
+  // dkan_datastore_status field it's added during that
+  // update. Without this dependecy dkan_dataset_groups_update_7000
+  // runs before throwing an entity metadata wrapper error.
+  $dependencies['dkan_dataset_groups'][7000] = array(
+    'dkan_datastore' => 7001,
+  );
+  return $dependencies;
+}
+
+/**
  * Update resources without groups with the same group from parent dataset.
  */
 function dkan_dataset_groups_update_7000(&$sandbox) {
@@ -40,7 +55,7 @@ function dkan_dataset_groups_update_7000(&$sandbox) {
     //Simulate a empty original
     $original = new stdClass();
     $original->type = 'dataset';
-    $original->og_group_ref = array(); 
+    $original->og_group_ref = array();
     $dataset = node_load($item->field_dataset_ref_target_id);
     $dataset->original = $original;
     dkan_dataset_sync_groups($dataset);

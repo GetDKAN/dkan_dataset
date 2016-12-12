@@ -173,6 +173,7 @@ projects[remote_file_source][patch][2362487] = https://www.drupal.org/files/issu
 projects[remote_file_source][subdir] = contrib
 
 projects[remote_stream_wrapper][version] = 1.0-rc1
+projects[remote_stream_wrapper][patch][2833837] = https://www.drupal.org/files/issues/prevent-download-intent-open-stream-2833837-1.patch
 projects[remote_stream_wrapper][subdir] = contrib
 
 projects[select_or_other][version] = 2.22

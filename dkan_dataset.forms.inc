@@ -218,11 +218,10 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     $file_upload_validators = $form['field_upload'][$field_upload_langcode][0]['#file_resup_upload_validators'];
     $form['field_upload'][$field_upload_langcode][0]['#description'] = theme('file_upload_help', array('upload_validators' => $file_upload_validators));
 
-    // Get langcode for field_link_file.
-    $field_link_file_langcode = dkan_dataset_form_field_language($form, 'field_link_file');
+    // Get langcode for field_link_remote_file.
     $field_link_remote_file_langcode = dkan_dataset_form_field_language($form, 'field_link_remote_file');
-    $form['field_link_file'][$field_link_file_langcode][0]['#description'] = 'Link to a CSV file that will be imported into the DKAN datastore.';
-    $form['field_link_remote_file'][$field_link_file_langcode][0]['#description'] = 'Link to a csv, html, xls, json, xlsx, doc, docx, rdf, txt, jpg, png, gif, tiff, pdf, odf, ods, odt, tsv, geojson, or xml file. CSV files can be imported into the DKAN datastore.';
+    $form['field_link_remote_file'][$field_link_remote_file_langcode][0]['#description'] = 'Link to a CSV file that will be imported into the DKAN datastore.';
+    $form['field_link_remote_file'][$field_link_remote_file_langcode][0]['#description'] = 'Link to a csv, html, xls, json, xlsx, doc, docx, rdf, txt, jpg, png, gif, tiff, pdf, odf, ods, odt, tsv, geojson, or xml file. CSV files can be imported into the DKAN datastore.';
 
     // Get langcode for field_link_api.
     $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_link_api');
@@ -232,9 +231,7 @@ function dkan_dataset_form_alter(&$form, &$form_state, $form_id) {
     $form['title']['#required'] = TRUE;
 
     $form['field_link_api'][$field_link_api_langcode][0]['#title'] = '';
-
-    $form['field_link_file'][$field_link_file_langcode][0]['#title'] = '';
-    $form['field_link_remote_file'][$field_link_file_langcode][0]['#title'] = '';
+    $form['field_link_remote_file'][$field_link_remote_file_langcode][0]['#title'] = '';
 
     // Move groups to vertical tabs.
     if (isset($form['og_group_ref'])) {
@@ -387,7 +384,7 @@ function dkan_dataset_dataset_form_submit($form, &$form_state) {
  * Validation function for resource node form.
  */
 function dkan_dataset_resource_node_form_validate($form, &$form_state) {
-  // Get langcode for field_link_file.
+  // Get langcode for field_link_remote_file.
   $field_link_remote_file_langcode = dkan_dataset_form_field_language($form, 'field_link_remote_file');
   // Get langcode for field_link_api.
   $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_link_api');

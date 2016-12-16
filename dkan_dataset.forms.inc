@@ -388,7 +388,6 @@ function dkan_dataset_dataset_form_submit($form, &$form_state) {
  */
 function dkan_dataset_resource_node_form_validate($form, &$form_state) {
   // Get langcode for field_link_file.
-  $field_link_file_langcode = dkan_dataset_form_field_language($form, 'field_link_file');
   $field_link_remote_file_langcode = dkan_dataset_form_field_language($form, 'field_link_remote_file');
   // Get langcode for field_link_api.
   $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_link_api');
@@ -398,10 +397,10 @@ function dkan_dataset_resource_node_form_validate($form, &$form_state) {
   $field_format_langcode = dkan_dataset_form_field_language($form, 'field_format');
 
   // See if file link, api link, or file upload.
-  $link = isset($form_state['values']['field_link_file'][$field_link_file_langcode]) ? $form_state['values']['field_link_file'][$field_link_file_langcode][0]['url'] : NULL;
+  $link = isset($form_state['values']['field_link_remote_file'][$field_link_remote_file_langcode]) ? $form_state['values']['field_link_remote_file'][$field_link_remote_file_langcode][0]['filefield_remotefile']['url'] : NULL;
+  $link_fid = isset($form_state['values']['field_link_remote_file'][$field_link_remote_file_langcode]) ? $form_state['values']['field_link_remote_file'][$field_link_remote_file_langcode][0]['fid'] : NULL;
   $api = isset($form_state['values']['field_link_api']) ? $form_state['values']['field_link_api'][$field_link_api_langcode][0]['url'] : NULL;
-  $upload_fid = $form_state['values']['field_upload'][$field_upload_langcode][0]['fid'];
-  $link_fid = isset($form_state['values']['field_link_remote_file'][$field_upload_langcode]) ? $form_state['values']['field_link_remote_file'][$field_upload_langcode][0]['fid'] : NULL;
+  $upload_fid = isset($form_state['values']['field_upload'][$field_upload_langcode][0]['fid']) ? $form_state['values']['field_upload'][$field_upload_langcode][0]['fid'] : NULL;
 
   $format_name = isset($form_state['values']['field_format'][$field_upload_langcode][0]) ? $form_state['values']['field_format'][$field_upload_langcode][0]['name'] : NULL;
   $format_tid = isset($form_state['values']['field_format'][$field_upload_langcode][0]) ? $form_state['values']['field_format'][$field_upload_langcode][0]['tid'] : NULL;
@@ -432,8 +431,16 @@ function dkan_dataset_resource_node_form_validate($form, &$form_state) {
     }
   }
   // Ensure that only one type of resource is uploaded or linked to.
-  if ($link && ($api || $upload_fid || $link_fid) || $api && ($link || $upload_fid || $link_fid) || ($upload_fid && $api || $link) || ($link_fid && $api || $link)) {
-    form_set_error('field_link_file', 'Only one resource type can be added.');
+  if(count(array_filter(array($link_fid,$api,$upload_fid))) != 1) {
+    if ($link_fid) {
+      form_set_error('field_link_remote_file', 'Remote file option is populated - only one resource type can be used at a time.');
+    }
+    if ($api) {
+      form_set_error('field_link_api', 'API or Website URL is populated - only one resource type can be used at a time.');
+    }
+    if ($upload_fid) {
+      form_set_error('field_upload', 'File upload is populated - only one resource type can be used at a time.');
+    }
   }
   // Autodetect file type if a new one is not provided.
   if (!$type) {
@@ -495,16 +502,15 @@ function dkan_dataset_recline_format_alter(&$format, $entity) {
  * After build function for resource and dataset nodes.
  */
 function dkan_dataset_resource_form_after_build($form, &$form_state) {
-  if (isset($form['field_link_file'])) {
-    // Get langcode for field_link_file.
-    $field_link_file_langcode = dkan_dataset_form_field_language($form, 'field_link_file');
-    $field_link_remote_file_langcode = dkan_dataset_form_field_language($form, 'field_link_file');
+  if (isset($form['field_link_remote_file'])) {
+    // Get langcode for field_link_remote_file.
+    $field_link_remote_file_langcode = dkan_dataset_form_field_language($form, 'field_link_remote_file');
+    $form['field_link_remote_file'][$field_link_remote_file_langcode][0]['filefield_remotefile']['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011.csv';
+    $form['field_link_remote_file'][$field_link_remote_file_langcode][0]['filefield_remotefile']['select']['#suffix'] = '';
+  }
+  if (isset($form['field_link_api'])) {
     // Get langcode for field_link_api.
     $field_link_api_langcode = dkan_dataset_form_field_language($form, 'field_link_api');
-
-    $form['field_link_file'][$field_link_file_langcode][0]['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011.csv';
-    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_remotefile']['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011.csv';
-    $form['field_link_remote_file'][$field_link_file_langcode][0]['filefield_remotefile']['select']['#suffix'] = '';
     $form['field_link_api'][$field_link_api_langcode][0]['url']['#attributes']['placeholder'] = 'eg. http://example.com/gold-prices-jan-2011';
   }
   if (isset($form['field_format'])) {

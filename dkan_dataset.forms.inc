@@ -430,13 +430,16 @@ function dkan_dataset_resource_node_form_validate($form, &$form_state) {
   // Ensure that only one type of resource is uploaded or linked to.
   if(count(array_filter(array($link_fid,$api,$upload_fid))) != 1) {
     if ($link_fid) {
-      form_set_error('field_link_remote_file', 'Remote file option is populated - only one resource type can be used at a time.');
+      $remote_error = t('<strong>Remote file</strong> is populated - only one resource type can be used at a time.');
+      form_set_error('field_link_remote_file', $remote_error);
     }
     if ($api) {
-      form_set_error('field_link_api', 'API or Website URL is populated - only one resource type can be used at a time.');
+      $api_error = t('<strong>API or Website URL</strong> is populated - only one resource type can be used at a time.');
+      form_set_error('field_link_api', $api_error);
     }
     if ($upload_fid) {
-      form_set_error('field_upload', 'File upload is populated - only one resource type can be used at a time.');
+      $upload_error = t('<strong>Upload</strong> is populated - only one resource type can be used at a time.');
+      form_set_error('field_upload', $upload_error);
     }
   }
   // Autodetect file type if a new one is not provided.

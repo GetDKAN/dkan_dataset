@@ -43,16 +43,12 @@ dependencies:
     - 'bash dkan-module-init.sh --deps --build=$DATABASE_URL'
     - 'ahoy drush --yes runserver :8888':
         background: true
-
     # Setup display for selenium
     #- sh -e /etc/init.d/xvfb start
     #- sleep 3
-
     - wget http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.2.jar
     - java -jar selenium-server-standalone-2.48.2.jar -quiet -p 4444 -log shut_up_selenium :
         background: true
-  pre:
-    - echo "memory_limit = 256M" > ~/.phpenv/versions/5.5.11/etc/conf.d/memory.ini
   post:
      - sudo apt-get install -y x11vnc
      - x11vnc -forever -nopw:

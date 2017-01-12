@@ -76,6 +76,7 @@ projects[features][subdir] = contrib
 
 projects[field_group][version] = 1.5
 projects[field_group][patch][2042681] = http://drupal.org/files/issues/field-group-show-ajax-2042681-8.patch
+projects[field_group][patch][2831815] = https://www.drupal.org/files/issues/hash-location-sanitization.diff
 projects[field_group][subdir] = contrib
 
 projects[field_group_table][download][type] = git

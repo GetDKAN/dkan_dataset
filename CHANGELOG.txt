@@ -2,6 +2,7 @@
 --------------------------
 - Upgrade Features to 7.x-2.9
 - Make date facet use "day" granularity.
+- Add patch to field_group to avoid DOM-based cross-site scripting vulnerabilities.
 
 7.x-1.11 2016-02-02
 --------------------------

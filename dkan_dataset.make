@@ -195,7 +195,7 @@ projects[token][subdir] = contrib
 projects[uuid][version] = 1.0-beta2
 projects[uuid][subdir] = contrib
 
-projects[views][version] = 3.14
+projects[views][version] = 3.15
 projects[views][subdir] = contrib
 
 projects[views_responsive_grid][version] = 1.3

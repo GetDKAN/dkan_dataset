@@ -1,5 +1,6 @@
 7.x-1.x
 --------------------------
+- Upgrade views to 3.15
 - Upgrade Features to 7.x-2.9
 - Make date facet use "day" granularity.
 - Add patch to field_group to avoid DOM-based cross-site scripting vulnerabilities.

@@ -39,3 +39,4 @@ features[variable][] = pathauto_node_dataset_pattern
 features[variable][] = pathauto_node_resource_pattern
 files[] = tests/dkan_dataset.test
 files[] = tests/dkan_dataset_class.test
+version = 7.x-1.12.14

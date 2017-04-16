@@ -320,7 +320,7 @@ function dkan_dataset_api_site_read() {
     'success' => TRUE,
     'result' => TRUE,
   );
-  drupal_json_output($output);
+  dkan_open_data_json_output($output);
 }
 
 /**
@@ -334,7 +334,7 @@ function dkan_dataset_api_open_data_json() {
   $nodes = dkan_dataset_api_get_datasets();
   $rows = dkan_open_data_build_rows($nodes);
 
-  drupal_json_output($rows);
+  dkan_open_data_json_output($rows);
 }
 
 
@@ -370,7 +370,7 @@ function dkan_dataset_api_package_list() {
     $output['result'] = array();
   }
 
-  drupal_json_output($output);
+  dkan_open_data_json_output($output);
 }
 
 /**
@@ -427,7 +427,7 @@ function dkan_dataset_api_revision_list() {
     $output['success'] = FALSE;
     $output['result'] = array();
   }
-  drupal_json_output($output);
+  dkan_open_data_json_output($output);
 }
 
 /**
@@ -464,7 +464,7 @@ function dkan_dataset_api_current_package_list_with_resources() {
       $output['result'] = array();
     }
   }
-  drupal_json_output($output);
+  dkan_open_data_json_output($output);
 }
 
 
@@ -533,7 +533,7 @@ function dkan_dataset_api_group_package_show() {
       'id' => array(t('Missing Value')),
     );
   }
-  drupal_json_output($output);
+  dkan_open_data_json_output($output);
 }
 
 
@@ -588,7 +588,7 @@ function dkan_dataset_api_package_show($uuid = NULL) {
     );
   }
 
-  drupal_json_output($output);
+  dkan_open_data_json_output($output);
 }
 
 /**
@@ -642,7 +642,7 @@ function dkan_dataset_api_resource_show($uuid = NULL) {
     );
   }
 
-  drupal_json_output($output);
+  dkan_open_data_json_output($output);
 }
 
 
@@ -705,7 +705,7 @@ function dkan_dataset_api_package_revision_list($uuid = NULL) {
       'uuid' => array(t('Missing Value')),
     );
   }
-  drupal_json_output($output);
+  dkan_open_data_json_output($output);
 }
 
 /**
@@ -818,7 +818,7 @@ function dkan_dataset_api_group_list() {
     $output['result'] = array();
     $output['error'] = $validation_errors;
   }
-  drupal_json_output($output);
+  dkan_open_data_json_output($output);
 }
 
 /**

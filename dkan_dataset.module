@@ -520,6 +520,33 @@ function dkan_dataset_file_mimetype_mapping_alter(&$mapping) {
 }
 
 /**
+ * Implements hook_node_insert().
+ */
+function dkan_dataset_node_insert($node) {
+  switch ($node->type) {
+    case 'resource':
+      // Redirects user to dataset page after adding resource.
+      if (isset($node->field_dataset_ref['und'][0]) && isset($node->op) && $node->op == 'Save') {
+        $dataset_nid = $node->field_dataset_ref['und'][0]['target_id'];
+        $dataset_node = node_load($dataset_nid);
+        $dataset_wrapper = entity_metadata_wrapper('node', $dataset_node);
+        // Save resource on dataset before redirect.
+        $existing_resources = $dataset_wrapper->field_resources->value();
+        $resources = array($node->nid);
+        if ($existing_resources) {
+          foreach ($existing_resources as $resource) {
+            $resources[] = $resource->nid;
+          }
+        }
+        $dataset_wrapper->field_resources->set($resources);
+        $dataset_wrapper->save();
+        // Redirect to the dataset after saving the last node in the form.
+        drupal_goto('node/' . $dataset_nid);
+      }
+    break;
+  }
+}
+/**
  * Implements hook_node_update().
  */
 function dkan_dataset_node_update($node) {
